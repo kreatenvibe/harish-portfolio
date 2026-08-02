@@ -124,7 +124,7 @@ export default function AboutPage() {
           <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                Let's Build
+                Let&apos;s Build
               </p>
 
               <h2 className="mt-4 font-heading text-4xl font-bold leading-tight sm:text-5xl">

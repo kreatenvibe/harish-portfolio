@@ -133,55 +133,13 @@ const faqs = [
   },
 ];
 
+import { HeroSequence } from "../components/hero-sequence";
+
 export default function Home() {
   return (
     <main className="bg-background text-foreground">
       {/* Hero */}
-      <section className="mx-auto max-w-7xl px-6 pb-24 pt-20 lg:px-8 lg:pb-32 lg:pt-32">
-        <div className="max-w-5xl">
-          <p className="mb-6 font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            Custom Business Software
-          </p>
-
-          <h1 className="max-w-5xl font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl">
-            Software that fits your business—
-            <span className="text-accent">not the other way around.</span>
-          </h1>
-
-          <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-muted sm:text-xl">
-            We build custom business systems for growing businesses that have
-            outgrown generic tools—from customer portals and CRM systems to
-            billing platforms, internal dashboards, and complete business
-            applications. Every solution is designed around your workflow and
-            built to grow with your business.
-          </p>
-
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <Link
-              href="#contact"
-              className="inline-flex items-center justify-center rounded-full bg-primary px-7 py-3.5 font-sans text-sm font-semibold text-white"
-            >
-              Start Your Project
-            </Link>
-
-            <Link
-              href="#contact"
-              className="inline-flex items-center justify-center rounded-full px-7 py-3.5 font-sans text-sm font-semibold text-foreground"
-            >
-              Discuss Your Business Needs
-            </Link>
-          </div>
-        </div>
-
-        <div className="mt-24 max-w-3xl border-l-2 border-accent pl-6">
-          <p className="font-heading text-2xl font-semibold leading-tight sm:text-3xl">
-            Stop piecing your business together with spreadsheets,
-            disconnected tools, and manual work. Bring your processes into one
-            reliable digital system built around the way your business actually
-            works.
-          </p>
-        </div>
-      </section>
+      <HeroSequence />
 
       {/* Problem */}
       <section id="about" className="bg-primary text-white">

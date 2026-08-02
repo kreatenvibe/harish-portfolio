@@ -113,7 +113,7 @@ export default function ServicesPage() {
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
           <div className="max-w-4xl">
             <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-              Let's Talk
+              Let&apos;s Talk
             </p>
 
             <h2 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">

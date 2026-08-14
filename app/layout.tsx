@@ -50,6 +50,7 @@ export default function RootLayout({
       className={`${bricolage.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <div className="grain-overlay" aria-hidden="true" />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

@@ -1,5 +1,10 @@
 import Link from "next/link";
 
+import { HeroSequence } from "../components/hero-sequence";
+import { FaqAccordion } from "../components/faq-accordion";
+import { Reveal } from "../components/reveal";
+import { Eyebrow } from "../components/eyebrow";
+
 const services = [
   {
     title: "Custom Business Software",
@@ -132,8 +137,6 @@ const faqs = [
       "No. You can start with the business problem. If you know that your team is spending too much time on manual work, using too many disconnected tools, or struggling with an existing process, we can help define what the right digital solution should look like.",
   },
 ];
-
-import { HeroSequence } from "../components/hero-sequence";
 
 export default function Home() {
   return (
@@ -412,26 +415,28 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto max-w-5xl px-6 py-24 lg:py-32">
-        <div className="max-w-3xl">
-          <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            FAQ
-          </p>
-        </div>
+      <section id="faq" className="mx-auto max-w-5xl px-6 py-24 lg:py-32">
+        <div className="grid gap-6 lg:grid-cols-[220px_1fr] lg:items-end lg:gap-12">
+          <Reveal>
+            <Eyebrow>FAQ</Eyebrow>
+          </Reveal>
 
-        <div className="mt-12 space-y-12">
-          {faqs.map((faq) => (
-            <article key={faq.question}>
-              <h3 className="font-heading text-2xl font-semibold leading-tight sm:text-3xl">
-                {faq.question}
-              </h3>
+          <div>
+            <Reveal delay={0.08}>
+              <h2 className="font-heading text-4xl font-bold leading-tight sm:text-5xl">
+                Common questions, answered.
+              </h2>
+            </Reveal>
 
-              <p className="mt-4 font-sans text-lg leading-8 text-muted">
-                {faq.answer}
+            <Reveal delay={0.14}>
+              <p className="mt-6 max-w-xl font-sans text-lg leading-8 text-muted">
+                What business owners usually ask before starting a project.
               </p>
-            </article>
-          ))}
+            </Reveal>
+          </div>
         </div>
+
+        <FaqAccordion faqs={faqs} />
       </section>
 
       {/* Final CTA */}

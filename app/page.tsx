@@ -148,7 +148,7 @@ export default function Home() {
       <section id="about" className="bg-primary text-white">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
-            <div>
+            <Reveal>
               <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
                 Why Custom Software
               </p>
@@ -156,9 +156,9 @@ export default function Home() {
               <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
                 Your business is unique. Your software should be too.
               </h2>
-            </div>
+            </Reveal>
 
-            <div className="space-y-8 font-sans text-lg leading-8 text-white/70">
+            <Reveal delay={0.1} className="space-y-8 font-sans text-lg leading-8 text-white/70">
               <p>
                 As a business grows, the tools that worked in the beginning can
                 start getting in the way. Customer information ends up in
@@ -174,14 +174,14 @@ export default function Home() {
                 workflow instead of asking you to change your business to fit
                 generic software.
               </p>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* Core Offer */}
       <section id="services" className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-        <div className="max-w-3xl">
+        <Reveal className="max-w-3xl">
           <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
             What We Build
           </p>
@@ -195,23 +195,25 @@ export default function Home() {
             dashboard, or a complete business platform, we build software
             around your requirements—not around a generic template.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-16 grid gap-x-12 gap-y-16 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
-            <article key={service.title}>
-              <span className="font-sans text-sm font-semibold text-accent">
-                0{index + 1}
-              </span>
+            <Reveal key={service.title} delay={(index % 3) * 0.08} y={16}>
+              <article>
+                <span className="font-sans text-sm font-semibold text-accent">
+                  0{index + 1}
+                </span>
 
-              <h3 className="mt-5 font-heading text-2xl font-semibold">
-                {service.title}
-              </h3>
+                <h3 className="mt-5 font-heading text-2xl font-semibold">
+                  {service.title}
+                </h3>
 
-              <p className="mt-3 font-sans leading-7 text-muted">
-                {service.description}
-              </p>
-            </article>
+                <p className="mt-3 font-sans leading-7 text-muted">
+                  {service.description}
+                </p>
+              </article>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -220,7 +222,7 @@ export default function Home() {
       <section className="bg-[#f4f4f2]">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
           <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
-            <div>
+            <Reveal>
               <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
                 The Difference
               </p>
@@ -235,14 +237,20 @@ export default function Home() {
                 give you a clearer view of what is happening across your
                 operations.
               </p>
-            </div>
+            </Reveal>
 
             <ul className="space-y-7">
-              {benefits.map((benefit) => (
-                <li key={benefit} className="flex gap-4 font-sans text-lg leading-7">
+              {benefits.map((benefit, index) => (
+                <Reveal
+                  key={benefit}
+                  as="li"
+                  delay={index * 0.05}
+                  y={14}
+                  className="flex gap-4 font-sans text-lg leading-7"
+                >
                   <span className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-accent" />
                   <span>{benefit}</span>
-                </li>
+                </Reveal>
               ))}
             </ul>
           </div>
@@ -253,15 +261,17 @@ export default function Home() {
       <section id="work" className="bg-primary text-white">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
           <div className="max-w-4xl">
-            <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-              A Practical Example
-            </p>
+            <Reveal>
+              <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
+                A Practical Example
+              </p>
 
-            <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-7xl">
-              From scattered processes to one streamlined business system.
-            </h2>
+              <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-7xl">
+                From scattered processes to one streamlined business system.
+              </h2>
+            </Reveal>
 
-            <div className="mt-10 space-y-7 font-sans text-lg leading-8 text-white/70">
+            <Reveal delay={0.1} className="mt-10 space-y-7 font-sans text-lg leading-8 text-white/70">
               <p>
                 Imagine a local business managing enquiries through WhatsApp,
                 customer details in Excel, appointments over phone calls, and
@@ -279,19 +289,21 @@ export default function Home() {
                 moving information from one place to another, the business gets
                 one streamlined system designed around how it operates.
               </p>
-            </div>
+            </Reveal>
 
-            <p className="mt-12 max-w-2xl font-heading text-2xl font-semibold leading-tight text-white sm:text-3xl">
-              That is what custom business software should do: simplify the way
-              your business works.
-            </p>
+            <Reveal delay={0.2}>
+              <p className="mt-12 max-w-2xl font-heading text-2xl font-semibold leading-tight text-white sm:text-3xl">
+                That is what custom business software should do: simplify the
+                way your business works.
+              </p>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* How It Works */}
       <section className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-        <div className="max-w-3xl">
+        <Reveal className="max-w-3xl">
           <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
             How It Works
           </p>
@@ -307,11 +319,11 @@ export default function Home() {
             throughout development, deploy the solution securely, and provide
             ongoing support after launch.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-5">
-          {steps.map((step) => (
-            <article key={step.number}>
+          {steps.map((step, index) => (
+            <Reveal key={step.number} as="article" delay={index * 0.08} y={16}>
               <span className="font-heading text-5xl font-bold text-accent">
                 {step.number}
               </span>
@@ -323,7 +335,7 @@ export default function Home() {
               <p className="mt-3 font-sans leading-7 text-muted">
                 {step.description}
               </p>
-            </article>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -332,7 +344,7 @@ export default function Home() {
       <section className="bg-[#f4f4f2]">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
           <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
-            <div>
+            <Reveal>
               <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
                 Why KreatenVibe
               </p>
@@ -340,10 +352,10 @@ export default function Home() {
               <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
                 Built around your business. Delivered with clarity.
               </h2>
-            </div>
+            </Reveal>
 
             <div>
-              <div className="space-y-7 font-sans text-lg leading-8 text-muted">
+              <Reveal delay={0.1} className="space-y-7 font-sans text-lg leading-8 text-muted">
                 <p>
                   Every business is different. That is why we do not sell
                   one-size-fits-all software.
@@ -356,17 +368,20 @@ export default function Home() {
                   delivery, and solutions designed for your business—not
                   generic templates.
                 </p>
-              </div>
+              </Reveal>
 
               <ul className="mt-12 grid gap-x-8 gap-y-5 sm:grid-cols-2">
-                {supportingPoints.map((point) => (
-                  <li
+                {supportingPoints.map((point, index) => (
+                  <Reveal
                     key={point}
+                    as="li"
+                    delay={0.15 + index * 0.05}
+                    y={12}
                     className="font-sans font-semibold text-foreground"
                   >
                     <span className="mr-3 text-accent">+</span>
                     {point}
-                  </li>
+                  </Reveal>
                 ))}
               </ul>
             </div>
@@ -376,7 +391,7 @@ export default function Home() {
 
       {/* Technology Partner */}
       <section className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-        <div className="max-w-4xl">
+        <Reveal className="max-w-4xl">
           <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
             Long-Term Partnership
           </p>
@@ -391,13 +406,13 @@ export default function Home() {
             KreatenVibe is built around long-term support—helping you improve,
             automate, and extend your digital systems as your needs evolve.
           </p>
-        </div>
+        </Reveal>
       </section>
 
       {/* Social Proof / Work */}
       <section className="bg-primary text-white">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-          <div className="max-w-3xl">
+          <Reveal className="max-w-3xl">
             <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
               Selected Work
             </p>
@@ -410,7 +425,7 @@ export default function Home() {
               Explore how we turn complex workflows into practical digital
               systems.
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -443,21 +458,26 @@ export default function Home() {
       <section id="contact" className="bg-accent text-white">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
           <div className="max-w-4xl">
-            <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-white/70">
-              Start a Conversation
-            </p>
+            <Reveal>
+              <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-white/70">
+                Start a Conversation
+              </p>
 
-            <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-7xl">
-              Ready to build a system that works the way your business does?
-            </h2>
+              <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-7xl">
+                Ready to build a system that works the way your business does?
+              </h2>
+            </Reveal>
 
-            <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-white/80 sm:text-xl">
-              Tell us how your business works today, what is slowing you down,
-              and what you want to improve. We will help you figure out what
-              can be simplified, automated, or built around your workflow.
-            </p>
+            <Reveal delay={0.1}>
+              <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-white/80 sm:text-xl">
+                Tell us how your business works today, what is slowing you
+                down, and what you want to improve. We will help you figure
+                out what can be simplified, automated, or built around your
+                workflow.
+              </p>
+            </Reveal>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <Reveal delay={0.2} className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Link
                 href="#contact"
                 className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 font-sans text-sm font-semibold text-foreground"
@@ -471,7 +491,7 @@ export default function Home() {
               >
                 Discuss Your Business Needs
               </Link>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>

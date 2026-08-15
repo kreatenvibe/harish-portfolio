@@ -1,9 +1,6 @@
-import Link from "next/link";
-
-import { HeroSequence } from "../components/hero-sequence";
-import { FaqAccordion } from "../components/faq-accordion";
-import { Reveal } from "../components/reveal";
 import { Eyebrow } from "../components/eyebrow";
+import { CtaButton } from "../components/cta-button";
+import { FaqAccordion } from "../components/faq-accordion";
 
 const services = [
   {
@@ -69,7 +66,7 @@ const steps = [
     number: "03",
     title: "Build",
     description:
-      "Develop the solution in milestones, with regular progress updates and demos so you always know where the project stands.",
+      "Develop the solution in milestones, with regular demos so you always know where the project stands.",
   },
   {
     number: "04",
@@ -81,7 +78,7 @@ const steps = [
     number: "05",
     title: "Launch & Support",
     description:
-      "Deploy the solution securely and continue supporting it after launch as your business evolves.",
+      "Deploy the solution securely and continue supporting it as your business evolves.",
   },
 ];
 
@@ -140,248 +137,163 @@ const faqs = [
 
 export default function Home() {
   return (
-    <main className="bg-background text-foreground">
+    <>
       {/* Hero */}
-      <HeroSequence />
+      <section>
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+          <Eyebrow>Custom Business Software</Eyebrow>
+
+          <h1 className="mt-7 max-w-3xl font-heading text-5xl font-bold leading-[1.02] tracking-tight text-foreground sm:text-6xl">
+            Software that fits your business.
+          </h1>
+
+          <p className="mt-7 max-w-lg text-lg leading-8 text-muted">
+            Stop piecing your business together with spreadsheets,
+            WhatsApp, and manual work. We build the system that fits how
+            you actually operate.
+          </p>
+
+          <div className="mt-9 flex flex-wrap items-center gap-5">
+            <CtaButton href="#contact" variant="primary">
+              Start Your Project
+            </CtaButton>
+            <CtaButton href="#contact" variant="ghost">
+              Discuss Your Business Needs
+            </CtaButton>
+          </div>
+        </div>
+      </section>
 
       {/* Problem */}
-      <section id="about" className="bg-primary text-white">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
+      <section id="about" className="scroll-mt-28 bg-[#F7F6F3]">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
-            <Reveal>
-              <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                Why Custom Software
-              </p>
-
-              <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            <div>
+              <Eyebrow>Why Custom Software</Eyebrow>
+              <h2 className="mt-6 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
                 Your business is unique. Your software should be too.
               </h2>
-            </Reveal>
+            </div>
 
-            <Reveal delay={0.1} className="space-y-8 font-sans text-lg leading-8 text-white/70">
-              <p>
-                As a business grows, the tools that worked in the beginning can
-                start getting in the way. Customer information ends up in
-                spreadsheets, enquiries stay in WhatsApp, appointments are
-                managed over phone calls, invoices are handled manually, and
-                important information is spread across different systems.
-              </p>
-
-              <p>
-                KreatenVibe brings those disconnected processes together. We
-                understand how your business works, identify where software can
-                make the biggest difference, and build a system around your
-                workflow instead of asking you to change your business to fit
-                generic software.
-              </p>
-            </Reveal>
+            <p className="text-lg leading-8 text-muted">
+              As you grow, the tools that once worked start getting in the
+              way—customer info in spreadsheets, enquiries in WhatsApp,
+              invoices done by hand. KreatenVibe brings it together into
+              one system built around how you actually work.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Core Offer */}
-      <section id="services" className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-        <Reveal className="max-w-3xl">
-          <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            What We Build
-          </p>
+      <section id="services" className="scroll-mt-28">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+          <div className="max-w-3xl">
+            <Eyebrow>What We Build</Eyebrow>
+            <h2 className="mt-6 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+              Custom business systems, built around your workflow.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-muted">
+              Built around your requirements—not a generic template.
+            </p>
+          </div>
 
-          <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Custom business systems, built around your workflow.
-          </h2>
-
-          <p className="mt-6 font-sans text-lg leading-8 text-muted">
-            Whether you need a customer portal, billing system, CRM, internal
-            dashboard, or a complete business platform, we build software
-            around your requirements—not around a generic template.
-          </p>
-        </Reveal>
-
-        <div className="mt-16 grid gap-x-12 gap-y-16 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => (
-            <Reveal key={service.title} delay={(index % 3) * 0.08} y={16}>
-              <article>
-                <span className="font-sans text-sm font-semibold text-accent">
+          <ul className="mt-14 grid gap-x-8 gap-y-10 sm:grid-cols-2">
+            {services.map((service, index) => (
+              <li key={service.title} className="border-t border-foreground/10 pt-5">
+                <span className="text-sm font-semibold text-accent">
                   0{index + 1}
                 </span>
-
-                <h3 className="mt-5 font-heading text-2xl font-semibold">
+                <h3 className="mt-3 font-heading text-2xl font-semibold text-foreground">
                   {service.title}
                 </h3>
-
-                <p className="mt-3 font-sans leading-7 text-muted">
+                <p className="mt-3 leading-7 text-muted">
                   {service.description}
                 </p>
-              </article>
-            </Reveal>
-          ))}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
       {/* Benefits */}
-      <section className="bg-[#f4f4f2]">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-          <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
-            <Reveal>
-              <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                The Difference
-              </p>
-
-              <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+      <section className="bg-[#F7F6F3]">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-24">
+            <div>
+              <Eyebrow>The Difference</Eyebrow>
+              <h2 className="mt-6 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
                 Less manual work. More control over your business.
               </h2>
+            </div>
 
-              <p className="mt-6 max-w-xl font-sans text-lg leading-8 text-muted">
-                Good software should make the business easier to run. We focus
-                on practical improvements that save time, reduce friction, and
-                give you a clearer view of what is happening across your
-                operations.
-              </p>
-            </Reveal>
-
-            <ul className="space-y-7">
-              {benefits.map((benefit, index) => (
-                <Reveal
+            <ul className="space-y-4">
+              {benefits.map((benefit) => (
+                <li
                   key={benefit}
-                  as="li"
-                  delay={index * 0.05}
-                  y={14}
-                  className="flex gap-4 font-sans text-lg leading-7"
+                  className="border-b border-foreground/10 pb-4 text-lg leading-7 text-foreground"
                 >
-                  <span className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-accent" />
-                  <span>{benefit}</span>
-                </Reveal>
+                  {benefit}
+                </li>
               ))}
             </ul>
           </div>
         </div>
       </section>
 
-      {/* Transformation */}
-      <section id="work" className="bg-primary text-white">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-          <div className="max-w-4xl">
-            <Reveal>
-              <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                A Practical Example
-              </p>
-
-              <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-7xl">
-                From scattered processes to one streamlined business system.
-              </h2>
-            </Reveal>
-
-            <Reveal delay={0.1} className="mt-10 space-y-7 font-sans text-lg leading-8 text-white/70">
-              <p>
-                Imagine a local business managing enquiries through WhatsApp,
-                customer details in Excel, appointments over phone calls, and
-                invoices manually.
-              </p>
-
-              <p>
-                We can bring that workflow together with a professional
-                website, a custom CRM, automated WhatsApp or email follow-ups,
-                appointment scheduling, and a centralized dashboard.
-              </p>
-
-              <p>
-                Instead of switching between disconnected tools and manually
-                moving information from one place to another, the business gets
-                one streamlined system designed around how it operates.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.2}>
-              <p className="mt-12 max-w-2xl font-heading text-2xl font-semibold leading-tight text-white sm:text-3xl">
-                That is what custom business software should do: simplify the
-                way your business works.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
       {/* How It Works */}
-      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-        <Reveal className="max-w-3xl">
-          <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            How It Works
-          </p>
+      <section>
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+          <div className="max-w-3xl">
+            <Eyebrow>How It Works</Eyebrow>
+            <h2 className="mt-6 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+              A clear process from idea to working system.
+            </h2>
+          </div>
 
-          <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            A clear process from idea to working system.
-          </h2>
-
-          <p className="mt-6 font-sans text-lg leading-8 text-muted">
-            Every project begins with understanding your business and defining
-            clear requirements. We then create a roadmap, build in milestones
-            with regular progress updates and demos, gather your feedback
-            throughout development, deploy the solution securely, and provide
-            ongoing support after launch.
-          </p>
-        </Reveal>
-
-        <div className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-5">
-          {steps.map((step, index) => (
-            <Reveal key={step.number} as="article" delay={index * 0.08} y={16}>
-              <span className="font-heading text-5xl font-bold text-accent">
-                {step.number}
-              </span>
-
-              <h3 className="mt-5 font-heading text-2xl font-semibold">
-                {step.title}
-              </h3>
-
-              <p className="mt-3 font-sans leading-7 text-muted">
-                {step.description}
-              </p>
-            </Reveal>
-          ))}
+          <ol className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+            {steps.map((step) => (
+              <li key={step.number} className="border-t border-foreground/10 pt-5">
+                <span className="text-sm font-semibold text-accent">
+                  {step.number}
+                </span>
+                <h3 className="mt-3 font-heading text-xl font-semibold text-foreground">
+                  {step.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  {step.description}
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
       {/* Why KreatenVibe */}
-      <section className="bg-[#f4f4f2]">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-          <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
-            <Reveal>
-              <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                Why KreatenVibe
-              </p>
-
-              <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+      <section className="bg-[#F7F6F3]">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-24">
+            <div>
+              <Eyebrow>Why KreatenVibe</Eyebrow>
+              <h2 className="mt-6 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
                 Built around your business. Delivered with clarity.
               </h2>
-            </Reveal>
+            </div>
 
             <div>
-              <Reveal delay={0.1} className="space-y-7 font-sans text-lg leading-8 text-muted">
-                <p>
-                  Every business is different. That is why we do not sell
-                  one-size-fits-all software.
-                </p>
+              <p className="text-lg leading-8 text-muted">
+                We do not sell one-size-fits-all software. We work closely
+                with you to understand your processes and support you from
+                planning to deployment—not generic templates.
+              </p>
 
-                <p>
-                  We work closely with you to understand your processes, build
-                  software around your workflow, and support you from planning
-                  to deployment. You get clear communication, transparent
-                  delivery, and solutions designed for your business—not
-                  generic templates.
-                </p>
-              </Reveal>
-
-              <ul className="mt-12 grid gap-x-8 gap-y-5 sm:grid-cols-2">
-                {supportingPoints.map((point, index) => (
-                  <Reveal
-                    key={point}
-                    as="li"
-                    delay={0.15 + index * 0.05}
-                    y={12}
-                    className="font-sans font-semibold text-foreground"
-                  >
-                    <span className="mr-3 text-accent">+</span>
-                    {point}
-                  </Reveal>
+              <ul className="mt-8 flex flex-wrap gap-3">
+                {supportingPoints.map((point) => (
+                  <li key={point}>
+                    <span className="inline-flex items-center rounded-full border border-foreground/10 bg-white px-4 py-2 text-sm font-semibold text-foreground">
+                      {point}
+                    </span>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -389,112 +301,66 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Technology Partner */}
-      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-        <Reveal className="max-w-4xl">
-          <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            Long-Term Partnership
-          </p>
-
-          <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-7xl">
-            Software that grows with your business.
-          </h2>
-
-          <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-muted sm:text-xl">
-            The goal is not simply to launch software and move on. As your
-            business changes, your systems may need to change with it.
-            KreatenVibe is built around long-term support—helping you improve,
-            automate, and extend your digital systems as your needs evolve.
-          </p>
-        </Reveal>
-      </section>
-
-      {/* Social Proof / Work */}
-      <section className="bg-primary text-white">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-          <Reveal className="max-w-3xl">
-            <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-              Selected Work
-            </p>
-
-            <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+      {/* Selected Work */}
+      <section>
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+          <div className="max-w-3xl">
+            <Eyebrow>Selected Work</Eyebrow>
+            <h2 className="mt-6 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
               Built for real business problems.
             </h2>
-
-            <p className="mt-6 font-sans text-lg leading-8 text-white/70">
-              Explore how we turn complex workflows into practical digital
-              systems.
-            </p>
-          </Reveal>
+            <div className="mt-8">
+              <CtaButton href="/work" variant="ghost">
+                View Selected Work
+              </CtaButton>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="mx-auto max-w-5xl px-6 py-24 lg:py-32">
-        <div className="grid gap-6 lg:grid-cols-[220px_1fr] lg:items-end lg:gap-12">
-          <Reveal>
+      <section id="faq" className="scroll-mt-28">
+        <div className="mx-auto max-w-5xl px-6 py-16 lg:py-20">
+          <div className="grid gap-6 lg:grid-cols-[220px_1fr] lg:items-end lg:gap-12">
             <Eyebrow>FAQ</Eyebrow>
-          </Reveal>
 
-          <div>
-            <Reveal delay={0.08}>
-              <h2 className="font-heading text-4xl font-bold leading-tight sm:text-5xl">
-                Common questions, answered.
-              </h2>
-            </Reveal>
+            <h2 className="font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+              Common questions, answered.
+            </h2>
+          </div>
 
-            <Reveal delay={0.14}>
-              <p className="mt-6 max-w-xl font-sans text-lg leading-8 text-muted">
-                What business owners usually ask before starting a project.
-              </p>
-            </Reveal>
+          <div className="mt-12">
+            <FaqAccordion faqs={faqs} />
           </div>
         </div>
-
-        <FaqAccordion faqs={faqs} />
       </section>
 
       {/* Final CTA */}
-      <section id="contact" className="bg-accent text-white">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
+      <section id="contact" className="scroll-mt-28 bg-accent text-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
           <div className="max-w-4xl">
-            <Reveal>
-              <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-white/70">
-                Start a Conversation
-              </p>
+            <Eyebrow tone="dark">Start a Conversation</Eyebrow>
+            <h2 className="mt-6 font-heading text-4xl font-bold leading-tight sm:text-5xl">
+              Ready to build a system that works the way your business
+              does?
+            </h2>
 
-              <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-7xl">
-                Ready to build a system that works the way your business does?
-              </h2>
-            </Reveal>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/70">
+              Tell us how your business works today and what you want to
+              improve. We will help you figure out the rest.
+            </p>
 
-            <Reveal delay={0.1}>
-              <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-white/80 sm:text-xl">
-                Tell us how your business works today, what is slowing you
-                down, and what you want to improve. We will help you figure
-                out what can be simplified, automated, or built around your
-                workflow.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.2} className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="#contact"
-                className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 font-sans text-sm font-semibold text-foreground"
-              >
+            <div className="mt-10 flex flex-wrap gap-5">
+              <CtaButton href="#contact" variant="accent">
                 Start Your Project
-              </Link>
-
-              <Link
-                href="#contact"
-                className="inline-flex items-center justify-center rounded-full px-7 py-3.5 font-sans text-sm font-semibold text-white"
-              >
+              </CtaButton>
+              <CtaButton href="#contact" variant="ghost-dark">
                 Discuss Your Business Needs
-              </Link>
-            </Reveal>
+              </CtaButton>
+            </div>
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 }

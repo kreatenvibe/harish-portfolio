@@ -7,12 +7,17 @@ export function Eyebrow({
 }) {
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${
+      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${
         tone === "dark"
           ? "border-white/15 bg-white/5 text-white/70"
           : "border-accent/20 bg-accent/[0.06] text-accent"
       }`}
     >
+      <span
+        className={`h-1 w-1 rounded-full ${
+          tone === "dark" ? "bg-white/50" : "bg-accent"
+        }`}
+      />
       {children}
     </span>
   );

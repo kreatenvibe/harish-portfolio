@@ -11,10 +11,10 @@ import {
   TrendUp,
   ChartBar,
 } from "@phosphor-icons/react/dist/ssr";
-import { Eyebrow } from "../components/eyebrow";
-import { CtaButton } from "../components/cta-button";
-import { FaqAccordion } from "../components/faq-accordion";
-import { ShowcaseStack } from "../components/showcase-stack";
+import { Eyebrow } from "@/components/ui/Eyebrow";
+import { CtaButton } from "@/components/ui/CtaButton";
+import { FaqAccordion } from "@/components/sections/FaqAccordion";
+import { ShowcaseStack } from "@/components/sections/ShowcaseStack";
 
 const services = [
   {
@@ -197,10 +197,10 @@ export default function Home() {
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-5">
-                <CtaButton href="#contact" variant="primary">
+                <CtaButton href="/contact" variant="primary">
                   Start Your Project
                 </CtaButton>
-                <CtaButton href="#contact" variant="ghost">
+                <CtaButton href="/contact" variant="ghost">
                   Discuss Your Business Needs
                 </CtaButton>
               </div>
@@ -496,10 +496,10 @@ export default function Home() {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-5">
-              <CtaButton href="#contact" variant="accent">
+              <CtaButton href="/contact" variant="accent">
                 Start Your Project
               </CtaButton>
-              <CtaButton href="#contact" variant="ghost-dark">
+              <CtaButton href="/contact" variant="ghost-dark">
                 Discuss Your Business Needs
               </CtaButton>
             </div>

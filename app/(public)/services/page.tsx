@@ -127,7 +127,7 @@ export default function ServicesPage() {
             </p>
 
             <Link
-              href="/#contact"
+              href="/contact"
               className="mt-10 inline-flex rounded-full bg-accent px-7 py-3.5 font-sans text-sm font-semibold text-white"
             >
               Discuss Your Business Needs

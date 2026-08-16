@@ -1,24 +1,13 @@
 import Link from "next/link";
+import { getProjects } from "@/lib/actions/project.action";
+import ProjectCard from "@/components/cards/ProjectCard";
 
-const projects = [
-  {
-    number: "01",
-    name: "Business Management System",
-    label: "Product Experiment",
-  },
-  {
-    number: "02",
-    name: "CRM & Customer Management",
-    label: "Product Experiment",
-  },
-  {
-    number: "03",
-    name: "Inventory & Billing Platform",
-    label: "Product Experiment",
-  },
-];
+export const dynamic = "force-dynamic";
 
-export default function WorkPage() {
+export default async function WorkPage() {
+  const result = await getProjects({ pageSize: 100 });
+  const projects = result.data?.projects ?? [];
+
   return (
     <main className="bg-background text-foreground">
       {/* Hero */}
@@ -42,100 +31,21 @@ export default function WorkPage() {
 
       {/* Projects */}
       <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-8 lg:pb-32">
-        <div className="space-y-24 lg:space-y-40">
-          {projects.map((project, index) => (
-            <article
-              key={project.number}
-              className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-24"
-            >
-              {/* Project visual */}
-              <div
-                className={`flex min-h-[400px] items-center justify-center bg-[#f4f4f2] ${index % 2 === 1 ? "lg:order-2" : "lg:order-1"
-                  }`}
-              >
-                <div className="text-center">
-                  <span className="font-heading text-7xl font-bold text-accent/20">
-                    {project.number}
-                  </span>
-
-                  <p className="mt-4 font-sans text-sm font-semibold uppercase tracking-[0.15em] text-muted">
-                    {project.label}
-                  </p>
-                </div>
-              </div>
-
-              {/* Project information */}
-              <div className={index % 2 === 1 ? "lg:order-1" : "lg:order-2"}>
-                <span className="font-heading text-5xl font-bold text-accent">
-                  {project.number}
-                </span>
-
-                <p className="mt-6 font-sans text-sm font-semibold uppercase tracking-[0.15em] text-accent">
-                  {project.label}
-                </p>
-
-                <h2 className="mt-4 font-heading text-4xl font-bold leading-tight sm:text-5xl">
-                  {project.name}
-                </h2>
-
-                <div className="mt-10 space-y-8">
-                  <div>
-                    <h3 className="font-heading text-xl font-semibold">
-                      The challenge
-                    </h3>
-
-                    <p className="mt-2 font-sans leading-7 text-muted">
-                      What was difficult, manual, disconnected, or inefficient
-                      before the project?
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-heading text-xl font-semibold">
-                      What we built
-                    </h3>
-
-                    <p className="mt-2 font-sans leading-7 text-muted">
-                      What system, application, website, CRM, dashboard, or
-                      automation was created?
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-heading text-xl font-semibold">
-                      How it works
-                    </h3>
-
-                    <p className="mt-2 font-sans leading-7 text-muted">
-                      Explain the important workflow in simple business
-                      language.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-heading text-xl font-semibold">
-                      The outcome
-                    </h3>
-
-                    <p className="mt-2 font-sans leading-7 text-muted">
-                      Use only verified results. Include time saved, reduced
-                      manual work, improved response time, increased visibility,
-                      or another measurable result only when it is genuinely
-                      known.
-                    </p>
-                  </div>
-                </div>
-
-                <Link
-                  href="/#contact"
-                  className="mt-10 inline-flex rounded-full bg-primary px-7 py-3.5 font-sans text-sm font-semibold text-white"
-                >
-                  Discuss Your Business Needs
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+        {projects.length === 0 ? (
+          <p className="font-sans text-lg text-muted">
+            Projects are coming soon.
+          </p>
+        ) : (
+          <div className="space-y-24 lg:space-y-40">
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={String(project._id)}
+                project={project}
+                index={index}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* CTA */}
@@ -157,7 +67,7 @@ export default function WorkPage() {
             </p>
 
             <Link
-              href="/#contact"
+              href="/contact"
               className="mt-10 inline-flex rounded-full bg-accent px-7 py-3.5 font-sans text-sm font-semibold text-white"
             >
               Discuss Your Business Needs

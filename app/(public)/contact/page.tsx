@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { EnvelopeSimple, Phone } from "@phosphor-icons/react/dist/ssr";
+import ContactForm from "@/components/sections/ContactForm";
+import { CONTACT } from "@/lib/contact";
 
 export default function ContactPage() {
   return (
@@ -25,176 +28,32 @@ export default function ContactPage() {
 
             <div className="mt-10">
               <p className="font-sans text-sm font-semibold text-foreground">
-                Prefer to discuss it first?
+                Prefer to reach out directly?
               </p>
 
-              <Link
-                href="#project-form"
-                className="mt-3 inline-flex font-sans text-sm font-semibold text-accent"
-              >
-                Discuss Your Business Needs →
-              </Link>
+              <div className="mt-4 flex flex-col gap-3">
+                <a
+                  href={`mailto:${CONTACT.email}`}
+                  className="inline-flex items-center gap-2 font-sans text-sm font-semibold text-accent"
+                >
+                  <EnvelopeSimple weight="bold" className="shrink-0" />
+                  {CONTACT.email}
+                </a>
+                <a
+                  href={CONTACT.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 font-sans text-sm font-semibold text-accent"
+                >
+                  <Phone weight="bold" className="shrink-0" />
+                  {CONTACT.phoneDisplay} (WhatsApp)
+                </a>
+              </div>
             </div>
           </div>
 
           {/* Form */}
-          <div id="project-form">
-            <form className="space-y-8">
-              {/* Name */}
-              <div>
-                <label
-                  htmlFor="name"
-                  className="font-sans text-sm font-semibold"
-                >
-                  Name
-                </label>
-
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  className="mt-3 w-full rounded-xl bg-[#f4f4f2] px-4 py-3.5 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:bg-[#eeeeec]"
-                  placeholder="Your name"
-                />
-              </div>
-
-              {/* Business Name */}
-              <div>
-                <label
-                  htmlFor="business"
-                  className="font-sans text-sm font-semibold"
-                >
-                  Business name
-                </label>
-
-                <input
-                  id="business"
-                  name="business"
-                  type="text"
-                  className="mt-3 w-full rounded-xl bg-[#f4f4f2] px-4 py-3.5 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:bg-[#eeeeec]"
-                  placeholder="Your business name"
-                />
-              </div>
-
-              {/* Email */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="font-sans text-sm font-semibold"
-                >
-                  Email
-                </label>
-
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  className="mt-3 w-full rounded-xl bg-[#f4f4f2] px-4 py-3.5 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:bg-[#eeeeec]"
-                  placeholder="you@company.com"
-                />
-              </div>
-
-              {/* Business */}
-              <div>
-                <label
-                  htmlFor="business-description"
-                  className="font-sans text-sm font-semibold"
-                >
-                  What does your business do?
-                </label>
-
-                <textarea
-                  id="business-description"
-                  name="business-description"
-                  rows={3}
-                  className="mt-3 w-full resize-none rounded-xl bg-[#f4f4f2] px-4 py-3.5 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:bg-[#eeeeec]"
-                  placeholder="Tell us a little about your business"
-                />
-              </div>
-
-              {/* Improve */}
-              <div>
-                <label
-                  htmlFor="improvement"
-                  className="font-sans text-sm font-semibold"
-                >
-                  What are you trying to improve?
-                </label>
-
-                <textarea
-                  id="improvement"
-                  name="improvement"
-                  rows={4}
-                  className="mt-3 w-full resize-none rounded-xl bg-[#f4f4f2] px-4 py-3.5 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:bg-[#eeeeec]"
-                  placeholder="What is taking too much time or creating friction?"
-                />
-              </div>
-
-              {/* Current Tools */}
-              <div>
-                <label
-                  htmlFor="current-tools"
-                  className="font-sans text-sm font-semibold"
-                >
-                  What tools or processes are you currently using?
-                </label>
-
-                <textarea
-                  id="current-tools"
-                  name="current-tools"
-                  rows={4}
-                  className="mt-3 w-full resize-none rounded-xl bg-[#f4f4f2] px-4 py-3.5 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:bg-[#eeeeec]"
-                  placeholder="For example: Excel, WhatsApp, email, existing CRM, manual processes..."
-                />
-              </div>
-
-              {/* Build */}
-              <div>
-                <label
-                  htmlFor="what-to-build"
-                  className="font-sans text-sm font-semibold"
-                >
-                  What would you like to build or automate?
-                </label>
-
-                <textarea
-                  id="what-to-build"
-                  name="what-to-build"
-                  rows={4}
-                  className="mt-3 w-full resize-none rounded-xl bg-[#f4f4f2] px-4 py-3.5 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:bg-[#eeeeec]"
-                  placeholder="Tell us what you have in mind, even if you are not sure yet."
-                />
-              </div>
-
-              {/* Anything Else */}
-              <div>
-                <label
-                  htmlFor="anything-else"
-                  className="font-sans text-sm font-semibold"
-                >
-                  Anything else we should know?
-                </label>
-
-                <textarea
-                  id="anything-else"
-                  name="anything-else"
-                  rows={4}
-                  className="mt-3 w-full resize-none bg-transparent px-0 py-3 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:border-accent"
-                  placeholder="Anything else that might help us understand your project"
-                />
-              </div>
-
-              {/* Submit */}
-              <button
-                type="submit"
-                className="inline-flex rounded-full bg-accent px-7 py-3.5 font-sans text-sm font-semibold text-white"
-              >
-                Start Your Project
-              </button>
-            </form>
-          </div>
+          <ContactForm />
         </div>
       </section>
 

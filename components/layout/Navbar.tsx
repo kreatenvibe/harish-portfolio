@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 const navItems = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
+  { label: "Services", href: "/services" },
+  { label: "Work", href: "/work" },
+  { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -41,7 +41,7 @@ export default function Navbar() {
 
           {/* Desktop CTA */}
           <Link
-            href="#contact"
+            href="/contact"
             className="hidden rounded-full bg-primary px-5 py-2.5 font-sans text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 md:block"
           >
             Start Your Project
@@ -99,7 +99,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            href="#contact"
+            href="/contact"
             className="mt-6 rounded-full bg-primary px-6 py-3.5 text-center font-sans text-sm font-semibold text-white transition-transform active:scale-95"
             onClick={() => setIsOpen(false)}
           >

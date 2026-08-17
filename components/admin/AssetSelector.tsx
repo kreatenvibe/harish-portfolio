@@ -247,7 +247,7 @@ export default function AssetSelector({
           </button>
           {uploadProgress > 0 && (
             <div className="flex items-center gap-2">
-              <div className="w-[200px] h-1 bg-foreground/10 rounded-sm overflow-hidden">
+              <div className="w-50 h-1 bg-foreground/10 rounded-sm overflow-hidden">
                 <div
                   className="h-full bg-accent transition-all duration-200"
                   style={{ width: `${uploadProgress}%` }}
@@ -287,7 +287,7 @@ export default function AssetSelector({
         )}
 
         {/* Files grid */}
-        <div className="p-6 grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] auto-rows-[160px] gap-4 overflow-y-auto flex-1 min-h-0 content-start">
+        <div className="p-6 grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] auto-rows-40 gap-4 overflow-y-auto flex-1 min-h-0 content-start">
           {loading ? (
             <div className="col-span-full text-center p-12 font-sans text-[16px] text-muted">
               Loading…
@@ -320,19 +320,17 @@ export default function AssetSelector({
                     onSelect?.(file.url, file.id);
                     onClose();
                   }}
-                  className={`group relative border-[1.5px] rounded-md overflow-hidden text-left transition-colors flex flex-col h-full ${
-                    isSelected
+                  className={`group relative border-[1.5px] rounded-md overflow-hidden text-left transition-colors flex flex-col h-full ${isSelected
                       ? "border-accent"
                       : "border-foreground/10 hover:border-accent"
-                  }`}
+                    }`}
                 >
                   {multiple && (
                     <span
-                      className={`absolute right-2 top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full border-2 ${
-                        isSelected
+                      className={`absolute right-2 top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full border-2 ${isSelected
                           ? "border-accent bg-accent text-white"
                           : "border-white bg-black/30 text-transparent"
-                      }`}
+                        }`}
                     >
                       <Check size={12} weight="bold" />
                     </span>
@@ -351,7 +349,7 @@ export default function AssetSelector({
                       />
                     )}
                   </div>
-                  
+
                   {/* Action Bar overlay */}
                   <div className="absolute top-2 right-2 z-20 flex gap-1">
                     <button

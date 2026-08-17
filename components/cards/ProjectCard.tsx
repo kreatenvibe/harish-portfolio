@@ -21,9 +21,9 @@ export default function ProjectCard({
   return (
     <Link
       href={`/work/${project.slug}`}
-      className="group block relative w-full overflow-hidden rounded-xl bg-muted/20 border border-foreground/10"
+      className="group block w-full"
     >
-      <div className="aspect-[4/3] w-full md:aspect-[16/9]">
+      <div className="relative aspect-4/3 w-full md:aspect-video overflow-hidden rounded-xl bg-muted/10 border border-foreground/10">
         {heroMedia ? (
           heroMedia.type === "video" ? (
             <video
@@ -51,26 +51,41 @@ export default function ProjectCard({
             </span>
           </div>
         )}
+
+        {/* Number Badge */}
+        <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-1 rounded-full border border-foreground/10">
+          <span className="font-heading text-sm font-bold text-foreground">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
       </div>
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300" />
-
-      {/* Title block */}
-      <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 flex flex-col justify-end">
-        <p className="font-sans text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-accent mb-2 opacity-90 translate-y-2 transition-all duration-300 group-hover:translate-y-0">
+      {/* Text block */}
+      <div className="mt-6 flex flex-col">
+        <p className="font-sans text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-accent mb-2">
           {project.label}
         </p>
-        <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-none tracking-tight translate-y-4 transition-all duration-300 group-hover:translate-y-0">
-          {project.title}
-        </h2>
-      </div>
-      
-      {/* Number Badge */}
-      <div className="absolute top-6 right-6">
-        <span className="font-heading text-2xl font-black text-white/50">
-          {String(index + 1).padStart(2, "0")}
-        </span>
+        <div className="flex items-start justify-between gap-4">
+          <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight tracking-tight">
+            {project.title}
+          </h2>
+          <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-muted/5 text-foreground transition-all duration-300 group-hover:-rotate-45 group-hover:bg-foreground group-hover:text-background">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </div>
+        </div>
       </div>
     </Link>
   );

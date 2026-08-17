@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const services = [
   {
@@ -6,42 +7,49 @@ const services = [
     title: "Custom Business Software",
     description:
       "Build the software your business actually needs instead of forcing your workflow into a generic product. We create purpose-built systems for unique business processes, operations, and customer experiences.",
+    image: "https://ik.imagekit.io/qg9tid500w/services/Custom%20Business%20Software.png",
   },
   {
     number: "02",
     title: "CRM Systems & Customer Portals",
     description:
       "Bring customer information, enquiries, follow-ups, appointments, communication, and account activity into one organized system designed around your customer journey.",
+    image: "https://ik.imagekit.io/qg9tid500w/services/crm%20dashboard.png",
   },
   {
     number: "03",
     title: "Internal Tools & Dashboards",
     description:
       "Replace spreadsheets and fragmented internal processes with secure tools and dashboards that help your team manage operations, data, tasks, and reporting more effectively.",
+    image: "https://ik.imagekit.io/qg9tid500w/services/Internal%20Tools.png",
   },
   {
     number: "04",
     title: "Web Applications",
     description:
       "Build secure, reliable web applications that customers, employees, or partners can use from anywhere.",
+    image: "https://ik.imagekit.io/qg9tid500w/services/web%20applications.png",
   },
   {
     number: "05",
     title: "Business Websites",
     description:
       "Professional, high-performance websites designed to represent your business clearly, attract the right customers, and provide a strong foundation for growth.",
+    image: "https://ik.imagekit.io/qg9tid500w/services/business%20websites.png",
   },
   {
     number: "06",
     title: "AI & Workflow Automation",
     description:
       "Automate repetitive work and connect disconnected processes using integrations, workflows, and AI where they create real business value.",
+    image: "https://ik.imagekit.io/qg9tid500w/services/workflow%20automation.png",
   },
   {
     number: "07",
     title: "Mobile Apps & MVPs",
     description:
       "Turn a product idea or business requirement into a focused mobile application or MVP that can be tested, improved, and grown over time.",
+    image: "https://ik.imagekit.io/qg9tid500w/services/mobile%20apps.png",
   },
 ];
 
@@ -93,14 +101,22 @@ export default function ServicesPage() {
                   </p>
                 </div>
 
-                {/* Visual placeholder */}
+                {/* Visual placeholder / Image */}
                 <div
-                  className={`flex min-h-90 items-center justify-center bg-[#f4f4f2] ${isEven ? "lg:order-1" : "lg:order-2"
+                  className={`flex relative min-h-90 items-center justify-center bg-[#f4f4f2] overflow-hidden ${isEven ? "lg:order-1" : "lg:order-2"
                     }`}
                 >
-                  <span className="font-heading text-2xl font-semibold text-foreground/20">
-                    {service.title}
-                  </span>
+                  {service.image ? (
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="font-heading text-2xl font-semibold text-foreground/20">
+                      {service.title}
+                    </span>
+                  )}
                 </div>
               </article>
             );

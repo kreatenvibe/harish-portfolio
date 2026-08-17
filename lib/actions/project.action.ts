@@ -3,6 +3,7 @@
 import { z } from "zod";
 import slugify from "slugify";
 import type { QueryFilter } from "mongoose";
+import { revalidateTag } from "next/cache";
 import action from "@/lib/handlers/action";
 import handleError from "@/lib/handlers/error";
 import { dbConnect } from "@/lib/mongoose";
@@ -138,6 +139,7 @@ export async function createProject(
     };
 
     const created = await Project.create(projectData);
+    revalidateTag("sitemap-projects", "max");
     return { success: true, data: JSON.parse(JSON.stringify(created.toObject())) };
   } catch (error) {
     return handleError(error) as ErrorResponse;
@@ -167,6 +169,7 @@ export async function updateProject(
     }).lean<IProject>();
     if (!updated) throw new NotFoundError("Project");
 
+    revalidateTag("sitemap-projects", "max");
     return { success: true, data: JSON.parse(JSON.stringify(updated)) };
   } catch (error) {
     return handleError(error) as ErrorResponse;
@@ -187,6 +190,7 @@ export async function deleteProject(
     const deleted = await Project.findByIdAndDelete(result.params.id);
     if (!deleted) throw new NotFoundError("Project");
 
+    revalidateTag("sitemap-projects", "max");
     return { success: true, data: { id: result.params.id } };
   } catch (error) {
     return handleError(error) as ErrorResponse;

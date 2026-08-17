@@ -1,14 +1,48 @@
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import { getProjectBySlug } from "@/lib/actions/project.action";
 import ProjectDetail from "@/components/sections/ProjectDetail";
 
 export const dynamic = "force-dynamic";
 
-export default async function ProjectPage({
-  params,
-}: {
+type Props = {
   params: Promise<{ slug: string }>;
-}) {
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params;
+  const result = await getProjectBySlug(resolvedParams.slug);
+  const project = result.data;
+
+  if (!result.success || !project) {
+    return {
+      title: "Project Not Found",
+      description: "The requested project could not be found.",
+    };
+  }
+
+  const images = project.media
+    ?.filter((m: any) => m.type === "image")
+    .map((m: any) => m.url) || [];
+
+  return {
+    title: project.title,
+    description: project.challenge?.substring(0, 160) || `Read about our work on ${project.title}`,
+    openGraph: {
+      title: project.title,
+      description: project.challenge?.substring(0, 160) || `Read about our work on ${project.title}`,
+      images: images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.challenge?.substring(0, 160) || `Read about our work on ${project.title}`,
+      images: images,
+    },
+  };
+}
+
+export default async function ProjectPage({ params }: Props) {
   const resolvedParams = await params;
   const result = await getProjectBySlug(resolvedParams.slug);
   const project = result.data;

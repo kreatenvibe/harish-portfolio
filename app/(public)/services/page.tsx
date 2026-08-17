@@ -51,6 +51,13 @@ const services = [
       "Turn a product idea or business requirement into a focused mobile application or MVP that can be tested, improved, and grown over time.",
     image: "https://ik.imagekit.io/qg9tid500w/services/mobile%20apps.png",
   },
+  {
+    number: "08",
+    title: "Graphic Design Services",
+    description:
+      "Comprehensive design solutions to elevate your brand. We specialize in Brand Identity, Logo Design, Social Media, Print Design, Packaging, and Marketing Creatives.",
+    image: "https://ik.imagekit.io/qg9tid500w/services/graphic%20design.png",
+  },
 ];
 
 export default function ServicesPage() {

@@ -1,10 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
     EnvelopeSimple,
     Phone,
     InstagramLogo,
     XLogo,
-    GithubLogo,
     YoutubeLogo,
 } from "@phosphor-icons/react/dist/ssr";
 import { CONTACT, SOCIAL_LINKS } from "@/lib/contact";
@@ -12,7 +12,6 @@ import { CONTACT, SOCIAL_LINKS } from "@/lib/contact";
 const SOCIAL_ICONS = {
     Instagram: InstagramLogo,
     "Twitter / X": XLogo,
-    GitHub: GithubLogo,
     YouTube: YoutubeLogo,
 } as const;
 
@@ -35,9 +34,15 @@ export default function Footer() {
                     <div className="max-w-sm">
                         <Link
                             href="/"
-                            className="font-heading text-3xl font-bold tracking-tight"
+                            className="inline-flex"
                         >
-                            Kreaten<span className="text-accent">Vibe</span>
+                            <Image
+                                src="/logo/kreatenvibe-logo.png"
+                                alt="KreatenVibe Logo"
+                                width={180}
+                                height={40}
+                                className="h-10 w-auto object-contain brightness-0 invert"
+                            />
                         </Link>
 
                         <p className="mt-5 font-sans text-sm leading-6 text-white/60">

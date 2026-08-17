@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -23,9 +24,16 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className="font-heading text-2xl font-bold tracking-tight z-50 relative"
+            className="z-50 relative flex items-center"
           >
-            Kreaten<span className="text-accent">Vibe</span>
+            <Image
+              src="/logo/kreatenvibe-logo.png"
+              alt="KreatenVibe Logo"
+              width={180}
+              height={40}
+              className="h-8 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}

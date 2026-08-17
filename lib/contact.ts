@@ -8,6 +8,5 @@ export const CONTACT = {
 export const SOCIAL_LINKS = [
   { label: "Instagram", href: "https://www.instagram.com/kreatenvibe/" },
   { label: "Twitter / X", href: "https://x.com/kreatenvibe" },
-  { label: "GitHub", href: "https://github.com/kreatenvibe" },
   { label: "YouTube", href: "https://www.youtube.com/@kreatenvibe" },
 ] as const;

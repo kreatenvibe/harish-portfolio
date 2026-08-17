@@ -3,6 +3,7 @@
 import { z } from "zod";
 import slugify from "slugify";
 import type { QueryFilter } from "mongoose";
+import { revalidateTag } from "next/cache";
 import action from "@/lib/handlers/action";
 import handleError from "@/lib/handlers/error";
 import { dbConnect } from "@/lib/mongoose";
@@ -152,6 +153,7 @@ export async function createBlogPost(
     }
 
     const created = await BlogPost.create(blogPostData);
+    revalidateTag("sitemap-blogs", "max");
     return { success: true, data: JSON.parse(JSON.stringify(created.toObject())) };
   } catch (error) {
     return handleError(error) as ErrorResponse;
@@ -188,6 +190,7 @@ export async function updateBlogPost(
     }).lean<IBlogPost>();
     if (!updated) throw new NotFoundError("Blog post");
 
+    revalidateTag("sitemap-blogs", "max");
     return { success: true, data: JSON.parse(JSON.stringify(updated)) };
   } catch (error) {
     return handleError(error) as ErrorResponse;
@@ -208,6 +211,7 @@ export async function deleteBlogPost(
     const deleted = await BlogPost.findByIdAndDelete(result.params.id);
     if (!deleted) throw new NotFoundError("Blog post");
 
+    revalidateTag("sitemap-blogs", "max");
     return { success: true, data: { id: result.params.id } };
   } catch (error) {
     return handleError(error) as ErrorResponse;
@@ -237,6 +241,7 @@ export async function togglePublished(
     }
 
     await blogPost.save();
+    revalidateTag("sitemap-blogs", "max");
     return { success: true, data: JSON.parse(JSON.stringify(blogPost.toObject())) };
   } catch (error) {
     return handleError(error) as ErrorResponse;

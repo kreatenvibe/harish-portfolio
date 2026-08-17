@@ -30,3 +30,30 @@ export async function GET(req: Request) {
     );
   }
 }
+
+export async function POST(req: Request) {
+  const session = await auth();
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  try {
+    const { folderName, parentFolderPath } = await req.json();
+    if (!folderName) {
+      return NextResponse.json({ error: "folderName is required" }, { status: 400 });
+    }
+
+    await ikFetch(`/folder`, {
+      method: "POST",
+      body: JSON.stringify({
+        folderName,
+        parentFolderPath: parentFolderPath || "/",
+      }),
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Failed to create folder" },
+      { status: 500 }
+    );
+  }
+}

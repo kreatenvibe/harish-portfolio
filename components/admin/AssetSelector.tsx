@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { upload } from "@imagekit/next";
 import Image from "next/image";
-import { FilmSlate, Check } from "@phosphor-icons/react";
+import { FilmSlate, Check, FolderPlus, ArrowsOut, FolderOpen } from "@phosphor-icons/react";
 import type { IKFile, IKFolder } from "@/types/imagekit";
 
 const VIDEO_EXTENSIONS = ["mp4", "webm", "mov", "m4v", "ogg", "ogv"];
@@ -123,6 +123,48 @@ export default function AssetSelector({
     }
   };
 
+  const handleCreateFolder = async () => {
+    const name = window.prompt("Enter new folder name:");
+    if (!name) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/folders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ folderName: name, parentFolderPath: currentPath })
+      });
+      if (!res.ok) throw new Error("Failed to create folder");
+      const foldersRes = await fetch(`/api/folders?path=${encodeURIComponent(currentPath)}`);
+      const foldersData = await foldersRes.json();
+      setFolders(Array.isArray(foldersData) ? foldersData : []);
+    } catch (err) {
+      alert("Failed to create folder");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleMoveFile = async (file: IKFile) => {
+    const dest = window.prompt(`Move ${file.name} to destination path:\n(e.g., /new-folder or /)`, currentPath);
+    if (!dest || dest === currentPath) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/assets/move", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sourceFilePath: file.path, destinationPath: dest })
+      });
+      if (!res.ok) throw new Error("Failed to move file");
+      const filesRes = await fetch(`/api/assets?folder=${encodeURIComponent(currentPath)}`);
+      const data = await filesRes.json();
+      setFiles(Array.isArray(data) ? data : []);
+    } catch (err) {
+      alert("Failed to move file");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleBack = () => {
     const parent = currentPath.split("/").slice(0, -1).join("/") || "/";
     setCurrentPath(parent);
@@ -195,6 +237,14 @@ export default function AssetSelector({
           >
             {accept === "video" ? "Upload Video" : accept === "all" ? "Upload File" : "Upload Image"}
           </button>
+          <button
+            type="button"
+            onClick={handleCreateFolder}
+            className="flex items-center gap-1.5 rounded-full border border-foreground/15 px-4 py-1.5 font-sans text-[14px] font-semibold text-foreground transition-colors hover:border-accent hover:text-accent"
+          >
+            <FolderPlus size={16} />
+            New Folder
+          </button>
           {uploadProgress > 0 && (
             <div className="flex items-center gap-2">
               <div className="w-[200px] h-1 bg-foreground/10 rounded-sm overflow-hidden">
@@ -227,9 +277,10 @@ export default function AssetSelector({
                 key={folder.id}
                 type="button"
                 onClick={() => setCurrentPath(folder.path)}
-                className="font-sans text-[15px] bg-[#f4f4f2] border border-foreground/10 hover:border-accent rounded px-3 py-1.5 transition-colors"
+                className="flex items-center gap-2 font-sans text-[15px] bg-[#f4f4f2] border border-foreground/10 hover:border-accent rounded px-3 py-1.5 transition-colors"
               >
-                📁 {folder.name}
+                <FolderOpen size={18} className="text-accent" />
+                {folder.name}
               </button>
             ))}
           </div>
@@ -269,7 +320,7 @@ export default function AssetSelector({
                     onSelect?.(file.url, file.id);
                     onClose();
                   }}
-                  className={`relative border-[1.5px] rounded-md overflow-hidden text-left transition-colors flex flex-col h-full ${
+                  className={`group relative border-[1.5px] rounded-md overflow-hidden text-left transition-colors flex flex-col h-full ${
                     isSelected
                       ? "border-accent"
                       : "border-foreground/10 hover:border-accent"
@@ -300,6 +351,22 @@ export default function AssetSelector({
                       />
                     )}
                   </div>
+                  
+                  {/* Action Bar overlay */}
+                  <div className="absolute top-2 right-2 z-20 flex gap-1">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleMoveFile(file);
+                      }}
+                      title="Move File"
+                      className="flex h-7 w-7 items-center justify-center rounded-md bg-background/90 text-foreground hover:bg-accent hover:text-white border border-foreground/10 shadow-sm transition-colors"
+                    >
+                      <ArrowsOut size={14} />
+                    </button>
+                  </div>
+
                   <div className="w-full font-sans text-[13px] text-muted px-2 py-1.5 truncate shrink-0 bg-background">
                     {file.name}
                   </div>

@@ -10,10 +10,13 @@ export interface IProject {
   howItWorks: string;
   outcome: string;
   liveUrl?: string;
-  coverImage?: {
+  // Optional: .lean() reads skip schema defaults, so documents saved before
+  // this field existed come back without it.
+  media?: {
     url: string;
     fileId: string;
-  };
+    type: "image" | "video";
+  }[];
   featured: boolean;
   order: number;
   createdAt?: Date;
@@ -32,9 +35,15 @@ const ProjectSchema = new Schema<IProject>(
     howItWorks: { type: String, required: true },
     outcome: { type: String, required: true },
     liveUrl: { type: String },
-    coverImage: {
-      url: { type: String },
-      fileId: { type: String, default: "" },
+    media: {
+      type: [
+        {
+          url: { type: String, required: true },
+          fileId: { type: String, required: true },
+          type: { type: String, enum: ["image", "video"], required: true },
+        },
+      ],
+      default: [],
     },
     featured: { type: Boolean, default: false },
     order: { type: Number, default: 0 },

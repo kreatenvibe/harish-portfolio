@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { label: "Services", href: "/services" },
@@ -13,6 +14,7 @@ const navItems = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname() || "";
 
   return (
     <>
@@ -28,21 +30,28 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-8 md:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="font-sans text-sm font-medium text-foreground transition-colors hover:text-accent"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const active = pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`font-sans text-sm font-medium transition-colors ${
+                    active
+                      ? "text-accent"
+                      : "text-foreground hover:text-accent"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Desktop CTA */}
           <Link
             href="/contact"
-            className="hidden rounded-full bg-primary px-5 py-2.5 font-sans text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 md:block"
+            className="hidden rounded-full bg-primary px-5 py-2.5 font-sans text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 md:block ml-4"
           >
             Start Your Project
           </Link>
@@ -83,21 +92,28 @@ export default function Navbar() {
 
       {/* Side Sheet */}
       <div
-        className={`fixed top-0 right-0 z-50 h-screen w-3/4 max-w-sm bg-background/80 backdrop-blur-xl shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col px-6 py-24 ${
+        className={`fixed top-0 right-0 z-50 h-screen w-3/4 max-w-sm bg-background/95 backdrop-blur-xl shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col px-6 py-24 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex flex-col gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="font-heading text-2xl font-semibold text-foreground transition-colors hover:text-accent"
-              onClick={() => setIsOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div className="flex flex-col gap-6">
+          {navItems.map((item) => {
+            const active = pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`font-heading text-2xl font-semibold transition-colors ${
+                  active
+                    ? "text-accent"
+                    : "text-foreground hover:text-accent"
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
           <Link
             href="/contact"
             className="mt-6 rounded-full bg-primary px-6 py-3.5 text-center font-sans text-sm font-semibold text-white transition-transform active:scale-95"

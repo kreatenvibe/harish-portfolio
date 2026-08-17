@@ -26,11 +26,14 @@ const CreateProjectSchema = z.object({
   howItWorks: z.string().min(1, "How it works is required"),
   outcome: z.string().min(1, "Outcome is required"),
   liveUrl: z.string().url("Invalid live URL").optional().or(z.literal("")),
-  coverImage: z
-    .object({
-      url: z.string().url("Invalid image URL"),
-      fileId: z.string().min(1, "Image file ID is required"),
-    })
+  media: z
+    .array(
+      z.object({
+        url: z.string().url("Invalid media URL"),
+        fileId: z.string().min(1, "Media file ID is required"),
+        type: z.enum(["image", "video"]),
+      })
+    )
     .optional(),
   featured: z.boolean().optional(),
   order: z.number().optional(),

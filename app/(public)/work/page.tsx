@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export default async function WorkPage() {
   const result = await getProjects({ pageSize: 100 });
   const projects = result.data?.projects ?? [];
-
+  console.log("test")
   return (
     <main className="bg-background text-foreground">
       {/* Hero */}
@@ -36,7 +36,7 @@ export default async function WorkPage() {
             Projects are coming soon.
           </p>
         ) : (
-          <div className="space-y-24 lg:space-y-40">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             {projects.map((project, index) => (
               <ProjectCard
                 key={String(project._id)}

@@ -370,3 +370,16 @@ h6 {
   }
 }
 
+/* ---------------------------------------------------------------- */
+/* Project media carousel                                            */
+/* ---------------------------------------------------------------- */
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+

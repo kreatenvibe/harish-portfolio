@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import type { IProject } from "@/database";
 
+type MediaItem = { url: string; fileId: string; type: "image" | "video" };
+
 export default function ProjectCard({
   project,
   index,
@@ -9,100 +11,67 @@ export default function ProjectCard({
   project: IProject;
   index: number;
 }) {
-  const number = String(index + 1).padStart(2, "0");
-  const reversed = index % 2 === 1;
+  const media = project.media ?? [];
+
+  // Prioritize first video as hero, otherwise first image
+  const videos = media.filter(m => m.type === "video");
+  const images = media.filter(m => m.type === "image");
+  const heroMedia = videos.length > 0 ? videos[0] : (images.length > 0 ? images[0] : null);
 
   return (
-    <article className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-24">
-      {/* Project visual */}
-      <div
-        className={`relative flex min-h-[400px] items-center justify-center overflow-hidden bg-[#f4f4f2] ${
-          reversed ? "lg:order-2" : "lg:order-1"
-        }`}
-      >
-        {project.coverImage?.url ? (
-          <Image
-            src={project.coverImage.url}
-            alt={project.title}
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover"
-            unoptimized
-          />
+    <Link
+      href={`/work/${project.slug}`}
+      className="group block relative w-full overflow-hidden rounded-xl bg-muted/20 border border-foreground/10"
+    >
+      <div className="aspect-[4/3] w-full md:aspect-[16/9]">
+        {heroMedia ? (
+          heroMedia.type === "video" ? (
+            <video
+              src={heroMedia.url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <Image
+              src={heroMedia.url}
+              alt={project.title}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              unoptimized
+            />
+          )
         ) : (
-          <div className="text-center">
-            <span className="font-heading text-7xl font-bold text-accent/20">
-              {number}
-            </span>
-            <p className="mt-4 font-sans text-sm font-semibold uppercase tracking-[0.15em] text-muted">
+          <div className="flex h-full items-center justify-center bg-[#f4f4f2]">
+            <span className="font-heading text-2xl font-bold text-accent/50 uppercase tracking-widest">
               {project.label}
-            </p>
+            </span>
           </div>
         )}
       </div>
 
-      {/* Project information */}
-      <div className={reversed ? "lg:order-1" : "lg:order-2"}>
-        <span className="font-heading text-5xl font-bold text-accent">
-          {number}
-        </span>
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300" />
 
-        <p className="mt-6 font-sans text-sm font-semibold uppercase tracking-[0.15em] text-accent">
+      {/* Title block */}
+      <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 flex flex-col justify-end">
+        <p className="font-sans text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-accent mb-2 opacity-90 translate-y-2 transition-all duration-300 group-hover:translate-y-0">
           {project.label}
         </p>
-
-        <h2 className="mt-4 font-heading text-4xl font-bold leading-tight sm:text-5xl">
+        <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-none tracking-tight translate-y-4 transition-all duration-300 group-hover:translate-y-0">
           {project.title}
         </h2>
-
-        <div className="mt-10 space-y-8">
-          <div>
-            <h3 className="font-heading text-xl font-semibold">
-              The challenge
-            </h3>
-            <p className="mt-2 font-sans leading-7 text-muted">
-              {project.challenge}
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-heading text-xl font-semibold">
-              What we built
-            </h3>
-            <p className="mt-2 font-sans leading-7 text-muted">
-              {project.whatWeBuilt}
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-heading text-xl font-semibold">
-              How it works
-            </h3>
-            <p className="mt-2 font-sans leading-7 text-muted">
-              {project.howItWorks}
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-heading text-xl font-semibold">
-              The outcome
-            </h3>
-            <p className="mt-2 font-sans leading-7 text-muted">
-              {project.outcome}
-            </p>
-          </div>
-        </div>
-
-        <Link
-          href={project.liveUrl || "/#contact"}
-          className="mt-10 inline-flex rounded-full bg-primary px-7 py-3.5 font-sans text-sm font-semibold text-white"
-          {...(project.liveUrl
-            ? { target: "_blank", rel: "noopener noreferrer" }
-            : {})}
-        >
-          {project.liveUrl ? "Visit Live Site" : "Discuss Your Business Needs"}
-        </Link>
       </div>
-    </article>
+      
+      {/* Number Badge */}
+      <div className="absolute top-6 right-6">
+        <span className="font-heading text-2xl font-black text-white/50">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
+    </Link>
   );
 }

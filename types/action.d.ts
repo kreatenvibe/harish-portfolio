@@ -6,10 +6,11 @@ export interface CreateProjectParams {
   howItWorks: string;
   outcome: string;
   liveUrl?: string;
-  coverImage?: {
+  media?: {
     url: string;
     fileId: string;
-  };
+    type: "image" | "video";
+  }[];
   featured?: boolean;
   order?: number;
 }

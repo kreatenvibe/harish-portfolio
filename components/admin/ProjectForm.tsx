@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { X } from "@phosphor-icons/react";
+import { X, FilmSlate, CaretLeft, CaretRight } from "@phosphor-icons/react";
 import AssetSelector from "@/components/admin/AssetSelector";
 import { createProject, updateProject } from "@/lib/actions/project.action";
 import type { IProject } from "@/database";
+
+type MediaItem = { url: string; fileId: string; type: "image" | "video" };
 
 const FIELD_CLASS =
   "mt-2 w-full rounded-xl bg-[#f4f4f2] px-4 py-3 font-sans text-base text-foreground outline-none focus:bg-[#eeeeec]";
@@ -24,7 +26,7 @@ export default function ProjectForm({ project }: { project?: IProject }) {
   const [liveUrl, setLiveUrl] = useState(project?.liveUrl ?? "");
   const [featured, setFeatured] = useState(project?.featured ?? false);
   const [order, setOrder] = useState(project?.order ?? 0);
-  const [coverImage, setCoverImage] = useState(project?.coverImage);
+  const [media, setMedia] = useState<MediaItem[]>(project?.media ?? []);
 
   const [assetSelectorOpen, setAssetSelectorOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,10 +47,7 @@ export default function ProjectForm({ project }: { project?: IProject }) {
       liveUrl: liveUrl || undefined,
       featured,
       order,
-      coverImage:
-        coverImage?.url && coverImage.fileId
-          ? { url: coverImage.url, fileId: coverImage.fileId }
-          : undefined,
+      media,
     };
 
     const result = isEdit
@@ -151,36 +150,87 @@ export default function ProjectForm({ project }: { project?: IProject }) {
 
       <div className="mt-6">
         <label className="font-sans text-sm font-semibold text-foreground">
-          Cover image
+          Media
         </label>
-        <div className="mt-2 flex items-center gap-4">
-          {coverImage?.url && (
-            <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-lg bg-[#f4f4f2]">
-              <Image
-                src={coverImage.url}
-                alt=""
-                fill
-                sizes="128px"
-                className="object-cover"
-                unoptimized
-              />
-              <button
-                type="button"
-                onClick={() => setCoverImage(undefined)}
-                className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white"
+        <p className="mt-1 font-sans text-sm text-muted">
+          Add one or more images and videos. The first item is used as the
+          cover; drag order with the arrows below.
+        </p>
+
+        {media.length > 0 && (
+          <div className="mt-4 grid grid-cols-3 gap-4 sm:grid-cols-4">
+            {media.map((item, i) => (
+              <div
+                key={item.fileId}
+                className="relative aspect-square overflow-hidden rounded-lg bg-[#f4f4f2]"
               >
-                <X size={12} />
-              </button>
-            </div>
-          )}
-          <button
-            type="button"
-            onClick={() => setAssetSelectorOpen(true)}
-            className="rounded-full border border-foreground/15 px-4 py-2 font-sans text-sm font-semibold text-foreground transition-colors hover:border-accent hover:text-accent"
-          >
-            {coverImage?.url ? "Change image" : "Choose image"}
-          </button>
-        </div>
+                {item.type === "video" ? (
+                  <div className="flex h-full w-full items-center justify-center">
+                    <FilmSlate size={28} className="text-muted" />
+                  </div>
+                ) : (
+                  <Image
+                    src={item.url}
+                    alt=""
+                    fill
+                    sizes="180px"
+                    className="object-cover"
+                    unoptimized
+                  />
+                )}
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setMedia((prev) => prev.filter((_, j) => j !== i))
+                  }
+                  className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white"
+                >
+                  <X size={12} />
+                </button>
+
+                <div className="absolute inset-x-1 bottom-1 flex items-center justify-between">
+                  <button
+                    type="button"
+                    disabled={i === 0}
+                    onClick={() =>
+                      setMedia((prev) => {
+                        const next = [...prev];
+                        [next[i - 1], next[i]] = [next[i], next[i - 1]];
+                        return next;
+                      })
+                    }
+                    className="flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white disabled:opacity-30"
+                  >
+                    <CaretLeft size={12} />
+                  </button>
+                  <button
+                    type="button"
+                    disabled={i === media.length - 1}
+                    onClick={() =>
+                      setMedia((prev) => {
+                        const next = [...prev];
+                        [next[i + 1], next[i]] = [next[i], next[i + 1]];
+                        return next;
+                      })
+                    }
+                    className="flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white disabled:opacity-30"
+                  >
+                    <CaretRight size={12} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={() => setAssetSelectorOpen(true)}
+          className="mt-4 rounded-full border border-foreground/15 px-4 py-2 font-sans text-sm font-semibold text-foreground transition-colors hover:border-accent hover:text-accent"
+        >
+          {media.length > 0 ? "Add more media" : "Choose media"}
+        </button>
       </div>
 
       <div className="mt-6 grid gap-6 sm:grid-cols-2">
@@ -243,7 +293,17 @@ export default function ProjectForm({ project }: { project?: IProject }) {
       <AssetSelector
         isOpen={assetSelectorOpen}
         onClose={() => setAssetSelectorOpen(false)}
-        onSelect={(url, fileId) => setCoverImage({ url, fileId: fileId ?? "" })}
+        accept="all"
+        multiple
+        onSelectMultiple={(items) =>
+          setMedia((prev) => {
+            const existingIds = new Set(prev.map((item) => item.fileId));
+            return [
+              ...prev,
+              ...items.filter((item) => !existingIds.has(item.fileId)),
+            ];
+          })
+        }
       />
     </form>
   );

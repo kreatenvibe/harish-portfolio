@@ -3,23 +3,59 @@
 import { useEffect, useRef, useState } from "react";
 import { upload } from "@imagekit/next";
 import Image from "next/image";
+import { FilmSlate, Check } from "@phosphor-icons/react";
 import type { IKFile, IKFolder } from "@/types/imagekit";
+
+const VIDEO_EXTENSIONS = ["mp4", "webm", "mov", "m4v", "ogg", "ogv"];
+
+// ImageKit only distinguishes "image" vs "non-image" — refine "non-image"
+// down to "video" by extension so the picker can filter/render each kind.
+function getMediaKind(file: IKFile): "image" | "video" | null {
+  if (file.type === "image") return "image";
+  const ext = file.name.split(".").pop()?.toLowerCase();
+  return ext && VIDEO_EXTENSIONS.includes(ext) ? "video" : null;
+}
+
+type MediaAccept = "image" | "video" | "all";
 
 interface AssetSelectorProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelect: (url: string, fileId?: string) => void;
+  /** Which kinds of files are selectable. Defaults to images only. */
+  accept?: MediaAccept;
+  /** Allow selecting several files at once via onSelectMultiple. */
+  multiple?: boolean;
+  onSelect?: (url: string, fileId?: string) => void;
+  onSelectMultiple?: (
+    items: { url: string; fileId: string; type: "image" | "video" }[]
+  ) => void;
 }
 
-export default function AssetSelector({ isOpen, onClose, onSelect }: AssetSelectorProps) {
+export default function AssetSelector({
+  isOpen,
+  onClose,
+  accept = "image",
+  multiple = false,
+  onSelect,
+  onSelectMultiple,
+}: AssetSelectorProps) {
   const [files, setFiles] = useState<IKFile[]>([]);
   const [folders, setFolders] = useState<IKFolder[]>([]);
   const [currentPath, setCurrentPath] = useState("/");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [selected, setSelected] = useState<Map<string, IKFile>>(new Map());
   const fileRef = useRef<HTMLInputElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+
+  // Reset selection whenever the modal transitions closed -> open (adjusting
+  // state during render avoids the extra commit a useEffect would cause).
+  const [wasOpen, setWasOpen] = useState(isOpen);
+  if (isOpen !== wasOpen) {
+    setWasOpen(isOpen);
+    if (isOpen) setSelected(new Map());
+  }
 
   useEffect(() => {
     if (!isOpen) return;
@@ -92,6 +128,15 @@ export default function AssetSelector({ isOpen, onClose, onSelect }: AssetSelect
     setCurrentPath(parent);
   };
 
+  const visibleFiles = files
+    .map((file) => ({ file, kind: getMediaKind(file) }))
+    .filter(
+      (
+        entry
+      ): entry is { file: IKFile; kind: "image" | "video" } =>
+        entry.kind !== null && (accept === "all" || entry.kind === accept)
+    );
+
   if (!isOpen) return null;
 
   return (
@@ -105,7 +150,13 @@ export default function AssetSelector({ isOpen, onClose, onSelect }: AssetSelect
         {/* Header */}
         <div className="flex justify-between items-center px-6 py-5 border-b border-foreground/10 shrink-0">
           <div>
-            <p className="font-heading text-[22px] text-foreground m-0">Select Image</p>
+            <p className="font-heading text-[22px] text-foreground m-0">
+              {multiple
+                ? "Select Media"
+                : accept === "video"
+                  ? "Select Video"
+                  : "Select Image"}
+            </p>
             <p className="font-sans text-[14px] text-muted mt-1">{currentPath}</p>
           </div>
           <button
@@ -122,7 +173,13 @@ export default function AssetSelector({ isOpen, onClose, onSelect }: AssetSelect
           <input
             ref={fileRef}
             type="file"
-            accept="image/*"
+            accept={
+              accept === "video"
+                ? "video/*"
+                : accept === "all"
+                  ? "image/*,video/*"
+                  : "image/*"
+            }
             className="hidden"
             onChange={(e) => {
               const file = e.target.files?.[0];
@@ -136,7 +193,7 @@ export default function AssetSelector({ isOpen, onClose, onSelect }: AssetSelect
             disabled={uploadProgress > 0}
             className="rounded-full border border-foreground/15 px-4 py-1.5 font-sans text-[14px] font-semibold text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
           >
-            Upload Image
+            {accept === "video" ? "Upload Video" : accept === "all" ? "Upload File" : "Upload Image"}
           </button>
           {uploadProgress > 0 && (
             <div className="flex items-center gap-2">
@@ -188,40 +245,94 @@ export default function AssetSelector({ isOpen, onClose, onSelect }: AssetSelect
             <div className="col-span-full text-center p-12 font-sans text-[14px] text-accent">
               {error}
             </div>
-          ) : files.filter((f) => f.type === "image").length === 0 ? (
+          ) : visibleFiles.length === 0 ? (
             <div className="col-span-full text-center p-12 font-sans text-[16px] text-muted">
-              No images here.
+              {accept === "video" ? "No videos here." : accept === "all" ? "No media here." : "No images here."}
             </div>
           ) : (
-            files
-              .filter((f) => f.type === "image")
-              .map((file) => (
+            visibleFiles.map(({ file, kind }) => {
+              const isSelected = selected.has(file.id);
+              return (
                 <button
                   key={file.id}
                   type="button"
                   onClick={() => {
-                    onSelect(file.url, file.id);
+                    if (multiple) {
+                      setSelected((prev) => {
+                        const next = new Map(prev);
+                        if (next.has(file.id)) next.delete(file.id);
+                        else next.set(file.id, file);
+                        return next;
+                      });
+                      return;
+                    }
+                    onSelect?.(file.url, file.id);
                     onClose();
                   }}
-                  className="border-[1.5px] border-foreground/10 hover:border-accent rounded-md overflow-hidden text-left transition-colors flex flex-col h-full"
+                  className={`relative border-[1.5px] rounded-md overflow-hidden text-left transition-colors flex flex-col h-full ${
+                    isSelected
+                      ? "border-accent"
+                      : "border-foreground/10 hover:border-accent"
+                  }`}
                 >
-                  <div className="relative w-full flex-1 bg-[#f4f4f2]">
-                    <Image
-                      src={file.thumbnailUrl}
-                      alt={file.name}
-                      fill
-                      sizes="180px"
-                      className="object-cover"
-                      unoptimized
-                    />
+                  {multiple && (
+                    <span
+                      className={`absolute right-2 top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full border-2 ${
+                        isSelected
+                          ? "border-accent bg-accent text-white"
+                          : "border-white bg-black/30 text-transparent"
+                      }`}
+                    >
+                      <Check size={12} weight="bold" />
+                    </span>
+                  )}
+                  <div className="relative w-full flex-1 bg-[#f4f4f2] flex items-center justify-center">
+                    {kind === "video" ? (
+                      <FilmSlate size={32} className="text-muted" />
+                    ) : (
+                      <Image
+                        src={file.thumbnailUrl}
+                        alt={file.name}
+                        fill
+                        sizes="180px"
+                        className="object-cover"
+                        unoptimized
+                      />
+                    )}
                   </div>
                   <div className="w-full font-sans text-[13px] text-muted px-2 py-1.5 truncate shrink-0 bg-background">
                     {file.name}
                   </div>
                 </button>
-              ))
+              );
+            })
           )}
         </div>
+
+        {/* Multi-select footer */}
+        {multiple && (
+          <div className="px-6 py-4 border-t border-foreground/10 flex items-center justify-between shrink-0">
+            <span className="font-sans text-[14px] text-muted">
+              {selected.size} selected
+            </span>
+            <button
+              type="button"
+              disabled={selected.size === 0}
+              onClick={() => {
+                const items = Array.from(selected.values()).map((file) => ({
+                  url: file.url,
+                  fileId: file.id,
+                  type: (getMediaKind(file) ?? "image") as "image" | "video",
+                }));
+                onSelectMultiple?.(items);
+                onClose();
+              }}
+              className="rounded-full bg-primary px-5 py-2 font-sans text-[14px] font-semibold text-white disabled:opacity-40"
+            >
+              Add {selected.size > 0 ? selected.size : ""} Media
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

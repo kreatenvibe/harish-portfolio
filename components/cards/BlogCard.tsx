@@ -5,11 +5,8 @@ import type { IBlogPost } from "@/database";
 
 export default function BlogCard({ post }: { post: IBlogPost }) {
   return (
-    <Link
-      href={`/blog/${post.slug}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-foreground/10 transition-colors hover:border-accent/40"
-    >
-      <div className="relative aspect-16/10 w-full overflow-hidden bg-[#f4f4f2]">
+    <Link href={`/blog/${post.slug}`} className="group block w-full">
+      <div className="relative aspect-16/10 w-full overflow-hidden rounded-xl border border-foreground/10 bg-[#f4f4f2]">
         {post.coverImage?.url ? (
           <Image
             src={post.coverImage.url}
@@ -28,16 +25,34 @@ export default function BlogCard({ post }: { post: IBlogPost }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-6">
+      <div className="mt-6 flex flex-col">
         {post.publishedAt && (
           <p className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-muted">
             {formatDate(post.publishedAt)}
           </p>
         )}
-        <h3 className="mt-3 font-heading text-xl font-bold leading-tight text-foreground group-hover:text-accent">
-          {post.title}
-        </h3>
-        <p className="mt-3 flex-1 font-sans text-sm leading-6 text-muted">
+        <div className="mt-3 flex items-start justify-between gap-4">
+          <h3 className="font-heading text-xl font-bold leading-tight text-foreground">
+            {post.title}
+          </h3>
+          <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-muted/5 text-foreground transition-all duration-300 group-hover:-rotate-45 group-hover:bg-foreground group-hover:text-background">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+        <p className="mt-3 font-sans text-sm leading-6 text-muted">
           {post.excerpt}
         </p>
         {post.tags && post.tags.length > 0 && (

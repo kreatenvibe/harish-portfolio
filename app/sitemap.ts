@@ -3,6 +3,12 @@ import { unstable_cache } from "next/cache";
 import { dbConnect } from "@/lib/mongoose";
 import { BlogPost, Project } from "@/database";
 
+// Renders per-request instead of being statically generated at build time.
+// The Vercel build machine's egress IP isn't whitelisted in MongoDB Atlas,
+// so a build-time DB connection here fails and takes the whole build down
+// with it. The underlying queries are still cached via unstable_cache below.
+export const dynamic = "force-dynamic";
+
 /**
  * Single source of truth for the production origin. Every URL emitted below
  * is built from this so the sitemap can never drift from the live domain.

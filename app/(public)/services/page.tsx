@@ -1,62 +1,41 @@
 import Link from "next/link";
-import Image from "next/image";
 
 const services = [
   {
     number: "01",
-    title: "Custom Business Software",
+    title: "Paint & Roto",
     description:
-      "Build the software your business actually needs instead of forcing your workflow into a generic product. We create purpose-built systems for unique business processes, operations, and customer experiences.",
-    image: "https://ik.imagekit.io/qg9tid500w/services/Custom%20Business%20Software.png",
+      "Clean plates, wire and rig removal, and precise roto mattes for broadcast and film production, done to hold up under close review.",
   },
   {
     number: "02",
-    title: "CRM Systems & Customer Portals",
+    title: "VFX Cleanup & Compositing Support",
     description:
-      "Bring customer information, enquiries, follow-ups, appointments, communication, and account activity into one organized system designed around your customer journey.",
-    image: "https://ik.imagekit.io/qg9tid500w/services/crm%20dashboard.png",
+      "Paint prep and cleanup work that fits into an existing VFX pipeline, delivered to spec and on schedule.",
   },
   {
     number: "03",
-    title: "Internal Tools & Dashboards",
+    title: "Brand Identity & Logo Design",
     description:
-      "Replace spreadsheets and fragmented internal processes with secure tools and dashboards that help your team manage operations, data, tasks, and reporting more effectively.",
-    image: "https://ik.imagekit.io/qg9tid500w/services/Internal%20Tools.png",
+      "Logo systems, visual identity, and brand guidelines built to represent a business clearly and hold up across every touchpoint.",
   },
   {
     number: "04",
-    title: "Web Applications",
+    title: "Packaging Design",
     description:
-      "Build secure, reliable web applications that customers, employees, or partners can use from anywhere.",
-    image: "https://ik.imagekit.io/qg9tid500w/services/web%20applications.png",
+      "Product and packaging artwork that stands out on shelf while staying true to the brand it belongs to.",
   },
   {
     number: "05",
-    title: "Business Websites",
+    title: "Social Media Design",
     description:
-      "Professional, high-performance websites designed to represent your business clearly, attract the right customers, and provide a strong foundation for growth.",
-    image: "https://ik.imagekit.io/qg9tid500w/services/business%20websites.png",
+      "Templates and creatives that keep a brand consistent, on-message, and scroll-stopping across platforms.",
   },
   {
     number: "06",
-    title: "AI & Workflow Automation",
+    title: "Print Design",
     description:
-      "Automate repetitive work and connect disconnected processes using integrations, workflows, and AI where they create real business value.",
-    image: "https://ik.imagekit.io/qg9tid500w/services/workflow%20automation.png",
-  },
-  {
-    number: "07",
-    title: "Mobile Apps & MVPs",
-    description:
-      "Turn a product idea or business requirement into a focused mobile application or MVP that can be tested, improved, and grown over time.",
-    image: "https://ik.imagekit.io/qg9tid500w/services/mobile%20apps.png",
-  },
-  {
-    number: "08",
-    title: "Graphic Design Services",
-    description:
-      "Comprehensive design solutions to elevate your brand. We specialize in Brand Identity, Logo Design, Social Media, Print Design, Packaging, and Marketing Creatives.",
-    image: "https://ik.imagekit.io/qg9tid500w/services/graphic%20design.png",
+      "Posters, brochures, and print collateral designed with real-world production and printing in mind.",
   },
 ];
 
@@ -71,13 +50,13 @@ export default function ServicesPage() {
           </p>
 
           <h1 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl">
-            Digital systems built around the way your business works.
+            VFX and design work, done with care.
           </h1>
 
           <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-muted sm:text-xl">
-            From a focused internal tool to a complete business platform, we
-            build practical software that fits your workflow, connects your
-            processes, and grows with your business.
+            From a single roto pass to a complete brand identity, I bring the
+            same close attention to detail to every project — for production
+            studios, filmmakers, and businesses alike.
           </p>
         </div>
       </section>
@@ -108,22 +87,14 @@ export default function ServicesPage() {
                   </p>
                 </div>
 
-                {/* Visual placeholder / Image */}
+                {/* Visual placeholder — swap for real work samples once available */}
                 <div
-                  className={`flex relative min-h-90 items-center justify-center bg-[#f4f4f2] overflow-hidden ${isEven ? "lg:order-1" : "lg:order-2"
+                  className={`flex relative min-h-90 items-center justify-center bg-surface overflow-hidden ${isEven ? "lg:order-1" : "lg:order-2"
                     }`}
                 >
-                  {service.image ? (
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <span className="font-heading text-2xl font-semibold text-foreground/20">
-                      {service.title}
-                    </span>
-                  )}
+                  <span className="font-heading text-2xl font-semibold text-foreground/20">
+                    {service.title}
+                  </span>
                 </div>
               </article>
             );
@@ -132,7 +103,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Closing CTA */}
-      <section className="bg-[#f4f4f2] text-foreground">
+      <section className="bg-surface text-foreground">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
           <div className="max-w-4xl">
             <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
@@ -140,20 +111,20 @@ export default function ServicesPage() {
             </p>
 
             <h2 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
-              Not sure what you need yet?
+              Not sure which service you need?
             </h2>
 
             <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-muted sm:text-xl">
-              Start with the business problem, not the technology. Tell us what is
-              taking too much time, creating friction, or holding your team back, and
-              we can work out the right digital solution together.
+              Start with the project, not the category. Tell me what you&apos;re
+              working on — footage that needs cleanup, a brand that needs
+              designing — and we can figure out the right approach together.
             </p>
 
             <Link
               href="/contact"
               className="mt-10 inline-flex rounded-full bg-accent px-7 py-3.5 font-sans text-sm font-semibold text-white"
             >
-              Discuss Your Business Needs
+              Get In Touch
             </Link>
           </div>
         </div>

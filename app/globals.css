@@ -7,6 +7,28 @@
   --primary: #0a0a0a;
   --accent: #e53935;
   --muted: #6b6b6b;
+
+  /* Elevation tiers for alternating sections/cards, lightest -> darkest
+     in light mode; .theme-dark below inverts the relationship. */
+  --surface: #f7f6f3;
+  --surface-2: #ffffff;
+  --surface-hover: #eeeeec;
+}
+
+/* Scoped to the public site only (see app/(public)/layout.tsx) — the
+   admin dashboard stays on the :root light theme above, since it's a
+   functional CRUD tool rather than the visual portfolio. */
+.theme-dark {
+  --background: #0a0a0b;
+  --foreground: #f2f1ed;
+  --muted: #9c9992;
+  --accent: #ff4438;
+
+  /* background (darkest) < surface < surface-2, an inverted elevation
+     ladder from the light theme's white-on-off-white banding. */
+  --surface: #141416;
+  --surface-2: #1c1c1f;
+  --surface-hover: #1f1f22;
 }
 
 @theme inline {
@@ -18,9 +40,13 @@
   --color-accent: var(--accent);
   --color-muted: var(--muted);
 
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-hover: var(--surface-hover);
+
   /* Typography */
   --font-sans: var(--font-manrope);
-  --font-heading: var(--font-bricolage);
+  --font-heading: var(--font-bebas);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 }
@@ -31,13 +57,19 @@ body {
   font-family: var(--font-manrope), sans-serif;
 }
 
+/* Bebas Neue is a tall condensed display face designed to be set in caps —
+   mixed-case headings read weak/thin by comparison, so every heading is
+   uppercased and given a touch of tracking back for legibility at that
+   width. Letter-spacing may need per-heading tuning once seen live. */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-bricolage), sans-serif;
+  font-family: var(--font-bebas), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
 /* ---------------------------------------------------------------- */
@@ -274,13 +306,15 @@ h6 {
   --blur-line: blur(5px);
   --w-line: 46%;
   --h-line: 4px;
-  --gradient-line: var(--primary);
+  /* was --primary, which stays dark in both themes and disappears
+     against a dark page — --foreground correctly inverts instead. */
+  --gradient-line: var(--foreground);
   opacity: 0.3;
 }
 .stack-line:nth-child(2)::after {
   --w-line: 46%;
   --h-line: 1px;
-  --gradient-line: var(--primary);
+  --gradient-line: var(--foreground);
   opacity: 0.25;
 }
 
@@ -298,10 +332,11 @@ h6 {
 /* ---------------------------------------------------------------- */
 
 .build-tile {
+  /* Border color comes from the border-foreground/10 Tailwind class on
+     the element itself (theme-aware), not hardcoded here. */
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  border: 1px solid rgb(10 10 10 / 0.1);
   transition: border-color 0.5s ease;
 }
 
@@ -314,7 +349,15 @@ h6 {
   width: 44px;
   height: 44px;
   border-radius: 44px;
-  background: radial-gradient(circle, #3c3c3c 0%, #171717 45%, #000000 100%);
+  /* A fixed dark gradient reads great on a light tile but disappears
+     once the tile itself sits on a dark page — accent always contrasts,
+     in either theme. */
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent) 75%, white) 0%,
+    var(--accent) 45%,
+    color-mix(in srgb, var(--accent) 70%, black) 100%
+  );
   transform: scale(1);
   transform-origin: 50% 50%;
   transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);

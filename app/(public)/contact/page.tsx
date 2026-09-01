@@ -16,14 +16,14 @@ export default function ContactPage() {
             </p>
 
             <h1 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
-              Tell us what you want to simplify.
+              Tell me about your project.
             </h1>
 
             <p className="mt-8 max-w-xl font-sans text-lg leading-8 text-muted sm:text-xl">
-              You do not need to have the technical solution figured out. Tell
-              us how your business works today, what is taking too much time,
-              what tools you are using, and what you want to improve. We will
-              help you work out the right approach.
+              You do not need every detail figured out yet. Tell me about the
+              footage or brief, the deadline you&apos;re working with, and
+              what you have in mind. I&apos;ll help you work out the right
+              approach.
             </p>
 
             <div className="mt-10">
@@ -58,18 +58,18 @@ export default function ContactPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="bg-[#f4f4f2]">
+      <section className="bg-surface">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-24">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="font-heading text-3xl font-bold sm:text-4xl">
-              Have a business problem to solve?
+              Have a project to discuss?
             </h2>
 
             <Link
               href="#project-form"
-              className="inline-flex w-fit rounded-full bg-primary px-7 py-3.5 font-sans text-sm font-semibold text-white"
+              className="inline-flex w-fit rounded-full bg-foreground px-7 py-3.5 font-sans text-sm font-semibold text-background"
             >
-              Discuss Your Business Needs
+              Get In Touch
             </Link>
           </div>
         </div>

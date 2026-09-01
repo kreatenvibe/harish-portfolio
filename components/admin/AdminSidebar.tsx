@@ -12,19 +12,21 @@ import {
   SignOut,
   List,
   X,
+  Tag,
 } from "@phosphor-icons/react";
 
 const NAV_LINKS = [
   { label: "Dashboard", href: "/admin", icon: Gauge },
-  { label: "Blog", href: "/admin/blog", icon: Newspaper },
+  { label: "Categories", href: "/admin/categories", icon: Tag },
   { label: "Work", href: "/admin/work", icon: Briefcase },
+  { label: "Blog", href: "/admin/blog", icon: Newspaper },
   { label: "Leads", href: "/admin/leads", icon: Envelope },
 ];
 
 function Logo() {
   return (
     <Link href="/admin" className="font-heading text-xl font-bold tracking-tight">
-      Kreaten<span className="text-accent">Vibe</span>
+      HK<span className="text-accent">Designs</span>
     </Link>
   );
 }

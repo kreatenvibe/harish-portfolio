@@ -5,8 +5,12 @@ const BASE =
   "group relative inline-flex items-center gap-4 rounded-full py-1.5 pl-6 pr-1.5 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2";
 
 const VARIANTS = {
+  // foreground/background (not primary/white) so this inverts correctly
+  // between the light admin theme and the dark public theme — primary
+  // stays a constant near-black in both, which would disappear on a
+  // dark page.
   primary:
-    "bg-primary text-white hover:bg-primary/90 focus-visible:ring-offset-background",
+    "bg-foreground text-background hover:bg-foreground/90 focus-visible:ring-offset-background",
   accent:
     "bg-white text-primary hover:bg-white/90 focus-visible:ring-offset-accent",
   ghost:
@@ -16,7 +20,7 @@ const VARIANTS = {
 } as const;
 
 const ICON_SHELL = {
-  primary: "bg-white/10 text-white",
+  primary: "bg-background/10 text-background",
   accent: "bg-primary/5 text-primary",
   ghost: "bg-foreground/5 text-foreground",
   "ghost-dark": "bg-white/10 text-white",

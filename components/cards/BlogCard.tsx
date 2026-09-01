@@ -6,7 +6,7 @@ import type { IBlogPost } from "@/database";
 export default function BlogCard({ post }: { post: IBlogPost }) {
   return (
     <Link href={`/blog/${post.slug}`} className="group block w-full">
-      <div className="relative aspect-16/10 w-full overflow-hidden rounded-xl border border-foreground/10 bg-[#f4f4f2]">
+      <div className="relative aspect-16/10 w-full overflow-hidden rounded-xl border border-foreground/10 bg-surface">
         {post.coverImage?.url ? (
           <Image
             src={post.coverImage.url}
@@ -60,7 +60,7 @@ export default function BlogCard({ post }: { post: IBlogPost }) {
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-[#f4f4f2] px-3 py-1 font-sans text-xs font-medium text-muted"
+                className="rounded-full bg-surface px-3 py-1 font-sans text-xs font-medium text-muted"
               >
                 {tag}
               </span>

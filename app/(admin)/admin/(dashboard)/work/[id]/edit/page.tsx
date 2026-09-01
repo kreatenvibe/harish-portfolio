@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import ProjectForm from "@/components/admin/ProjectForm";
+import ProjectSectionsManager from "@/components/admin/ProjectSectionsManager";
 import { getProjectById } from "@/lib/actions/project.action";
+import { getCategories } from "@/lib/actions/category.action";
+import { getProjectSections } from "@/lib/actions/section.action";
 
 export const metadata = {
   title: "Edit Project",
@@ -12,8 +15,17 @@ export default async function EditProjectPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const result = await getProjectById(id);
-  if (!result.success || !result.data) notFound();
+
+  const [projectResult, categoriesResult, sectionsResult] = await Promise.all([
+    getProjectById(id),
+    getCategories({ pageSize: 100 }),
+    getProjectSections(id),
+  ]);
+
+  if (!projectResult.success || !projectResult.data) notFound();
+
+  const categories = categoriesResult.data?.categories ?? [];
+  const sections = sectionsResult.data ?? [];
 
   return (
     <div>
@@ -21,7 +33,20 @@ export default async function EditProjectPage({
         Edit Project
       </h1>
       <div className="mt-8">
-        <ProjectForm project={result.data} />
+        <ProjectForm project={projectResult.data} categories={categories} />
+      </div>
+
+      <div className="mt-14 max-w-3xl">
+        <h2 className="font-heading text-2xl font-bold text-foreground">
+          Sections
+        </h2>
+        <p className="mt-2 font-sans text-sm text-muted">
+          Group this project&apos;s media into sections. Sections and their
+          order are entirely up to you.
+        </p>
+        <div className="mt-6">
+          <ProjectSectionsManager projectId={id} sections={sections} />
+        </div>
       </div>
     </div>
   );

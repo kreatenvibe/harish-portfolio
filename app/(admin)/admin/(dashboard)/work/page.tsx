@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { Plus } from "@phosphor-icons/react/dist/ssr";
-import { getProjects, deleteProject } from "@/lib/actions/project.action";
+import { getProjects } from "@/lib/actions/project.action";
+import { getCategories } from "@/lib/actions/category.action";
 import FilterBar from "@/components/filters/FilterBar";
-import AdminDeleteButton from "@/components/admin/AdminDeleteButton";
+import CategoryFilterSelect from "@/components/admin/CategoryFilterSelect";
+import ProjectList from "@/components/admin/ProjectList";
 
 export const metadata = {
   title: "Work",
@@ -11,17 +13,32 @@ export const metadata = {
 export default async function AdminWorkPage({
   searchParams,
 }: {
-  searchParams: Promise<{ query?: string; filter?: string; page?: string }>;
+  searchParams: Promise<{
+    query?: string;
+    filter?: string;
+    page?: string;
+    categoryId?: string;
+  }>;
 }) {
-  const { query, filter, page } = await searchParams;
-  const result = await getProjects({
-    query,
-    filter,
-    page: page ? Number(page) : 1,
-    pageSize: 20,
-  });
+  const { query, filter, page, categoryId } = await searchParams;
 
-  const projects = result.data?.projects ?? [];
+  const [projectsResult, categoriesResult] = await Promise.all([
+    getProjects({
+      query,
+      filter,
+      categoryId,
+      page: page ? Number(page) : 1,
+      pageSize: 20,
+    }),
+    getCategories({ pageSize: 100 }),
+  ]);
+
+  const projects = projectsResult.data?.projects ?? [];
+  const categories = categoriesResult.data?.categories ?? [];
+  const categoryNameById = Object.fromEntries(
+    categories.map((c) => [String(c._id), c.name])
+  );
+  const showDeleted = filter === "deleted";
 
   return (
     <div>
@@ -31,8 +48,8 @@ export default async function AdminWorkPage({
             Work
           </h1>
           <p className="mt-2 font-sans text-sm text-muted">
-            {result.data?.total ?? 0} project
-            {result.data?.total === 1 ? "" : "s"}
+            {projectsResult.data?.total ?? 0} project
+            {projectsResult.data?.total === 1 ? "" : "s"}
           </p>
         </div>
         <Link
@@ -44,52 +61,26 @@ export default async function AdminWorkPage({
         </Link>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex flex-wrap items-center gap-3">
         <FilterBar
           searchPlaceholder="Search projects…"
-          filters={[{ value: "featured", label: "Featured" }]}
+          filters={[
+            { value: "featured", label: "Featured" },
+            { value: "draft", label: "Draft" },
+            { value: "published", label: "Published" },
+            { value: "archived", label: "Archived" },
+            { value: "deleted", label: "Deleted" },
+          ]}
         />
+        <CategoryFilterSelect categories={categories} />
       </div>
 
-      <div className="mt-8 divide-y divide-foreground/10 border-t border-foreground/10">
-        {projects.length === 0 ? (
-          <p className="py-12 text-center font-sans text-sm text-muted">
-            No projects yet.
-          </p>
-        ) : (
-          projects.map((project) => (
-            <div
-              key={String(project._id)}
-              className="flex items-center justify-between gap-6 py-5"
-            >
-              <div className="min-w-0">
-                <Link
-                  href={`/admin/work/${project._id}/edit`}
-                  className="font-heading text-lg font-semibold text-foreground hover:text-accent"
-                >
-                  {project.title}
-                </Link>
-                <p className="mt-1 truncate font-sans text-sm text-muted">
-                  {project.label}
-                </p>
-              </div>
-              <div className="flex shrink-0 items-center gap-3">
-                {project.featured && (
-                  <span className="rounded-full bg-accent/10 px-3 py-1.5 font-sans text-xs font-semibold text-accent">
-                    Featured
-                  </span>
-                )}
-                <AdminDeleteButton
-                  action={async () => {
-                    "use server";
-                    return deleteProject({ id: String(project._id) });
-                  }}
-                  confirmMessage={`Delete "${project.title}"? This cannot be undone.`}
-                />
-              </div>
-            </div>
-          ))
-        )}
+      <div className="mt-8">
+        <ProjectList
+          projects={projects}
+          categoryNameById={categoryNameById}
+          showDeleted={showDeleted}
+        />
       </div>
     </div>
   );

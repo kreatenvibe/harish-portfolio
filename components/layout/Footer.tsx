@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
     EnvelopeSimple,
     Phone,
@@ -27,27 +26,22 @@ const footerLinks = [
 
 export default function Footer() {
     return (
-        <footer className="bg-primary text-white">
+        <footer className="border-t border-white/10 bg-primary text-white">
             <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
                 <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
                     {/* Brand */}
                     <div className="max-w-sm">
                         <Link
                             href="/"
-                            className="inline-flex"
+                            className="inline-flex font-heading text-2xl font-bold tracking-tight text-white"
                         >
-                            <Image
-                                src="/logo/kreatenvibe-logo.png"
-                                alt="KreatenVibe Logo"
-                                width={180}
-                                height={40}
-                                className="h-10 w-auto object-contain brightness-0 invert"
-                            />
+                            HK<span className="text-accent">Designs</span>
                         </Link>
 
                         <p className="mt-5 font-sans text-sm leading-6 text-white/60">
-                            KreatenVibe builds custom business software, websites, CRM
-                            systems, and automation for growing businesses.
+                            Harish Kumar G — Paint &amp; Roto artist and graphic designer
+                            working across VFX cleanup, brand identity, packaging, and
+                            print design.
                         </p>
 
                         <div className="mt-6 flex flex-col gap-3">
@@ -113,9 +107,9 @@ export default function Footer() {
                 </div>
 
                 <div className="mt-16 flex flex-col gap-3 font-sans text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
-                    <p>© {new Date().getFullYear()} KreatenVibe. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} HK Designs. All rights reserved.</p>
 
-                    <p>Custom software for growing businesses.</p>
+                    <p>Paint &amp; Roto artist and graphic designer.</p>
                 </div>
             </div>
         </footer>

@@ -9,14 +9,14 @@ export default function AdminLoginPage() {
     <main className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="w-full max-w-sm text-center">
         <p className="font-heading text-2xl font-bold tracking-tight">
-          Kreaten<span className="text-accent">Vibe</span>
+          HK<span className="text-accent">Designs</span>
         </p>
         <h1 className="mt-8 font-heading text-3xl font-bold text-foreground">
           Admin sign in
         </h1>
         <p className="mt-3 font-sans text-sm text-muted">
-          Sign in with an authorized Google account to manage Blog, Work, and
-          Leads.
+          Sign in with an authorized Google account to manage Categories,
+          Work, Blog, and Leads.
         </p>
 
         <form

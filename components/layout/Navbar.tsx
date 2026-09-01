@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -24,16 +23,9 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className="z-50 relative flex items-center"
+            className="z-50 relative flex items-center font-heading text-xl font-bold tracking-tight text-foreground"
           >
-            <Image
-              src="/logo/kreatenvibe-logo.png"
-              alt="KreatenVibe Logo"
-              width={180}
-              height={40}
-              className="h-8 w-auto object-contain"
-              priority
-            />
+            HK<span className="text-accent">Designs</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -59,7 +51,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <Link
             href="/contact"
-            className="hidden rounded-full bg-primary px-5 py-2.5 font-sans text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 md:block ml-4"
+            className="hidden rounded-full bg-foreground px-5 py-2.5 font-sans text-sm font-semibold text-background transition-transform hover:-translate-y-0.5 md:block ml-4"
           >
             Start Your Project
           </Link>
@@ -124,7 +116,7 @@ export default function Navbar() {
           })}
           <Link
             href="/contact"
-            className="mt-6 rounded-full bg-primary px-6 py-3.5 text-center font-sans text-sm font-semibold text-white transition-transform active:scale-95"
+            className="mt-6 rounded-full bg-foreground px-6 py-3.5 text-center font-sans text-sm font-semibold text-background transition-transform active:scale-95"
             onClick={() => setIsOpen(false)}
           >
             Start Your Project

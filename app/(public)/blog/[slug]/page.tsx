@@ -43,12 +43,12 @@ const markdownComponents: Components = {
     </blockquote>
   ),
   code: ({ children }) => (
-    <code className="rounded bg-[#f4f4f2] px-1.5 py-0.5 font-mono text-[0.9em]">
+    <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[0.9em]">
       {children}
     </code>
   ),
   pre: ({ children }) => (
-    <pre className="mt-6 overflow-x-auto rounded-xl bg-[#f4f4f2] p-5 font-mono text-sm">
+    <pre className="mt-6 overflow-x-auto rounded-xl bg-surface p-5 font-mono text-sm">
       {children}
     </pre>
   ),
@@ -81,7 +81,7 @@ export default async function BlogPostPage({
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-[#f4f4f2] px-3 py-1 font-sans text-xs font-medium text-muted"
+                className="rounded-full bg-surface px-3 py-1 font-sans text-xs font-medium text-muted"
               >
                 {tag}
               </span>
@@ -100,7 +100,7 @@ export default async function BlogPostPage({
         )}
 
         {post.coverImage?.url && (
-          <div className="relative mt-10 aspect-16/9 w-full overflow-hidden rounded-2xl bg-[#f4f4f2]">
+          <div className="relative mt-10 aspect-16/9 w-full overflow-hidden rounded-2xl bg-surface">
             <Image
               src={post.coverImage.url}
               alt={post.title}

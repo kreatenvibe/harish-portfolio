@@ -19,7 +19,7 @@ export default async function BlogPage() {
             Blog
           </p>
           <h1 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
-            Notes on building business software.
+            Notes on VFX, design, and the work behind it.
           </h1>
         </div>
       </section>

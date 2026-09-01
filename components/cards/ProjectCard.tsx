@@ -2,8 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import type { IProject } from "@/database";
 
-type MediaItem = { url: string; fileId: string; type: "image" | "video" };
-
 export default function ProjectCard({
   project,
   index,
@@ -11,43 +9,25 @@ export default function ProjectCard({
   project: IProject;
   index: number;
 }) {
-  const media = project.media ?? [];
-
-  // Prioritize first video as hero, otherwise first image
-  const videos = media.filter(m => m.type === "video");
-  const images = media.filter(m => m.type === "image");
-  const heroMedia = videos.length > 0 ? videos[0] : (images.length > 0 ? images[0] : null);
-
   return (
     <Link
       href={`/work/${project.slug}`}
       className="group block w-full"
     >
       <div className="relative aspect-4/3 w-full md:aspect-video overflow-hidden rounded-xl bg-muted/10 border border-foreground/10">
-        {heroMedia ? (
-          heroMedia.type === "video" ? (
-            <video
-              src={heroMedia.url}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          ) : (
-            <Image
-              src={heroMedia.url}
-              alt={project.title}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              unoptimized
-            />
-          )
+        {project.coverImage?.url ? (
+          <Image
+            src={project.coverImage.url}
+            alt={project.title}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            unoptimized
+          />
         ) : (
-          <div className="flex h-full items-center justify-center bg-[#f4f4f2]">
+          <div className="flex h-full items-center justify-center bg-surface">
             <span className="font-heading text-2xl font-bold text-accent/50 uppercase tracking-widest">
-              {project.label}
+              {project.title}
             </span>
           </div>
         )}
@@ -62,9 +42,11 @@ export default function ProjectCard({
 
       {/* Text block */}
       <div className="mt-6 flex flex-col">
-        <p className="font-sans text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-accent mb-2">
-          {project.label}
-        </p>
+        {(project.client || project.tags?.[0]) && (
+          <p className="font-sans text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-accent mb-2">
+            {project.client || project.tags?.[0]}
+          </p>
+        )}
         <div className="flex items-start justify-between gap-4">
           <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight tracking-tight">
             {project.title}

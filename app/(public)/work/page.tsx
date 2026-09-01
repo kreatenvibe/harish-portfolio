@@ -5,9 +5,9 @@ import ProjectCard from "@/components/cards/ProjectCard";
 export const dynamic = "force-dynamic";
 
 export default async function WorkPage() {
-  const result = await getProjects({ pageSize: 100 });
+  const result = await getProjects({ pageSize: 100 }, true);
   const projects = result.data?.projects ?? [];
-  console.log("test")
+
   return (
     <main className="bg-background text-foreground">
       {/* Hero */}
@@ -18,13 +18,13 @@ export default async function WorkPage() {
           </p>
 
           <h1 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl">
-            Practical software for real business workflows.
+            Selected work in VFX and design.
           </h1>
 
           <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-muted sm:text-xl">
-            Every project starts with a business problem. We turn complex
-            processes into reliable digital systems that are easier to manage,
-            easier to use, and ready to grow.
+            A mix of paint &amp; roto work from broadcast and film, alongside
+            branding, packaging, and print design projects for studios and
+            independent clients.
           </p>
         </div>
       </section>
@@ -49,7 +49,7 @@ export default async function WorkPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#f4f4f2]">
+      <section className="bg-surface">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
           <div className="max-w-4xl">
             <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
@@ -57,20 +57,20 @@ export default async function WorkPage() {
             </p>
 
             <h2 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
-              Have a business problem worth solving?
+              Have a project in mind?
             </h2>
 
             <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-muted sm:text-xl">
-              Tell us what is taking too much time, creating friction, or
-              holding your team back. We can help you work out the right
-              digital solution.
+              Whether it&apos;s clean plates and roto work or a brand identity
+              that needs designing, tell me about it and we&apos;ll figure out
+              the right approach together.
             </p>
 
             <Link
               href="/contact"
               className="mt-10 inline-flex rounded-full bg-accent px-7 py-3.5 font-sans text-sm font-semibold text-white"
             >
-              Discuss Your Business Needs
+              Get In Touch
             </Link>
           </div>
         </div>

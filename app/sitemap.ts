@@ -6,8 +6,10 @@ import { BlogPost, Project } from "@/database";
 /**
  * Single source of truth for the production origin. Every URL emitted below
  * is built from this so the sitemap can never drift from the live domain.
+ *
+ * PLACEHOLDER — swap for the real domain once one is registered/deployed.
  */
-export const BASE_URL = "https://kreatenvibe.com";
+export const BASE_URL = "https://hkdesigns.com";
 
 // Google (and most crawlers) reject a single sitemap file beyond this count.
 // See the `generateSitemaps()` note at the bottom of this file for the fix.

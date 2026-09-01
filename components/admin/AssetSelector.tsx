@@ -3,17 +3,23 @@
 import { useEffect, useRef, useState } from "react";
 import { upload } from "@imagekit/next";
 import Image from "next/image";
-import { FilmSlate, Check, FolderPlus, ArrowsOut, FolderOpen } from "@phosphor-icons/react";
+import { FilmSlate, FileText, File, Check, FolderPlus, ArrowsOut, FolderOpen } from "@phosphor-icons/react";
 import type { IKFile, IKFolder } from "@/types/imagekit";
 
 const VIDEO_EXTENSIONS = ["mp4", "webm", "mov", "m4v", "ogg", "ogv"];
+const PDF_EXTENSIONS = ["pdf"];
+
+export type MediaKind = "image" | "video" | "pdf" | "other";
 
 // ImageKit only distinguishes "image" vs "non-image" — refine "non-image"
-// down to "video" by extension so the picker can filter/render each kind.
-function getMediaKind(file: IKFile): "image" | "video" | null {
+// down to video/pdf/other by extension so every file the Media model
+// supports (image/video/pdf/other) is selectable, not just image/video.
+function getMediaKind(file: IKFile): MediaKind {
   if (file.type === "image") return "image";
   const ext = file.name.split(".").pop()?.toLowerCase();
-  return ext && VIDEO_EXTENSIONS.includes(ext) ? "video" : null;
+  if (ext && VIDEO_EXTENSIONS.includes(ext)) return "video";
+  if (ext && PDF_EXTENSIONS.includes(ext)) return "pdf";
+  return "other";
 }
 
 type MediaAccept = "image" | "video" | "all";
@@ -27,7 +33,7 @@ interface AssetSelectorProps {
   multiple?: boolean;
   onSelect?: (url: string, fileId?: string) => void;
   onSelectMultiple?: (
-    items: { url: string; fileId: string; type: "image" | "video" }[]
+    items: { url: string; fileId: string; type: MediaKind }[]
   ) => void;
 }
 
@@ -172,12 +178,7 @@ export default function AssetSelector({
 
   const visibleFiles = files
     .map((file) => ({ file, kind: getMediaKind(file) }))
-    .filter(
-      (
-        entry
-      ): entry is { file: IKFile; kind: "image" | "video" } =>
-        entry.kind !== null && (accept === "all" || entry.kind === accept)
-    );
+    .filter((entry) => accept === "all" || entry.kind === accept);
 
   if (!isOpen) return null;
 
@@ -303,24 +304,37 @@ export default function AssetSelector({
           ) : (
             visibleFiles.map(({ file, kind }) => {
               const isSelected = selected.has(file.id);
+              const handleSelect = () => {
+                if (multiple) {
+                  setSelected((prev) => {
+                    const next = new Map(prev);
+                    if (next.has(file.id)) next.delete(file.id);
+                    else next.set(file.id, file);
+                    return next;
+                  });
+                  return;
+                }
+                onSelect?.(file.url, file.id);
+                onClose();
+              };
+
               return (
-                <button
+                // A <div> (not <button>) — it wraps the "Move File" button
+                // below, and a <button> can't contain another <button>.
+                <div
                   key={file.id}
-                  type="button"
-                  onClick={() => {
-                    if (multiple) {
-                      setSelected((prev) => {
-                        const next = new Map(prev);
-                        if (next.has(file.id)) next.delete(file.id);
-                        else next.set(file.id, file);
-                        return next;
-                      });
-                      return;
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={multiple ? isSelected : undefined}
+                  aria-label={`Select ${file.name}`}
+                  onClick={handleSelect}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleSelect();
                     }
-                    onSelect?.(file.url, file.id);
-                    onClose();
                   }}
-                  className={`group relative border-[1.5px] rounded-md overflow-hidden text-left transition-colors flex flex-col h-full ${isSelected
+                  className={`group relative border-[1.5px] rounded-md overflow-hidden text-left transition-colors flex flex-col h-full cursor-pointer ${isSelected
                       ? "border-accent"
                       : "border-foreground/10 hover:border-accent"
                     }`}
@@ -338,6 +352,10 @@ export default function AssetSelector({
                   <div className="relative w-full flex-1 bg-[#f4f4f2] flex items-center justify-center">
                     {kind === "video" ? (
                       <FilmSlate size={32} className="text-muted" />
+                    ) : kind === "pdf" ? (
+                      <FileText size={32} className="text-muted" />
+                    ) : kind === "other" ? (
+                      <File size={32} className="text-muted" />
                     ) : (
                       <Image
                         src={file.thumbnailUrl}
@@ -368,7 +386,7 @@ export default function AssetSelector({
                   <div className="w-full font-sans text-[13px] text-muted px-2 py-1.5 truncate shrink-0 bg-background">
                     {file.name}
                   </div>
-                </button>
+                </div>
               );
             })
           )}
@@ -387,7 +405,7 @@ export default function AssetSelector({
                 const items = Array.from(selected.values()).map((file) => ({
                   url: file.url,
                   fileId: file.id,
-                  type: (getMediaKind(file) ?? "image") as "image" | "video",
+                  type: getMediaKind(file),
                 }));
                 onSelectMultiple?.(items);
                 onClose();

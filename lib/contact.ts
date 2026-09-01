@@ -1,12 +1,9 @@
 export const CONTACT = {
-  email: "kreatenvibe@gmail.com",
-  phoneDisplay: "+91 93541 26455",
-  phoneE164: "+919354126455",
-  whatsappUrl: "https://wa.me/919354126455",
+  email: "gughkpdtr@gmail.com",
+  phoneDisplay: "+91 91827 75963",
+  phoneE164: "+919182775963",
+  whatsappUrl: "https://wa.me/919182775963",
 } as const;
 
-export const SOCIAL_LINKS = [
-  { label: "Instagram", href: "https://www.instagram.com/kreatenvibe/" },
-  { label: "Twitter / X", href: "https://x.com/kreatenvibe" },
-  { label: "YouTube", href: "https://www.youtube.com/@kreatenvibe" },
-] as const;
+// No confirmed social handles yet — add real URLs here once available.
+export const SOCIAL_LINKS: { label: "Instagram" | "Twitter / X" | "YouTube"; href: string }[] = [];

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import localFont from 'next/font/local'
 import "./globals.css";
 
-const bricolage = localFont({
-  src: "./fonts/BricolageGrotesque.ttf",
-  variable: "--font-bricolage",
+const bebas = localFont({
+  src: "./fonts/BebasNeue-Regular.ttf",
+  variable: "--font-bebas",
 });
 
 const manrope = localFont({
@@ -12,28 +12,29 @@ const manrope = localFont({
   variable: "--font-manrope",
 });
 
+const SITE_TITLE = "HK Designs — Harish Kumar G, Paint & Roto Artist / Graphic Designer";
+const SITE_DESCRIPTION =
+  "Portfolio of Harish Kumar G — Paint & Roto artist and graphic designer working across VFX cleanup, brand identity, packaging, and print design.";
+
 export const metadata: Metadata = {
   title: {
-    default: "KreatenVibe — Custom Business Software & Digital Solutions",
-    template: "%s | KreatenVibe",
+    default: SITE_TITLE,
+    template: "%s | HK Designs",
   },
-  description:
-    "KreatenVibe builds custom business software, CRM systems, websites, web applications, and AI-powered automation for growing businesses.",
+  description: SITE_DESCRIPTION,
   icons: {
     icon: "/icon.png",
   },
   openGraph: {
-    title: "KreatenVibe — Custom Business Software & Digital Solutions",
-    description:
-      "KreatenVibe builds custom business software, CRM systems, websites, web applications, and AI-powered automation for growing businesses.",
-    siteName: "KreatenVibe",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    siteName: "HK Designs",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "KreatenVibe — Custom Business Software & Digital Solutions",
-    description:
-      "KreatenVibe builds custom business software, CRM systems, websites, web applications, and AI-powered automation for growing businesses.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
 };
 
@@ -45,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${manrope.variable} h-full antialiased`}
+      className={`${bebas.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { submitLead } from "@/lib/actions/lead.action";
 
 const FIELD_CLASS =
-  "mt-3 w-full rounded-xl bg-[#f4f4f2] px-4 py-3.5 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:bg-[#eeeeec]";
+  "mt-3 w-full rounded-xl bg-surface px-4 py-3.5 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:bg-surface-hover";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
@@ -46,12 +46,12 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div id="project-form" className="rounded-2xl bg-[#f4f4f2] p-10 text-center">
+      <div id="project-form" className="rounded-2xl bg-surface p-10 text-center">
         <p className="font-heading text-2xl font-bold text-foreground">
-          Thanks — we&apos;ve got it.
+          Thanks — I&apos;ve got it.
         </p>
         <p className="mt-3 font-sans text-base text-muted">
-          We&apos;ll get back to you shortly to discuss your project.
+          I&apos;ll get back to you shortly to discuss your project.
         </p>
       </div>
     );
@@ -85,17 +85,17 @@ export default function ContactForm() {
           />
         </div>
 
-        {/* Business Name */}
+        {/* Studio / Company */}
         <div>
           <label htmlFor="business" className="font-sans text-sm font-semibold">
-            Business name
+            Studio / Company (optional)
           </label>
           <input
             id="business"
             name="business"
             type="text"
             className={FIELD_CLASS}
-            placeholder="Your business name"
+            placeholder="If you're reaching out on behalf of one"
           />
         </div>
 
@@ -114,76 +114,76 @@ export default function ContactForm() {
           />
         </div>
 
-        {/* Business */}
+        {/* Project type */}
         <div>
           <label
             htmlFor="business-description"
             className="font-sans text-sm font-semibold"
           >
-            What does your business do?
+            What kind of project is this?
           </label>
           <textarea
             id="business-description"
             name="business-description"
             rows={3}
             className={`${FIELD_CLASS} resize-none`}
-            placeholder="Tell us a little about your business"
+            placeholder="Paint & roto for a shoot, a brand identity, packaging, etc."
           />
         </div>
 
-        {/* Improve */}
+        {/* Goal */}
         <div>
           <label htmlFor="improvement" className="font-sans text-sm font-semibold">
-            What are you trying to improve?
+            What are you trying to achieve?
           </label>
           <textarea
             id="improvement"
             name="improvement"
             rows={4}
             className={`${FIELD_CLASS} resize-none`}
-            placeholder="What is taking too much time or creating friction?"
+            placeholder="What does a finished result look like for you?"
           />
         </div>
 
-        {/* Current Tools */}
+        {/* Reference / style */}
         <div>
           <label htmlFor="current-tools" className="font-sans text-sm font-semibold">
-            What tools or processes are you currently using?
+            Any reference or style you have in mind?
           </label>
           <textarea
             id="current-tools"
             name="current-tools"
             rows={4}
             className={`${FIELD_CLASS} resize-none`}
-            placeholder="For example: Excel, WhatsApp, email, existing CRM, manual processes..."
+            placeholder="Links, plates, brand assets, or examples you like"
           />
         </div>
 
-        {/* Build */}
+        {/* Timeline / deliverable */}
         <div>
           <label htmlFor="what-to-build" className="font-sans text-sm font-semibold">
-            What would you like to build or automate?
+            What&apos;s the deadline and what needs delivering?
           </label>
           <textarea
             id="what-to-build"
             name="what-to-build"
             rows={4}
             className={`${FIELD_CLASS} resize-none`}
-            placeholder="Tell us what you have in mind, even if you are not sure yet."
+            placeholder="Tell me what you have in mind, even if you are not sure yet."
           />
         </div>
 
         {/* Anything Else */}
         <div>
           <label htmlFor="anything-else" className="font-sans text-sm font-semibold">
-            Anything else we should know?
+            Anything else I should know?
           </label>
           <textarea
             id="anything-else"
             name="anything-else"
             rows={4}
             className="mt-3 w-full resize-none bg-transparent px-0 py-3 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:border-accent"
-            placeholder="Anything else that might help us understand your project"
+            placeholder="Anything else that might help me understand your project"
           />
         </div>
 

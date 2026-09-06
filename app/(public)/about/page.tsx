@@ -69,7 +69,7 @@ export default function AboutPage() {
       </section>
 
       {/* Story */}
-      <section className="bg-surface text-white">
+      <section className="bg-surface text-foreground border-b border-line">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
           <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-24">
             {/* Section heading */}
@@ -78,13 +78,13 @@ export default function AboutPage() {
                 About
               </p>
 
-              <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl">
+              <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl text-foreground">
                 Harish Kumar G
               </h2>
             </div>
 
             {/* Copy */}
-            <div className="space-y-8 font-sans text-lg leading-8 text-white/70">
+            <div className="space-y-8 font-sans text-lg leading-8 text-muted">
               <p>
                 I&apos;m a Paint &amp; Roto artist and graphic designer with
                 hands-on experience across broadcast media, VFX production,
@@ -106,7 +106,7 @@ export default function AboutPage() {
                 built from the ground up.
               </p>
 
-              <p className="font-heading text-2xl font-semibold leading-tight text-white sm:text-3xl">
+              <p className="font-heading text-2xl font-semibold leading-tight text-foreground sm:text-3xl">
                 I&apos;m committed to producing visually compelling work and
                 continuously growing within the VFX and design industry.
               </p>
@@ -116,7 +116,7 @@ export default function AboutPage() {
       </section>
 
       {/* Experience */}
-      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
+      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32 border-b border-line">
         <div className="max-w-4xl">
           <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
             Experience
@@ -148,7 +148,7 @@ export default function AboutPage() {
       </section>
 
       {/* Approach */}
-      <section className="bg-surface">
+      <section className="bg-surface border-b border-line">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
           <div className="max-w-4xl">
             <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">

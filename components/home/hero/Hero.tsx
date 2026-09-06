@@ -665,7 +665,7 @@ export function Hero() {
       ref={containerRef}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="relative w-full bg-background text-foreground select-none border-b border-line flex flex-col justify-center min-h-[calc(100vh-4rem)] lg:h-[calc(100vh-4rem)] max-h-220 overflow-clip"
+      className="relative w-full bg-background text-foreground select-none border-b border-line flex flex-col justify-center lg:h-[calc(100vh-4rem)] lg:max-h-220 overflow-visible lg:overflow-clip"
     >
       {/* ======================================================================= */}
       {/* HeroStage: "The Box" (overflow: clip, position: relative)              */}
@@ -674,7 +674,7 @@ export function Hero() {
       <div
         ref={stageRef}
         data-hero-stage
-        className="relative mx-auto flex h-full w-full max-w-[1600px] flex-col justify-center px-4 sm:px-6 md:px-10 lg:px-12 py-4 lg:py-6 overflow-clip"
+        className="relative mx-auto flex h-full w-full max-w-[1600px] flex-col justify-center px-4 sm:px-6 md:px-10 lg:px-12 py-10 lg:py-6 overflow-visible lg:overflow-clip"
       >
         {/* ===================================================================== */}
         {/* DESKTOP 16:9 BOUNDED STAGE COMPOSITION (lg and above)                 */}
@@ -770,7 +770,7 @@ export function Hero() {
         {/* ===================================================================== */}
         {/* MOBILE & TABLET RESPONSIVE ARRANGEMENT (< lg)                         */}
         {/* ===================================================================== */}
-        <div className="lg:hidden flex flex-col gap-6 py-6">
+        <div className="lg:hidden flex flex-col gap-6 py-6 pb-12">
           {/* Main Title */}
           <div data-hero-title className="opacity-0">
             <h1 className="font-heading font-black text-6xl sm:text-7xl md:text-8xl leading-[0.85] tracking-tighter text-foreground">

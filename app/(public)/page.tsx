@@ -6,7 +6,7 @@ import {
   ArrowRight,
 } from "@phosphor-icons/react/dist/ssr";
 import { Hero } from "@/components/home/hero/Hero";
-import ProjectCard from "@/components/cards/ProjectCard";
+import { FeaturedSection } from "@/components/home/FeaturedSection";
 import { CategoryTile } from "@/components/home/CategoryTile";
 import { ClipReveal } from "@/components/motion/ClipReveal";
 import { StaggerGrid } from "@/components/motion/StaggerGrid";
@@ -50,47 +50,11 @@ export default async function Home() {
       {/* 1. Static Hero Section */}
       <Hero />
 
-      {/* 2. Featured Work Section */}
-      {featuredProjects.length > 0 && (
-        <section className="py-20 lg:py-28 bg-background border-b border-line">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            {/* Section Header: SectionLabel clip-reveals left-to-right the instant section enters view */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-              <div>
-                <ClipReveal direction="right" delay={0.02}>
-                  <SectionLabel>SELECTED WORK / 01</SectionLabel>
-                </ClipReveal>
-                <ClipReveal direction="right" delay={0.08}>
-                  <h2 className="mt-4 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
-                    Featured Client Work
-                  </h2>
-                </ClipReveal>
-              </div>
-              <ClipReveal direction="left" delay={0.12}>
-                <HoverLink href="/work" className="font-sans text-sm font-semibold text-foreground">
-                  <span>View All Work</span>
-                  <ArrowRight weight="bold" />
-                </HoverLink>
-              </ClipReveal>
-            </div>
-
-            {/* Grid cards: StaggerGrid bottom-to-top wipe, 0.06s stagger, strict DOM order */}
-            <StaggerGrid
-              className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12"
-              direction="up"
-            >
-              {featuredProjects.slice(0, 4).map((project, index) => (
-                <ProjectCard
-                  key={String(project._id)}
-                  project={project}
-                  index={index}
-                  categorySlug={categorySlugMap[String(project.categoryId)]}
-                />
-              ))}
-            </StaggerGrid>
-          </div>
-        </section>
-      )}
+      {/* 2. Featured Work Section (Pinned Horizontal Scroll + Opposing Image Parallax) */}
+      <FeaturedSection
+        projects={featuredProjects}
+        categorySlugMap={categorySlugMap}
+      />
 
       {/* 3. Category Overview Section */}
       {categories.length > 0 && (

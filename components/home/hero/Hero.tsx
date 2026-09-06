@@ -453,7 +453,7 @@ export function Hero() {
               const fitVars = Flip.fit(cardEl, destinationCards[idx], {
                 getVars: true,
                 scale: true,
-              }) as Record<string, any>;
+              }) as gsap.TweenVars;
 
               if (fitVars) {
                 scrollTl.to(
@@ -665,7 +665,7 @@ export function Hero() {
       ref={containerRef}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="relative w-full bg-background text-foreground select-none border-b border-line flex flex-col justify-center min-h-[calc(100vh-4rem)] lg:h-[calc(100vh-4rem)] max-h-[880px] overflow-clip"
+      className="relative w-full bg-background text-foreground select-none border-b border-line flex flex-col justify-center min-h-[calc(100vh-4rem)] lg:h-[calc(100vh-4rem)] max-h-220 overflow-clip"
     >
       {/* ======================================================================= */}
       {/* HeroStage: "The Box" (overflow: clip, position: relative)              */}
@@ -700,7 +700,7 @@ export function Hero() {
             {/* 1. BRANDING (Upper Left/Center, tilted -4.5deg) */}
             <div
               data-hero-card="branding"
-              className="absolute left-[18%] xl:left-[19%] top-[4%] xl:top-[5%] z-10 w-[34%] max-w-[460px] opacity-0 will-change-transform"
+              className="absolute left-[18%] xl:left-[19%] top-[4%] xl:top-[5%] z-10 w-[34%] max-w-115 opacity-0 will-change-transform"
             >
               <HeroProjectCard
                 number="01"
@@ -717,7 +717,7 @@ export function Hero() {
             {/* 2. PACKAGING (Upper Right, tilted -3.5deg) */}
             <div
               data-hero-card="packaging"
-              className="absolute right-[8%] xl:right-[10%] top-[6%] xl:top-[7%] z-10 w-[26%] max-w-[350px] opacity-0 will-change-transform"
+              className="absolute right-[8%] xl:right-[10%] top-[6%] xl:top-[7%] z-10 w-[26%] max-w-86 opacity-0 will-change-transform"
             >
               <HeroProjectCard
                 number="02"
@@ -734,7 +734,7 @@ export function Hero() {
             {/* 3. SOCIAL MEDIA (Lower Left, tilted +5.5deg) */}
             <div
               data-hero-card="social"
-              className="absolute left-[8%] xl:left-[9%] bottom-[5%] xl:bottom-[6%] z-20 w-[21%] max-w-[280px] opacity-0 will-change-transform"
+              className="absolute left-[8%] xl:left-[9%] bottom-[5%] xl:bottom-[6%] z-20 w-[21%] max-w-70 opacity-0 will-change-transform"
             >
               <HeroProjectCard
                 number="03"
@@ -751,7 +751,7 @@ export function Hero() {
             {/* 4. PRINT DESIGN (Lower Right, tilted -3.5deg) */}
             <div
               data-hero-card="print"
-              className="absolute right-[10%] xl:right-[12%] bottom-[3%] xl:bottom-[4%] z-10 w-[34%] max-w-[450px] opacity-0 will-change-transform"
+              className="absolute right-[10%] xl:right-[12%] bottom-[3%] xl:bottom-[4%] z-10 w-[34%] max-w-md opacity-0 will-change-transform"
             >
               <HeroProjectCard
                 number="04"

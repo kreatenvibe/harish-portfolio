@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { DURATION_SECTION, EASE_IN, STAGGER, prefersReducedMotion } from "@/lib/motion";
+import { DURATION_SECTION, STAGGER, prefersReducedMotion } from "@/lib/motion";
 
 interface StaggerGridProps {
   children: React.ReactNode;
@@ -14,13 +14,6 @@ interface StaggerGridProps {
   triggerHook?: string;
   as?: keyof React.JSX.IntrinsicElements;
 }
-
-const CLIP_INITIAL_MAP = {
-  right: "inset(0% 100% 0% 0%)",
-  left: "inset(0% 0% 0% 100%)",
-  down: "inset(0% 0% 100% 0%)",
-  up: "inset(100% 0% 0% 0%)",
-};
 
 export function StaggerGrid({
   children,
@@ -90,7 +83,7 @@ export function StaggerGrid({
     return () => ctx.revert();
   }, [direction, stagger, duration, triggerHook]);
 
-  const Comp = Component as any;
+  const Comp = Component as React.ElementType;
 
   return (
     <Comp ref={containerRef} className={className}>

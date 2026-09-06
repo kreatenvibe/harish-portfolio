@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { DURATION_SECTION, EASE_IN, prefersReducedMotion } from "@/lib/motion";
+import { DURATION_SECTION, prefersReducedMotion } from "@/lib/motion";
 
 type Direction = "left" | "right" | "up" | "down";
 
@@ -16,17 +16,6 @@ interface ClipRevealProps {
   triggerHook?: string;
   as?: keyof React.JSX.IntrinsicElements;
 }
-
-const CLIP_INITIAL_MAP: Record<Direction, string> = {
-  // Wipe from left to right: starts clipped from right
-  right: "inset(0% 100% 0% 0%)",
-  // Wipe from right to left: starts clipped from left
-  left: "inset(0% 0% 0% 100%)",
-  // Wipe from top to bottom: starts clipped from bottom
-  down: "inset(0% 0% 100% 0%)",
-  // Wipe from bottom to top: starts clipped from top
-  up: "inset(100% 0% 0% 0%)",
-};
 
 export function ClipReveal({
   children,
@@ -104,7 +93,7 @@ export function ClipReveal({
     return () => ctx.revert();
   }, [direction, delay, duration, triggerHook]);
 
-  const Comp = Component as any;
+  const Comp = Component as React.ElementType;
 
   return (
     <Comp ref={elementRef} className={className}>

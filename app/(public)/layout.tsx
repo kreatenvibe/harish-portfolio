@@ -1,5 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { getCategories } from "@/lib/actions/category.action";
 
 export default async function PublicLayout({
@@ -12,6 +13,7 @@ export default async function PublicLayout({
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-background text-foreground">
+      <SmoothScroll />
       <Navbar categories={categories} />
       <main className="flex-1">{children}</main>
       <Footer categories={categories} />

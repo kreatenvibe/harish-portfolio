@@ -5,8 +5,12 @@ import type { IBlogPost } from "@/database";
 
 export default function BlogCard({ post }: { post: IBlogPost }) {
   return (
-    <Link href={`/blog/${post.slug}`} className="group block w-full">
-      <div className="relative aspect-16/10 w-full overflow-hidden rounded-xl border border-foreground/10 bg-surface">
+    <Link
+      href={`/blog/${post.slug}`}
+      className="group block w-full transition-all duration-300 ease-out hover:-translate-y-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:rounded-[var(--radius-card)]"
+    >
+      {/* 1. Image Frame (Elevation communicates boundary; shadow only, no outline; 12px radius) */}
+      <div className="relative aspect-16/10 w-full overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-card-resting transition-shadow duration-300 ease-out group-hover:shadow-card-hover">
         {post.coverImage?.url ? (
           <Image
             src={post.coverImage.url}
@@ -32,10 +36,10 @@ export default function BlogCard({ post }: { post: IBlogPost }) {
           </p>
         )}
         <div className="mt-3 flex items-start justify-between gap-4">
-          <h3 className="font-heading text-xl font-bold leading-tight text-foreground">
+          <h3 className="font-heading text-xl font-bold leading-tight text-foreground transition-colors group-hover:text-accent">
             {post.title}
           </h3>
-          <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-muted/5 text-foreground transition-all duration-300 group-hover:-rotate-45 group-hover:bg-foreground group-hover:text-background">
+          <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface text-foreground shadow-card-resting transition-all duration-300 group-hover:-rotate-45 group-hover:bg-foreground group-hover:text-background">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -60,7 +64,7 @@ export default function BlogCard({ post }: { post: IBlogPost }) {
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-surface px-3 py-1 font-sans text-xs font-medium text-muted"
+                className="rounded-full bg-surface px-3 py-1 font-sans text-xs font-medium text-muted shadow-sm"
               >
                 {tag}
               </span>

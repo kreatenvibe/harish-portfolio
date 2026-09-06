@@ -6,15 +6,17 @@ type SectionWithMedia = IProjectSection & { media: IMedia[] };
 function MediaBlock({ item }: { item: IMedia }) {
   if (item.type === "video") {
     return (
-      <video
-        src={item.url}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        className="w-full h-auto rounded-sm border border-foreground/5"
-      />
+      <div className="overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-card-resting transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-card-hover">
+        <video
+          src={item.url}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="w-full h-auto"
+        />
+      </div>
     );
   }
 
@@ -24,23 +26,43 @@ function MediaBlock({ item }: { item: IMedia }) {
         href={item.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-center rounded-sm border border-foreground/5 bg-surface py-16 font-sans text-sm font-semibold text-accent hover:underline"
+        className="group flex items-center justify-between rounded-[var(--radius-card)] bg-surface p-8 shadow-card-resting transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-card-hover"
       >
-        {item.title || (item.type === "pdf" ? "View PDF" : "View file")}
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-surface-hover text-accent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
+          </div>
+          <div>
+            <span className="font-heading text-xl font-bold uppercase tracking-wide text-foreground">
+              {item.title || (item.type === "pdf" ? "Document PDF" : "Project Asset")}
+            </span>
+            <span className="block font-mono text-[10px] tracking-wider text-muted uppercase mt-0.5">
+              Click to view asset
+            </span>
+          </div>
+        </div>
+        <span className="font-sans text-xs font-bold uppercase text-accent transition-transform duration-300 group-hover:translate-x-1">
+          Open →
+        </span>
       </a>
     );
   }
 
   return (
-    <Image
-      src={item.url}
-      alt={item.altText || item.title || ""}
-      width={1200}
-      height={800}
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-      className="w-full h-auto rounded-sm border border-foreground/5"
-      unoptimized
-    />
+    <div className="overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-card-resting transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-card-hover">
+      <Image
+        src={item.url}
+        alt={item.altText || item.title || ""}
+        width={1400}
+        height={900}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 45vw"
+        className="w-full h-auto object-cover"
+        unoptimized
+      />
+    </div>
   );
 }
 
@@ -51,82 +73,51 @@ export default function ProjectDetail({
   project: IProject;
   sections: SectionWithMedia[];
 }) {
-  const eyebrow = project.client || project.tags?.[0];
-
   return (
-    <article className="py-16 lg:py-24 border-b border-foreground/20 last:border-b-0">
-      {/* Newspaper Header */}
-      <header className="mb-12">
-        <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-8 border-b-8 border-foreground pb-8">
-          <div className="flex-1">
-            {eyebrow && (
-              <p className="font-sans text-sm md:text-base font-bold uppercase tracking-[0.2em] text-accent mb-3">
-                {eyebrow}
+    <div className="space-y-24 lg:space-y-32">
+      {/* Editorial Sections with Media */}
+      {sections.map((section, sIndex) => (
+        <section
+          key={String(section._id)}
+          className="relative scroll-mt-24 space-y-10"
+        >
+          {/* Section Header */}
+          <div className="max-w-3xl space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-xs font-bold tracking-widest text-accent">
+                {String(sIndex + 1).padStart(2, "0")}
+              </span>
+              <span className="h-px w-6 bg-accent" />
+            </div>
+
+            <h2 className="font-heading text-3xl font-bold uppercase tracking-tight text-foreground sm:text-4xl md:text-5xl">
+              {section.title}
+            </h2>
+
+            {section.description && (
+              <p className="font-sans text-base leading-relaxed text-muted sm:text-lg">
+                {section.description}
               </p>
             )}
-            <h2 className="font-heading text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase">
-              {project.title}
-            </h2>
           </div>
-        </div>
-      </header>
 
-      {/* Hero cover image */}
-      {project.coverImage?.url && (
-        <div className="mb-16 mx-auto max-w-5xl">
-          <div className="rounded-lg overflow-hidden border-2 border-foreground/5 bg-surface">
-            <Image
-              src={project.coverImage.url}
-              alt={project.title}
-              width={1600}
-              height={1000}
-              sizes="(max-width: 768px) 100vw, 1200px"
-              className="w-full h-auto"
-              unoptimized
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Description */}
-      {project.description && (
-        <div className="max-w-3xl mx-auto mb-20 bg-surface p-8 md:p-10 rounded-sm border-t-4 border-foreground">
-          <div className="font-sans text-lg leading-relaxed text-muted space-y-4">
-            {project.description.split("\n").map((para, idx) =>
-              para.trim() ? <p key={idx}>{para}</p> : null
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Dynamic sections, each with its own media */}
-      {sections.map((section) => (
-        <div key={String(section._id)} className="mb-20 max-w-7xl mx-auto">
-          <h3 className="font-heading text-2xl font-bold uppercase tracking-wide mb-2">
-            {section.title}
-          </h3>
-          {section.description && (
-            <p className="font-sans text-base text-muted mb-6 max-w-2xl">
-              {section.description}
-            </p>
-          )}
+          {/* Section Media Grid with 12px Card Elevation */}
           {section.media.length > 0 && (
-            <div className="columns-1 lg:columns-2 gap-8 space-y-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
               {section.media.map((item) => (
-                <div
-                  key={String(item._id)}
-                  className="break-inside-avoid rounded-lg overflow-hidden border border-foreground/5 bg-surface"
-                >
+                <div key={String(item._id)} className="space-y-3">
                   <MediaBlock item={item} />
                   {item.caption && (
-                    <p className="p-3 font-sans text-sm text-muted">{item.caption}</p>
+                    <p className="px-2 font-sans text-xs text-muted leading-relaxed">
+                      {item.caption}
+                    </p>
                   )}
                 </div>
               ))}
             </div>
           )}
-        </div>
+        </section>
       ))}
-    </article>
+    </div>
   );
 }

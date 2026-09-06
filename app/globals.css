@@ -9,6 +9,9 @@
   --accent: #E53935;
   --accent-dim: #F5D4D2;
   --line: #DFE1E5;
+  --radius-card: 12px;
+  --shadow-resting: 0 1px 2px rgba(10,10,10,0.04), 0 10px 20px -14px rgba(10,10,10,0.12);
+  --shadow-hover: 0 2px 4px rgba(10,10,10,0.05), 0 20px 36px -18px rgba(10,10,10,0.18);
 }
 
 /* Scoped to project detail pages only (see app/(public)/work/[category]/[slug]/page.tsx) */
@@ -21,6 +24,9 @@
   --accent: #FF4438;
   --accent-dim: #3A1A18;
   --line: #2A2A2D;
+  --radius-card: 12px;
+  --shadow-resting: 0 1px 2px rgba(0,0,0,0.2), 0 10px 20px -14px rgba(0,0,0,0.4);
+  --shadow-hover: 0 2px 4px rgba(0,0,0,0.25), 0 20px 36px -18px rgba(0,0,0,0.5);
 }
 
 @theme inline {
@@ -38,12 +44,57 @@
   --font-sans: var(--font-manrope);
   --font-heading: var(--font-bebas);
   --font-mono: var(--font-mono);
+
+  /* Shadows & Radius */
+  --shadow-card-resting: var(--shadow-resting);
+  --shadow-card-hover: var(--shadow-hover);
+  --radius-card: var(--radius-card);
+}
+
+.shadow-card-resting {
+  box-shadow: var(--shadow-resting);
+}
+
+.shadow-card-hover {
+  box-shadow: var(--shadow-hover);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
+}
+
+/* ---------------------------------------------------------------- */
+/* Lenis smooth scroll rules                                         */
+/* ---------------------------------------------------------------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- */
+/* GSAP ScrollTrigger pin containment                               */
+/* ---------------------------------------------------------------- */
+.pin-spacer {
+  overflow: hidden !important;
+  max-width: 100% !important;
 }
 
 /* Bebas Neue headings: -0.02em letter spacing, uppercase, never below 28px */

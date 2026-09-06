@@ -1,7 +1,7 @@
 export function HeroMotionPath() {
   return (
     <div
-      className="pointer-events-none absolute inset-0 z-10 overflow-hidden"
+      className="pointer-events-none absolute inset-0 z-5"
       aria-hidden="true"
     >
       <svg
@@ -9,11 +9,12 @@ export function HeroMotionPath() {
         viewBox="0 0 1200 650"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice"
+        preserveAspectRatio="xMidYMid meet"
       >
-        {/* Curving swoosh path passing behind the Social Media card */}
+        {/* Curving swoosh path passing safely behind the Social Media card without clipping */}
         <path
-          d="M 320 420 C 180 410 40 430 40 480 C 40 540 180 570 540 545"
+          data-hero-motion-path
+          d="M 320 380 C 180 370 40 390 40 440 C 40 490 180 515 540 495"
           stroke="var(--accent)"
           strokeWidth="1.5"
           strokeLinecap="round"
@@ -21,8 +22,9 @@ export function HeroMotionPath() {
         />
         {/* Terminal red dot */}
         <circle
+          data-hero-motion-dot
           cx="540"
-          cy="545"
+          cy="495"
           r="4.5"
           fill="var(--accent)"
         />

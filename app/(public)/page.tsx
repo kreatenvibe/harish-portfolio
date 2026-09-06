@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Eraser,
   Target,
@@ -14,38 +15,49 @@ import {
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { CtaButton } from "@/components/ui/CtaButton";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
-import { ShowcaseStack } from "@/components/sections/ShowcaseStack";
+import { Hero } from "@/components/home/hero/Hero";
+import ProjectCard from "@/components/cards/ProjectCard";
+import { getCategories } from "@/lib/actions/category.action";
+import { getProjects } from "@/lib/actions/project.action";
 
-const services = [
+export const dynamic = "force-dynamic";
+
+const capabilities = [
   {
-    title: "Paint & Roto",
+    number: "01",
+    title: "Brand Identity & Systems",
     description:
-      "Clean plates, wire and rig removal, and precise roto mattes for broadcast and film production.",
+      "Logo systems, typography rules, color palettes, and comprehensive brand guidelines built for real-world consistency.",
   },
   {
-    title: "VFX Cleanup",
+    number: "02",
+    title: "Packaging & Label Design",
     description:
-      "Frame-accurate paint prep and compositing support that holds up under close review.",
+      "Product packaging, cartons, pouches, and bottle labels engineered for shelf presence and production tolerances.",
   },
   {
-    title: "Brand Identity & Logo Design",
+    number: "03",
+    title: "Social Media Systems",
     description:
-      "Logo systems, visual identity, and brand guidelines built to hold up across every touchpoint.",
+      "Grid systems, carousel templates, campaign creatives, and ad suites designed for brand consistency and engagement.",
   },
   {
-    title: "Packaging Design",
+    number: "04",
+    title: "Print Collateral & Editorial",
     description:
-      "Packaging and product artwork that stands out on a shelf and stays true to the brand.",
+      "Brochures, posters, catalogues, menus, and business stationery prepared meticulously for print production.",
   },
   {
-    title: "Social Media Design",
+    number: "05",
+    title: "Paint & Roto Prep",
     description:
-      "Templates and creatives that keep a brand consistent and scroll-stopping across platforms.",
+      "Clean plates, wire & rig removals, tracking marker cleanup, and frame-accurate roto mattes for broadcast and film.",
   },
   {
-    title: "Print Design",
+    number: "06",
+    title: "VFX Compositing Support",
     description:
-      "Posters, brochures, and print collateral designed for real-world production.",
+      "Pipeline-ready prep work and shot cleanup that integrates seamlessly into studio visual effects workflows.",
   },
 ];
 
@@ -61,7 +73,7 @@ const benefits = [
     Icon: FilmSlate,
   },
   {
-    text: "A background in both VFX production and graphic design.",
+    text: "A background in both VFX production and client graphic design.",
     Icon: PaintBrush,
   },
   {
@@ -77,7 +89,7 @@ const benefits = [
     Icon: ClockCountdown,
   },
   {
-    text: "Clear communication and feedback throughout the project.",
+    text: "Clear communication and collaborative feedback throughout.",
     Icon: ChatCircleText,
   },
 ];
@@ -123,104 +135,161 @@ const faqs = [
   {
     question: "What kind of work do you take on?",
     answer:
-      "Two main areas: paint & roto / VFX cleanup for broadcast and film production, and graphic design work — brand identity, packaging, social media, and print. If you're not sure which category your project falls into, just describe it and I'll let you know.",
+      "Two main areas: client graphic design (brand identity, packaging, social media, and print design) and paint & roto / VFX cleanup for broadcast and film production.",
   },
   {
     question: "What software do you work in?",
     answer:
-      "Silhouette and Autodesk Maya for paint, roto, and VFX work; Photoshop, Illustrator, After Effects, and Premiere Pro for design and motion work.",
+      "Photoshop, Illustrator, After Effects, and Premiere Pro for design and motion work; Silhouette and Autodesk Maya for paint, roto, and VFX prep.",
   },
   {
     question: "Do you work with studios or individual clients?",
     answer:
-      "Both. I currently work as a Graphic Designer at ETV Network and take on freelance paint & roto and design projects alongside that — for production studios, independent filmmakers, and businesses that need brand or print design.",
+      "Both. I currently work as a Graphic Designer at ETV Network and take on freelance design and VFX projects for production studios, independent filmmakers, and businesses.",
   },
   {
     question: "How does a project usually start?",
     answer:
-      "With a conversation about the footage or brief — what needs cleaning up, what the brand needs to communicate, and what the deadline looks like. From there I'll give you a realistic turnaround.",
+      "With a conversation about the footage or design brief — what needs creating or cleaning up, what the brand needs to communicate, and the deadline. From there I'll provide a clear roadmap and timeline.",
   },
   {
     question: "Can you work within an existing pipeline or brand system?",
     answer:
-      "Yes. For VFX work, I can follow an existing paint/roto pipeline and delivery spec. For design work, I can work within existing brand guidelines rather than starting from scratch.",
-  },
-  {
-    question: "What do you need from me to get started?",
-    answer:
-      "For VFX: the plates, any reference for wire/rig removal, and the delivery spec. For design: a brief, any existing brand assets, and examples of styles you like.",
+      "Yes. For VFX, I follow established paint/roto pipeline specs. For design, I strictly adhere to existing brand guidelines when provided.",
   },
   {
     question: "Do you offer revisions?",
     answer:
-      "Yes. Feedback rounds are built into the process — I'd rather adjust early than deliver something that misses the mark.",
-  },
-  {
-    question: "Can you work remotely?",
-    answer:
-      "Yes, all of my freelance work is handled remotely, with files shared and reviewed online.",
+      "Yes. Feedback milestones are built into every phase of the process to ensure alignment before final delivery.",
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const [categoriesResult, featuredProjectsResult] = await Promise.all([
+    getCategories({ pageSize: 8 }, true),
+    getProjects({ filter: "featured", pageSize: 6 }, true),
+  ]);
+
+  const categories = categoriesResult.data?.categories ?? [];
+  let featuredProjects = featuredProjectsResult.data?.projects ?? [];
+
+  // Fallback to published projects if no featured projects found
+  if (featuredProjects.length === 0) {
+    const fallbackProjects = await getProjects({ pageSize: 6 }, true);
+    featuredProjects = fallbackProjects.data?.projects ?? [];
+  }
+
+  const categorySlugMap: Record<string, string> = {};
+  categories.forEach((cat) => {
+    if (cat._id) categorySlugMap[String(cat._id)] = cat.slug;
+  });
+
   return (
     <>
-      {/* Hero */}
-      <section>
-        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
-          <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-center">
-            <div>
-              <Eyebrow>Paint & Roto Artist · Graphic Designer</Eyebrow>
+      {/* 1. Static Hero Section */}
+      <Hero />
 
-              <h1 className="mt-7 max-w-3xl font-heading text-5xl font-bold leading-[1.02] tracking-tight text-foreground sm:text-6xl">
-                Precision in every frame, character in every brand.
-              </h1>
-
-              <p className="mt-7 max-w-lg text-lg leading-8 text-muted">
-                I&apos;m Harish Kumar G — clean plates and roto mattes for
-                broadcast and film, and brand identity, packaging, and print
-                design for studios and businesses.
-              </p>
-
-              <div className="mt-9 flex flex-wrap items-center gap-5">
-                <CtaButton href="/work" variant="primary">
-                  View My Work
-                </CtaButton>
-                <CtaButton href="/contact" variant="ghost">
-                  Get In Touch
-                </CtaButton>
+      {/* 2. Category Overview (4 Tiles) */}
+      {categories.length > 0 && (
+        <section className="bg-surface/60 border-y border-foreground/10 py-16 lg:py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div>
+                <Eyebrow>Design Disciplines</Eyebrow>
+                <h2 className="mt-4 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+                  Explore by Category
+                </h2>
               </div>
+              <Link
+                href="/work"
+                className="font-sans text-sm font-semibold text-accent hover:underline flex items-center gap-2"
+              >
+                View all projects <ArrowRight weight="bold" />
+              </Link>
             </div>
 
-            <div className="mx-auto shrink-0 lg:mx-0">
-              <ShowcaseStack />
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {categories.slice(0, 4).map((category, index) => (
+                <Link
+                  key={category.slug}
+                  href={`/work/${category.slug}`}
+                  className="group relative flex flex-col justify-between rounded-xl border border-foreground/10 bg-surface p-7 transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <div>
+                    <span className="font-heading text-xs font-bold uppercase tracking-widest text-accent">
+                      0{index + 1}
+                    </span>
+                    <h3 className="mt-4 font-heading text-2xl font-bold text-foreground transition-colors group-hover:text-accent">
+                      {category.name}
+                    </h3>
+                    <p className="mt-3 font-sans text-sm leading-6 text-muted">
+                      {category.description ||
+                        `Browse client work and case studies in ${category.name.toLowerCase()}.`}
+                    </p>
+                  </div>
+
+                  <div className="mt-8 flex items-center gap-2 font-sans text-xs font-bold uppercase tracking-wider text-foreground/70 transition-colors group-hover:text-accent">
+                    <span>Explore projects</span>
+                    <ArrowRight weight="bold" className="transition-transform group-hover:translate-x-1" />
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* About teaser */}
+      {/* 3. Featured Projects */}
+      {featuredProjects.length > 0 && (
+        <section className="py-20 lg:py-28">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+              <div>
+                <Eyebrow>Portfolio Highlights</Eyebrow>
+                <h2 className="mt-4 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+                  Featured Client Work
+                </h2>
+              </div>
+              <CtaButton href="/work" variant="ghost">
+                View All Work
+              </CtaButton>
+            </div>
+
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
+              {featuredProjects.slice(0, 4).map((project, index) => (
+                <ProjectCard
+                  key={String(project._id)}
+                  project={project}
+                  index={index}
+                  categorySlug={categorySlugMap[String(project.categoryId)]}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 4. About teaser */}
       <section id="about" className="scroll-mt-28 bg-surface">
         <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
             <div>
               <Eyebrow>Two Crafts, One Eye for Detail</Eyebrow>
               <h2 className="mt-6 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
-                From raw plate
+                From raw brief or plate
                 <br />
                 <span className="text-foreground/45">
-                  to clean, finished frame.
+                  to clean, finished delivery.
                 </span>
               </h2>
             </div>
 
             <div>
               <p className="text-lg leading-8 text-muted">
-                Detail-oriented Paint &amp; Roto artist and graphic designer
-                with hands-on experience in broadcast media, VFX production,
-                and freelance design work. Currently a Graphic Designer at ETV
-                Network, and a freelance Paint &amp; Roto artist delivering
-                clean plates, precise mattes, and high-quality visual output.
+                Detail-oriented Graphic Designer and Paint &amp; Roto artist with
+                hands-on experience in broadcast media, branding systems, and visual
+                effects production. Currently a Graphic Designer at ETV Network,
+                delivering tailored visual solutions for studios, products, and brands.
               </p>
 
               <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -242,69 +311,65 @@ export default function Home() {
 
                 <span className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background">
                   <MagicWand weight="bold" className="shrink-0" />
-                  Clean, delivered plate
+                  Polished, delivered result
                 </span>
+              </div>
+
+              <div className="mt-8">
+                <Link
+                  href="/about"
+                  className="font-sans text-sm font-semibold text-accent hover:underline flex items-center gap-2"
+                >
+                  Read more about my background <ArrowRight weight="bold" />
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Core Offer */}
-      <section id="services" className="scroll-mt-28">
-        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+      {/* 5. Capabilities & Services (Folded from /services) */}
+      <section className="bg-background py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="max-w-3xl">
-            <Eyebrow>What I Do</Eyebrow>
+            <Eyebrow>Capabilities</Eyebrow>
             <h2 className="mt-6 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
-              VFX and design work,
+              Design &amp; VFX capabilities,
               <br />
               <span className="text-foreground/45">
                 built around your project.
               </span>
             </h2>
             <p className="mt-5 text-lg leading-8 text-muted">
-              From a single roto pass to a full brand identity.
+              From standalone brand identity systems to precision roto passes.
             </p>
           </div>
 
-          <ul className="mt-14 grid gap-6 sm:grid-cols-2">
-            {services.map((service, index) => (
+          <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {capabilities.map((item) => (
               <li
-                key={service.title}
-                className="build-tile border border-foreground/10 p-7"
+                key={item.title}
+                className="rounded-xl border border-foreground/10 bg-surface p-7 transition-colors hover:border-foreground/20"
               >
-                <span className="text-sm font-semibold text-accent">
-                  0{index + 1}
+                <span className="font-heading text-sm font-bold text-accent">
+                  {item.number}
                 </span>
-                <h3 className="build-tile-title mt-3 font-heading text-2xl font-semibold text-foreground">
-                  {service.title}
+                <h3 className="mt-3 font-heading text-2xl font-semibold text-foreground">
+                  {item.title}
                 </h3>
-                <p className="build-tile-desc mt-3 leading-7 text-muted">
-                  {service.description}
+                <p className="mt-3 leading-7 text-muted">
+                  {item.description}
                 </p>
-                <span className="build-tile-arrow" aria-hidden="true">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M7 17L17 7M17 7H8M17 7V16"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* Benefits */}
+      {/* 6. Benefits */}
       <section className="bg-surface">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
           <div className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
-
-            {/* Heading */}
             <div>
               <div className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-foreground/50">
                 <span>01</span>
@@ -321,7 +386,6 @@ export default function Home() {
               </h2>
             </div>
 
-            {/* Benefits */}
             <ul className="grid gap-x-8 gap-y-9 sm:grid-cols-2">
               {benefits.map(({ text, Icon }) => (
                 <li key={text} className="group flex items-center gap-4">
@@ -339,10 +403,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* 7. How It Works */}
       <section className="bg-background">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
-          {/* Header */}
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-foreground/50">
               <span>02</span>
@@ -359,19 +422,16 @@ export default function Home() {
             </h2>
           </div>
 
-          {/* Steps */}
           <ol className="mt-16 grid gap-0 sm:grid-cols-2 lg:grid-cols-5">
             {steps.map((step, index) => (
               <li
                 key={step.number}
                 className="relative border-t border-foreground/10 py-6 lg:border-t-0 lg:py-0 lg:pr-8"
               >
-                {/* Connecting line */}
                 {index < steps.length - 1 && (
                   <span className="absolute left-0 right-8 top-4.25 hidden h-px bg-foreground/10 lg:block" />
                 )}
 
-                {/* Step number */}
                 <div className="relative flex items-center">
                   <span className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background text-xs font-semibold text-foreground">
                     {step.number}
@@ -391,7 +451,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why HK Designs */}
+      {/* 8. Why HK Designs */}
       <section className="bg-surface">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
           <div className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
@@ -412,10 +472,10 @@ export default function Home() {
 
             <div>
               <p className="text-lg leading-8 text-foreground/85">
-                I bring a background in both VFX production and graphic
-                design, so whether the work is a roto pass for a broadcast
-                deadline or a brand identity for a new business, it gets the
-                same close attention from brief to delivery.
+                I bring a background across client graphic design and VFX
+                production, so whether the work is a brand identity for a new
+                business or a complex roto pass for a broadcast deadline, it
+                receives the same methodical care from brief to delivery.
               </p>
 
               <ul className="mt-10 flex flex-wrap gap-3">
@@ -432,24 +492,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Selected Work */}
-      <section>
-        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
-          <div className="max-w-3xl">
-            <Eyebrow>Selected Work</Eyebrow>
-            <h2 className="mt-6 font-heading text-4xl font-bold leading-tight text-foreground sm:text-5xl">
-              A look at recent VFX and design projects.
-            </h2>
-            <div className="mt-8">
-              <CtaButton href="/work" variant="ghost">
-                View Selected Work
-              </CtaButton>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
+      {/* 9. FAQ */}
       <section id="faq" className="scroll-mt-28">
         <div className="mx-auto max-w-5xl px-6 py-16 lg:py-20">
           <div className="max-w-3xl">
@@ -467,22 +510,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* 10. Final CTA */}
       <section id="contact" className="scroll-mt-28 bg-accent text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
           <div className="max-w-4xl">
             <Eyebrow tone="dark">Start a Conversation</Eyebrow>
             <h2 className="mt-6 font-heading text-4xl font-bold leading-tight sm:text-5xl">
-              Have footage to clean up
+              Have a brand to design
               <br />
               <span className="text-white/70">
-                or a brand that needs designing?
+                or footage that needs cleaning up?
               </span>
             </h2>
 
             <p className="mt-7 max-w-2xl text-lg leading-8 text-white/70">
-              Tell me about the project and the deadline you&apos;re working
-              with. I&apos;ll help you figure out the rest.
+              Tell me about your project, timeline, and deliverables. I&apos;ll help
+              you determine the right approach and scope.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-5">

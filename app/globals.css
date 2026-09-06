@@ -1,54 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-
-  --primary: #0a0a0a;
-  --accent: #e53935;
-  --muted: #6b6b6b;
-
-  /* Elevation tiers for alternating sections/cards, lightest -> darkest
-     in light mode; .theme-dark below inverts the relationship. */
-  --surface: #f7f6f3;
-  --surface-2: #ffffff;
-  --surface-hover: #eeeeec;
+  --background: #F2F3F5;
+  --surface: #FFFFFF;
+  --surface-hover: #F5D4D2;
+  --foreground: #0A0A0A;
+  --muted: #6B6E76;
+  --accent: #E53935;
+  --accent-dim: #F5D4D2;
+  --line: #DFE1E5;
 }
 
-/* Scoped to the public site only (see app/(public)/layout.tsx) — the
-   admin dashboard stays on the :root light theme above, since it's a
-   functional CRUD tool rather than the visual portfolio. */
+/* Scoped to project detail pages only (see app/(public)/work/[category]/[slug]/page.tsx) */
 .theme-dark {
-  --background: #0a0a0b;
-  --foreground: #f2f1ed;
-  --muted: #9c9992;
-  --accent: #ff4438;
-
-  /* background (darkest) < surface < surface-2, an inverted elevation
-     ladder from the light theme's white-on-off-white banding. */
-  --surface: #141416;
-  --surface-2: #1c1c1f;
-  --surface-hover: #1f1f22;
+  --background: #0A0A0B;
+  --surface: #1C1C1F;
+  --surface-hover: #1F1F22;
+  --foreground: #F2F1ED;
+  --muted: #9C9992;
+  --accent: #FF4438;
+  --accent-dim: #3A1A18;
+  --line: #2A2A2D;
 }
 
 @theme inline {
   /* Colors */
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  --color-primary: var(--primary);
-  --color-accent: var(--accent);
-  --color-muted: var(--muted);
-
   --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
   --color-surface-hover: var(--surface-hover);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
+  --color-line: var(--line);
 
   /* Typography */
   --font-sans: var(--font-manrope);
   --font-heading: var(--font-bebas);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  --font-mono: var(--font-mono);
 }
 
 body {
@@ -57,10 +46,7 @@ body {
   font-family: var(--font-manrope), sans-serif;
 }
 
-/* Bebas Neue is a tall condensed display face designed to be set in caps —
-   mixed-case headings read weak/thin by comparison, so every heading is
-   uppercased and given a touch of tracking back for legibility at that
-   width. Letter-spacing may need per-heading tuning once seen live. */
+/* Bebas Neue headings: -0.02em letter spacing, uppercase, never below 28px */
 h1,
 h2,
 h3,
@@ -69,7 +55,7 @@ h5,
 h6 {
   font-family: var(--font-bebas), sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.02em;
 }
 
 /* ---------------------------------------------------------------- */

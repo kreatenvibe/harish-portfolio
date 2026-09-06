@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import localFont from 'next/font/local'
+import localFont from "next/font/local";
+import { IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
 const bebas = localFont({
@@ -10,6 +11,12 @@ const bebas = localFont({
 const manrope = localFont({
   src: "./fonts/Manrope.ttf",
   variable: "--font-manrope",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+  variable: "--font-mono",
 });
 
 const SITE_TITLE = "HK Designs — Harish Kumar G, Paint & Roto Artist / Graphic Designer";
@@ -46,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bebas.variable} ${manrope.variable} h-full antialiased`}
+      className={`${bebas.variable} ${manrope.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

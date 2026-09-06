@@ -5,13 +5,19 @@ import type { IProject } from "@/database";
 export default function ProjectCard({
   project,
   index,
+  categorySlug,
 }: {
   project: IProject;
   index: number;
+  categorySlug?: string;
 }) {
+  const targetHref = categorySlug
+    ? `/work/${categorySlug}/${project.slug}`
+    : `/work/${project.slug}`;
+
   return (
     <Link
-      href={`/work/${project.slug}`}
+      href={targetHref}
       className="group block w-full"
     >
       <div className="relative aspect-4/3 w-full md:aspect-video overflow-hidden rounded-xl bg-muted/10 border border-foreground/10">

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { unstable_cache } from "next/cache";
 import { dbConnect } from "@/lib/mongoose";
-import { BlogPost, Project } from "@/database";
+import { BlogPost, Project, Category } from "@/database";
 
 // Renders per-request instead of being statically generated at build time.
 // The Vercel build machine's egress IP isn't whitelisted in MongoDB Atlas,
@@ -17,12 +17,8 @@ export const dynamic = "force-dynamic";
  */
 export const BASE_URL = "https://hkdesigns.com";
 
-// Google (and most crawlers) reject a single sitemap file beyond this count.
-// See the `generateSitemaps()` note at the bottom of this file for the fix.
 const MAX_URLS_PER_SITEMAP = 50_000;
 
-// Derived from Next's own type (rather than hand-rolled) so this stays in
-// sync automatically if the sitemap protocol's allowed values ever change.
 type ChangeFrequency = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 
 type StaticRoute = {
@@ -36,29 +32,44 @@ type DynamicEntry = {
   updatedAt: Date;
 };
 
+type DynamicProjectEntry = {
+  projectSlug: string;
+  categorySlug: string;
+  updatedAt: Date;
+};
+
 // ---------------------------------------------------------------------------
 // Static marketing pages — hand-maintained, no data fetch required.
 // ---------------------------------------------------------------------------
 
 const STATIC_ROUTES: StaticRoute[] = [
   { path: "", changeFrequency: "weekly", priority: 1.0 },
-  { path: "/services", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/work", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/work", changeFrequency: "weekly", priority: 0.9 },
   { path: "/blog", changeFrequency: "daily", priority: 0.8 },
   { path: "/about", changeFrequency: "monthly", priority: 0.7 },
   { path: "/contact", changeFrequency: "yearly", priority: 0.6 },
 ];
 
 // ---------------------------------------------------------------------------
-// Dynamic, data-driven pages.
-//
-// Wrapped in `unstable_cache` so a burst of crawler/browser hits to
-// /sitemap.xml collapses into one Mongo query per revalidate window instead
-// of hitting the database on every request. Each cache entry is tagged so
-// admin mutations (see lib/actions/blog.action.ts / project.action.ts) can
-// call `revalidateTag(...)` to refresh it immediately on publish/edit/delete,
-// rather than waiting out the hourly fallback.
+// Dynamic, data-driven pages with caching.
 // ---------------------------------------------------------------------------
+
+const getDynamicCategories = unstable_cache(
+  async (): Promise<DynamicEntry[]> => {
+    await dbConnect();
+    const categories = await Category.find({ isActive: true })
+      .select("slug updatedAt")
+      .sort({ order: 1 })
+      .lean<{ slug: string; updatedAt: Date }[]>();
+
+    return categories.map((cat) => ({
+      slug: cat.slug,
+      updatedAt: cat.updatedAt,
+    }));
+  },
+  ["sitemap-categories"],
+  { revalidate: 3600, tags: ["sitemap-categories", "categories"] }
+);
 
 const getDynamicBlogs = unstable_cache(
   async (): Promise<DynamicEntry[]> => {
@@ -71,31 +82,44 @@ const getDynamicBlogs = unstable_cache(
     return posts.map((post) => ({ slug: post.slug, updatedAt: post.updatedAt }));
   },
   ["sitemap-blogs"],
-  { revalidate: 3600, tags: ["sitemap-blogs"] }
+  { revalidate: 3600, tags: ["sitemap-blogs", "blog-posts"] }
 );
 
 const getDynamicProjects = unstable_cache(
-  async (): Promise<DynamicEntry[]> => {
+  async (): Promise<DynamicProjectEntry[]> => {
     await dbConnect();
-    const projects = await Project.find({})
-      .select("slug updatedAt")
-      .sort({ order: 1 })
-      .lean<{ slug: string; updatedAt: Date }[]>();
+    const [projects, categories] = await Promise.all([
+      Project.find({ status: "published" })
+        .select("slug categoryId updatedAt")
+        .sort({ order: 1 })
+        .lean<{ slug: string; categoryId: unknown; updatedAt: Date }[]>(),
+      Category.find({ isActive: true })
+        .select("_id slug")
+        .lean<{ _id: unknown; slug: string }[]>(),
+    ]);
 
-    return projects.map((project) => ({ slug: project.slug, updatedAt: project.updatedAt }));
+    const categoryMap = new Map<string, string>();
+    categories.forEach((cat) => {
+      categoryMap.set(String(cat._id), cat.slug);
+    });
+
+    const entries: DynamicProjectEntry[] = [];
+    for (const project of projects) {
+      const categorySlug = categoryMap.get(String(project.categoryId));
+      if (categorySlug) {
+        entries.push({
+          projectSlug: project.slug,
+          categorySlug,
+          updatedAt: project.updatedAt,
+        });
+      }
+    }
+
+    return entries;
   },
   ["sitemap-projects"],
-  { revalidate: 3600, tags: ["sitemap-projects"] }
+  { revalidate: 3600, tags: ["sitemap-projects", "projects"] }
 );
-
-/**
- * Placeholder for a future commerce catalog. There is no Product model yet —
- * wire this to a real collection/CMS query (mirroring getDynamicBlogs above)
- * the moment one exists, and add a matching entry map in `sitemap()` below.
- */
-async function getDynamicProducts(): Promise<DynamicEntry[]> {
-  return [];
-}
 
 // ---------------------------------------------------------------------------
 // Sitemap entry point
@@ -109,11 +133,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route.priority,
   }));
 
-  const [blogs, projects, products] = await Promise.all([
+  const [categories, blogs, projects] = await Promise.all([
+    getDynamicCategories(),
     getDynamicBlogs(),
     getDynamicProjects(),
-    getDynamicProducts(),
   ]);
+
+  const categoryEntries: MetadataRoute.Sitemap = categories.map((cat) => ({
+    url: `${BASE_URL}/work/${cat.slug}`,
+    lastModified: cat.updatedAt,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
 
   const blogEntries: MetadataRoute.Sitemap = blogs.map((post) => ({
     url: `${BASE_URL}/blog/${post.slug}`,
@@ -123,71 +154,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: `${BASE_URL}/work/${project.slug}`,
+    url: `${BASE_URL}/work/${project.categorySlug}/${project.projectSlug}`,
     lastModified: project.updatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
-  const productEntries: MetadataRoute.Sitemap = products.map((product) => ({
-    url: `${BASE_URL}/products/${product.slug}`,
-    lastModified: product.updatedAt,
-    changeFrequency: "weekly" as const,
-    priority: 0.6,
-  }));
-
-  const entries = [...staticEntries, ...blogEntries, ...projectEntries, ...productEntries];
+  const entries = [...staticEntries, ...categoryEntries, ...blogEntries, ...projectEntries];
 
   if (entries.length > MAX_URLS_PER_SITEMAP) {
-    // Past this point Google will only crawl the first 50,000 URLs and ignore
-    // the rest — split into multiple sitemaps before this ever fires in prod.
     console.warn(
-      `[sitemap] ${entries.length} URLs exceeds the ${MAX_URLS_PER_SITEMAP} single-sitemap limit. ` +
-        "Migrate to generateSitemaps() — see comment at the bottom of app/sitemap.ts."
+      `[sitemap] ${entries.length} URLs exceeds the ${MAX_URLS_PER_SITEMAP} single-sitemap limit.`
     );
   }
 
   return entries;
 }
-
-// ---------------------------------------------------------------------------
-// SCALING PAST 50,000 URLS
-//
-// Google's protocol caps a single sitemap file at 50,000 URLs. If
-// getDynamicBlogs()/getDynamicProjects()/getDynamicProducts() ever grow past
-// that combined total, replace the single `sitemap()` export above with
-// `generateSitemaps()` + a chunked `sitemap(props)`, e.g.:
-//
-//   export async function generateSitemaps() {
-//     const totalBlogs = await BlogPost.countDocuments({ published: true });
-//     const chunks = Math.ceil(totalBlogs / MAX_URLS_PER_SITEMAP);
-//     return Array.from({ length: chunks }, (_, id) => ({ id }));
-//   }
-//
-//   export default async function sitemap({
-//     id,
-//   }: {
-//     id: Promise<string>;
-//   }): Promise<MetadataRoute.Sitemap> {
-//     const chunkId = Number(await id);
-//     const start = chunkId * MAX_URLS_PER_SITEMAP;
-//
-//     await dbConnect();
-//     const posts = await BlogPost.find({ published: true })
-//       .select("slug updatedAt")
-//       .sort({ publishedAt: -1 })
-//       .skip(start)
-//       .limit(MAX_URLS_PER_SITEMAP)
-//       .lean<{ slug: string; updatedAt: Date }[]>();
-//
-//     return posts.map((post) => ({
-//       url: `${BASE_URL}/blog/${post.slug}`,
-//       lastModified: post.updatedAt,
-//     }));
-//   }
-//
-// This is generated at /sitemap/[id].xml and requires splitting static,
-// blog, project, and product entries into their own chunked sitemaps (or
-// nesting a dedicated sitemap.ts per route segment, e.g. app/blog/sitemap.ts)
-// once any single collection alone approaches the limit.
-// ---------------------------------------------------------------------------

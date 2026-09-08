@@ -94,14 +94,14 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
       {/* Pinned Stage Container on Desktop */}
       <div
         ref={stageRef}
-        className="relative z-[40] w-full flex flex-col justify-between py-16 lg:py-20 lg:h-[100dvh]"
+        className="relative z-[40] w-full flex flex-col justify-between py-10 lg:py-8 lg:h-[100dvh] lg:min-h-[640px] box-border"
       >
         {/* Header Strip */}
-        <div className="relative z-[40] mx-auto w-full max-w-7xl px-6 lg:px-8 mb-8 lg:mb-12">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-line/40 pb-6">
-            <div className="space-y-3">
+        <div className="relative z-[40] mx-auto w-full max-w-7xl px-6 lg:px-8 mb-4 lg:mb-6 shrink-0">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-line/40 pb-4">
+            <div className="space-y-2">
               <FrameCounter index={1} total={7} label="SELECTED WORK" />
-              <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-foreground">
+              <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-foreground">
                 Film Strip Showcase.
               </h2>
             </div>
@@ -122,7 +122,7 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
         </div>
 
         {/* Desktop: Horizontal Track */}
-        <div className="relative z-[40] hidden lg:block w-full overflow-hidden">
+        <div className="relative z-[40] hidden lg:block w-full overflow-hidden my-auto py-2">
           <div
             ref={trackRef}
             className="flex items-center gap-8 px-8 w-max will-change-transform"
@@ -134,7 +134,7 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
               return (
                 <div
                   key={String(project._id)}
-                  className="w-[420px] xl:w-[480px] shrink-0"
+                  className="w-[380px] xl:w-[440px] shrink-0"
                 >
                   <ProjectMatteCard
                     project={project}
@@ -146,7 +146,7 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
             })}
 
             {/* End Cap Timeline Anchor */}
-            <div className="flex flex-col items-center justify-center w-[300px] shrink-0 rounded border border-dashed border-line/60 bg-[#121215] p-8 text-center space-y-4">
+            <div className="flex flex-col items-center justify-center w-[280px] shrink-0 rounded border border-dashed border-line/60 bg-[#121215] p-6 text-center space-y-3">
               <span className="font-mono text-[10px] text-muted/60 uppercase tracking-widest">
                 END OF FEATURED PLATES
               </span>
@@ -162,7 +162,7 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
         </div>
 
         {/* Mobile / Tablet: Stacked Grid */}
-        <div className="relative z-[40] lg:hidden mx-auto w-full max-w-7xl px-6">
+        <div className="relative z-[40] lg:hidden mx-auto w-full max-w-7xl px-6 py-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((project, index) => {
               const categorySlug =
@@ -191,7 +191,7 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
         </div>
 
         {/* Footer Meta Strip for Desktop Stage */}
-        <div className="relative z-[40] hidden lg:flex mx-auto w-full max-w-7xl px-8 items-center justify-between border-t border-line/40 pt-4 font-mono text-[9px] text-muted/40 uppercase tracking-widest">
+        <div className="relative z-[40] hidden lg:flex mx-auto w-full max-w-7xl px-8 items-center justify-between border-t border-line/40 pt-3 shrink-0 font-mono text-[9px] text-muted/40 uppercase tracking-widest">
           <span>PLATE COUNT: {projects.length} FRAMES</span>
           <span>COMPOSITING TIMELINE</span>
         </div>

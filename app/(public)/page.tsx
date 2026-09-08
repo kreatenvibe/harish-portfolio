@@ -5,6 +5,7 @@ import { IdentityDossier } from "@/components/home/IdentityDossier";
 import { CareerTimeline } from "@/components/sections/CareerTimeline";
 import { TechnicalLayerStack } from "@/components/sections/TechnicalLayerStack";
 import { FinalFrame } from "@/components/home/FinalFrame";
+import { CameraJourneyCanvas } from "@/components/home/3d/CameraJourneyCanvas";
 import { getCategories } from "@/lib/actions/category.action";
 import { getProjects } from "@/lib/actions/project.action";
 
@@ -32,6 +33,9 @@ export default async function Home() {
 
   return (
     <div className="relative w-full bg-background text-foreground">
+      {/* PERSISTENT 3D CAMERA SPATIAL JOURNEY */}
+      <CameraJourneyCanvas />
+
       {/* FRAME 00 / 01 — OPENING STAGE & HERO */}
       <Hero featuredProjects={featuredProjects} />
 

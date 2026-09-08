@@ -61,6 +61,7 @@ export function HeroProjectCard({
               sizes="(max-width: 768px) 80vw, (max-width: 1200px) 40vw, 30vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
               priority
+              loading="eager"
             />
 
             {/* Bottom Left Title */}
@@ -101,6 +102,7 @@ export function HeroProjectCard({
               sizes="(max-width: 768px) 95vw, (max-width: 1200px) 55vw, 42vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
               priority
+              loading="eager"
             />
 
             {/* Bottom Left Overlay */}
@@ -153,6 +155,7 @@ export function HeroProjectCard({
               sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 34vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
               priority
+              loading="eager"
             />
 
             {/* Bottom Left Title */}

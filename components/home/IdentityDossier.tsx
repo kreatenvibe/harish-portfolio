@@ -15,9 +15,9 @@ const CAPABILITIES = [
 export function IdentityDossier() {
   return (
     <section id="about" className="relative bg-[#0A0A0B] border-b border-line py-20 lg:py-28 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative z-[40] mx-auto max-w-7xl px-6 lg:px-8">
         {/* Main Dossier Frame */}
-        <div className="relative rounded border border-line bg-surface p-8 sm:p-12 lg:p-16 overflow-hidden">
+        <div className="relative z-[40] rounded border border-line bg-surface p-8 sm:p-12 lg:p-16 overflow-hidden">
           {/* 4 Corner Markers */}
           <span className="frame-corner-tl" aria-hidden="true" />
           <span className="frame-corner-tr" aria-hidden="true" />
@@ -66,7 +66,7 @@ export function IdentityDossier() {
               <div className="pt-4">
                 <Link
                   href="/about"
-                  className="inline-flex items-center gap-2 rounded border border-line bg-[#161619] px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-foreground transition-all duration-300 hover:border-white/40 hover:bg-white/10"
+                  className="relative z-[50] inline-flex items-center gap-2 rounded border border-line bg-[#161619] px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-foreground transition-all duration-300 hover:border-white/40 hover:bg-white/10"
                 >
                   <span>FULL DOSSIER &amp; TIMELINE</span>
                   <ArrowUpRight size={13} weight="bold" />

@@ -40,9 +40,9 @@ const TIMELINE_TRACKS = [
 export function CareerTimeline({ isStandalone = false }: { isStandalone?: boolean }) {
   return (
     <section className={`relative bg-[#0A0A0B] border-b border-line ${isStandalone ? "py-20 lg:py-28" : "py-16 lg:py-24"} overflow-hidden`}>
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative z-[40] mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl space-y-4 mb-14 lg:mb-18">
+        <div className="relative z-[40] max-w-3xl space-y-4 mb-14 lg:mb-18">
           <FrameCounter index={4} total={7} label="PRODUCTION TIMELINE" />
           <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-foreground">
             Career Tracks &amp; Milestones.
@@ -53,11 +53,11 @@ export function CareerTimeline({ isStandalone = false }: { isStandalone?: boolea
         </div>
 
         {/* Timeline Tracks */}
-        <div className="space-y-4">
+        <div className="relative z-[40] space-y-4">
           {TIMELINE_TRACKS.map((track, idx) => (
             <div
               key={`${track.role}-${track.org}`}
-              className="group relative rounded border border-line bg-surface p-6 sm:p-8 transition-all duration-300 hover:border-white/40"
+              className="group relative z-[40] rounded border border-line bg-surface p-6 sm:p-8 transition-all duration-300 hover:border-white/40"
             >
               {/* Corner markers */}
               <span className="frame-corner-tl" aria-hidden="true" />

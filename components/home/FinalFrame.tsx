@@ -9,9 +9,9 @@ import { CONTACT } from "@/lib/contact";
 export function FinalFrame() {
   return (
     <section id="contact" className="relative bg-[#0A0A0B] border-b border-line py-20 lg:py-28 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative z-[40] mx-auto max-w-7xl px-6 lg:px-8">
         {/* Main Final Frame */}
-        <div className="relative rounded border border-line bg-surface p-8 sm:p-14 lg:p-20 overflow-hidden shadow-2xl">
+        <div className="relative z-[40] rounded border border-line bg-surface p-8 sm:p-14 lg:p-20 overflow-hidden shadow-2xl">
           {/* Corner Ticks */}
           <span className="frame-corner-tl" aria-hidden="true" />
           <span className="frame-corner-tr" aria-hidden="true" />
@@ -45,7 +45,7 @@ export function FinalFrame() {
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded border border-foreground bg-foreground px-8 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-background transition-all duration-300 hover:bg-white hover:shadow-lg"
+                  className="relative z-[50] inline-flex items-center gap-2 rounded border border-foreground bg-foreground px-8 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-background transition-all duration-300 hover:bg-white hover:shadow-lg"
                 >
                   <span>START YOUR PROJECT</span>
                   <ArrowUpRight size={13} weight="bold" />
@@ -55,7 +55,7 @@ export function FinalFrame() {
                   href={CONTACT.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded border border-line bg-[#161619] px-6 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-foreground transition-colors hover:border-white/40 hover:bg-white/10"
+                  className="relative z-[50] inline-flex items-center gap-2 rounded border border-line bg-[#161619] px-6 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-foreground transition-colors hover:border-white/40 hover:bg-white/10"
                 >
                   <span>WHATSAPP DIRECT</span>
                   <ArrowUpRight size={13} weight="bold" />

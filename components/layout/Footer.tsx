@@ -36,7 +36,7 @@ export default function Footer({
       <span className="frame-corner-tr" aria-hidden="true" />
 
       {/* Top Metadata Strip */}
-      <div className="border-b border-line/40 px-6 py-3 lg:px-8">
+      <div className="relative z-[40] border-b border-line/40 px-6 py-3 lg:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between font-mono text-[9px] tracking-widest text-muted/60 uppercase">
           <div className="flex items-center gap-2">
             <span className="signal-dot" />
@@ -49,7 +49,7 @@ export default function Footer({
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+      <div className="relative z-[40] mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_auto] lg:gap-16">
           {/* Brand Column */}
           <div className="max-w-sm space-y-6">

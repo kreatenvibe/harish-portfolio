@@ -44,9 +44,9 @@ const COMPOSITING_LAYERS = [
 export function TechnicalLayerStack() {
   return (
     <section className="relative bg-[#0A0A0B] border-b border-line py-20 lg:py-28 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative z-[40] mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl space-y-4 mb-14 lg:mb-18">
+        <div className="relative z-[40] max-w-3xl space-y-4 mb-14 lg:mb-18">
           <FrameCounter index={5} total={7} label="TECHNICAL STACK" />
           <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-foreground">
             Compositing Layer Stack.
@@ -57,11 +57,11 @@ export function TechnicalLayerStack() {
         </div>
 
         {/* Stack Layers */}
-        <div className="space-y-3">
+        <div className="relative z-[40] space-y-3">
           {COMPOSITING_LAYERS.map((item) => (
             <div
               key={item.layer}
-              className="group relative flex flex-col md:flex-row md:items-center justify-between rounded border border-line bg-surface p-6 transition-all duration-300 hover:border-white/40"
+              className="group relative z-[40] flex flex-col md:flex-row md:items-center justify-between rounded border border-line bg-surface p-6 transition-all duration-300 hover:border-white/40"
             >
               {/* Corner marks */}
               <span className="frame-corner-tl" aria-hidden="true" />

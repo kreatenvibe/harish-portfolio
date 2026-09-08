@@ -3,13 +3,14 @@ import { getProjects } from "@/lib/actions/project.action";
 import { getCategories } from "@/lib/actions/category.action";
 import ProjectCard from "@/components/cards/ProjectCard";
 import FilterBar from "@/components/filters/FilterBar";
+import { FrameCounter } from "@/components/frame/FrameCounter";
 
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Work — HK Designs",
+  title: "Work Archive — HK Designs",
   description:
-    "Explore design and VFX client work across Branding, Packaging, Social Media, and Print Design.",
+    "Explore the complete portfolio archive across Branding, Packaging, Social Media, Print Design, and VFX Paint & Roto.",
 };
 
 type Props = {
@@ -35,7 +36,7 @@ export default async function WorkPage({ searchParams }: Props) {
     }
   });
 
-  // Unique tags across all projects for optional secondary filter
+  // Unique tags across all projects for secondary filter
   const allTags = Array.from(
     new Set(projects.flatMap((p) => p.tags || []))
   ).filter(Boolean);
@@ -52,78 +53,84 @@ export default async function WorkPage({ searchParams }: Props) {
   }
 
   return (
-    <main className="bg-background text-foreground">
-      {/* Hero */}
-      <section className="mx-auto max-w-7xl px-6 pb-12 pt-20 lg:px-8 lg:pb-16 lg:pt-32">
-        <div className="max-w-5xl">
-          <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            Selected Work
-          </p>
+    <main className="min-h-screen bg-background text-foreground">
+      {/* Archive Header */}
+      <section className="relative border-b border-line px-6 pt-24 pb-12 lg:px-8 lg:pt-32 lg:pb-16 overflow-hidden">
+        <div className="absolute inset-0 hud-grid opacity-20 pointer-events-none" aria-hidden="true" />
 
-          <h1 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl">
-            Design and VFX work built with care.
-          </h1>
+        <div className="mx-auto max-w-7xl space-y-6">
+          <FrameCounter index="02" total={7} label="WORK ARCHIVE" />
 
-          <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-muted sm:text-xl">
-            Browse our complete portfolio of brand identity systems, product packaging,
-            social campaigns, and print collateral, alongside precision paint &amp; roto
-            broadcast work.
-          </p>
-        </div>
-
-        {/* Category Filter Tabs */}
-        {categories.length > 0 && (
-          <div className="mt-12 flex flex-wrap items-center gap-3 border-b border-foreground/10 pb-6">
-            <span className="font-sans text-xs font-bold uppercase tracking-wider text-muted mr-2">
-              Categories:
-            </span>
-            <Link
-              href="/work"
-              className="rounded-full bg-primary px-5 py-2 font-sans text-xs font-semibold text-white shadow-sm"
-            >
-              All Projects
-            </Link>
-            {categories.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/work/${cat.slug}`}
-                className="rounded-full border border-foreground/10 bg-surface px-5 py-2 font-sans text-xs font-semibold text-foreground/80 transition-colors hover:border-accent hover:text-accent"
-              >
-                {cat.name}
-              </Link>
-            ))}
+          <div className="max-w-4xl space-y-4">
+            <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-foreground leading-[0.92]">
+              Portfolio Archive.
+            </h1>
+            <p className="font-sans text-base sm:text-lg leading-relaxed text-muted max-w-2xl">
+              Complete index of brand identity systems, product packaging, motion campaigns, and broadcast VFX paint &amp; roto deliverables.
+            </p>
           </div>
-        )}
 
-        {/* Search & Tag Filter Bar */}
-        <div className="mt-8">
-          <FilterBar
-            filters={tagFilters}
-            searchPlaceholder="Search all projects…"
-          />
+          {/* Category Filter Navigation */}
+          {categories.length > 0 && (
+            <div className="pt-6">
+              <div className="flex flex-wrap items-center gap-2 border-b border-line/50 pb-4">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted mr-3">
+                  DISCIPLINE:
+                </span>
+                <Link
+                  href="/work"
+                  className="rounded border border-white/40 bg-white/10 px-3.5 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-foreground"
+                >
+                  [ ALL PLATES ]
+                </Link>
+                {categories.map((cat, idx) => (
+                  <Link
+                    key={cat.slug}
+                    href={`/work/${cat.slug}`}
+                    className="rounded border border-line bg-surface px-3.5 py-1.5 font-mono text-xs font-medium uppercase tracking-wider text-muted transition-colors hover:border-white/30 hover:text-foreground"
+                  >
+                    0{idx + 1} {cat.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Search & Tag Filter Bar */}
+          <div className="pt-2">
+            <FilterBar
+              filters={tagFilters}
+              searchPlaceholder="Search project titles, clients, or tags…"
+            />
+          </div>
         </div>
       </section>
 
       {/* Projects Grid */}
-      <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-8 lg:pb-32">
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
         {projects.length === 0 ? (
-          <div className="rounded-xl border border-foreground/10 bg-surface/50 p-12 text-center">
-            <p className="font-sans text-lg text-muted">
+          <div className="relative rounded border border-line bg-surface p-16 text-center space-y-4">
+            <span className="frame-corner-tl" aria-hidden="true" />
+            <span className="frame-corner-tr" aria-hidden="true" />
+            <p className="font-mono text-xs uppercase tracking-widest text-foreground font-semibold">
+              NO MATCHING PLATES FOUND
+            </p>
+            <p className="font-sans text-base text-muted">
               {query || filter
-                ? "No projects match your search criteria."
-                : "Projects are coming soon."}
+                ? "No projects match your current search query or tag filter."
+                : "Projects are currently being cataloged."}
             </p>
             {(query || filter) && (
               <Link
                 href="/work"
-                className="mt-4 inline-block font-sans text-sm font-semibold text-accent hover:underline"
+                className="inline-block rounded border border-line bg-surface px-4 py-2 font-mono text-xs uppercase tracking-wider text-foreground hover:border-white/40"
               >
-                Reset search
+                Reset Search Filters
               </Link>
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {projects.map((project, index) => (
               <ProjectCard
                 key={String(project._id)}
@@ -134,33 +141,6 @@ export default async function WorkPage({ searchParams }: Props) {
             ))}
           </div>
         )}
-      </section>
-
-      {/* CTA */}
-      <section className="bg-surface">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-          <div className="max-w-4xl">
-            <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-              Start a Project
-            </p>
-
-            <h2 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
-              Have a project in mind?
-            </h2>
-
-            <p className="mt-8 max-w-3xl font-sans text-lg leading-8 text-muted sm:text-xl">
-              Whether you need brand identity, custom packaging, social templates,
-              or VFX plate preparation, let&apos;s discuss the approach and timeline.
-            </p>
-
-            <Link
-              href="/contact"
-              className="mt-10 inline-flex rounded-full bg-accent px-7 py-3.5 font-sans text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
-            >
-              Get In Touch
-            </Link>
-          </div>
-        </div>
       </section>
     </main>
   );

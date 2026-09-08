@@ -2,12 +2,12 @@ import Link from "next/link";
 import {
   EnvelopeSimple,
   Phone,
+  ArrowUpRight,
   InstagramLogo,
   XLogo,
   YoutubeLogo,
 } from "@phosphor-icons/react/dist/ssr";
 import { CONTACT, SOCIAL_LINKS } from "@/lib/contact";
-import { HoverLink } from "@/components/motion/HoverLink";
 import type { ICategory } from "@/database";
 
 const SOCIAL_ICONS = {
@@ -18,11 +18,10 @@ const SOCIAL_ICONS = {
 
 const navigationLinks = [
   { label: "All Work", href: "/work" },
+  { label: "Services", href: "/services" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms", href: "/terms" },
 ];
 
 export default function Footer({
@@ -31,126 +30,153 @@ export default function Footer({
   categories?: ICategory[];
 }) {
   return (
-    <footer className="border-t border-[#2A2A2D] bg-[#0A0A0B] text-[#F2F1ED]">
+    <footer className="relative border-t border-line bg-[#0A0A0B] text-foreground overflow-hidden">
+      {/* 2 Corner Markers on the Footer Frame */}
+      <span className="frame-corner-tl" aria-hidden="true" />
+      <span className="frame-corner-tr" aria-hidden="true" />
+
+      {/* Top Metadata Strip */}
+      <div className="border-b border-line/40 px-6 py-3 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between font-mono text-[9px] tracking-widest text-muted/60 uppercase">
+          <div className="flex items-center gap-2">
+            <span className="signal-dot" />
+            <span className="text-foreground/75 font-semibold">HK DESIGNS {"//"} SEQUENCE CLOSURE</span>
+          </div>
+          <div className="hidden sm:flex items-center gap-4 text-muted/40">
+            <span>24FPS EDITORIAL</span>
+            <span>FRAME: 007 {"//"} FINAL</span>
+          </div>
+        </div>
+      </div>
+
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr_auto] lg:gap-16">
+        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_auto] lg:gap-16">
           {/* Brand Column */}
-          <div className="max-w-sm">
+          <div className="max-w-sm space-y-6">
             <Link
               href="/"
-              className="inline-flex font-heading text-2xl font-bold tracking-tight text-[#F2F1ED]"
+              className="inline-flex font-heading text-2xl font-bold tracking-tight text-foreground transition-opacity hover:opacity-80"
             >
-              HK<span className="text-accent">Designs</span>
+              HK DESIGNS
             </Link>
 
-            <p className="mt-5 font-sans text-sm leading-6 text-[#9C9992]">
-              Harish Kumar G — Graphic designer and Paint &amp; Roto artist
-              delivering brand identity systems, packaging, social campaigns,
-              print design, and frame-accurate VFX cleanup.
+            <p className="font-sans text-sm leading-6 text-muted">
+              Harish Kumar G — Visual Designer &amp; Paint &amp; Roto Artist at ETV
+              Network. Building brand identity systems, product packaging, motion
+              campaigns, and pixel-accurate VFX cleanup.
             </p>
 
-            <div className="mt-6 flex flex-col gap-3">
-              <HoverLink
+            <div className="flex flex-col gap-2.5 font-mono text-xs">
+              <a
                 href={`mailto:${CONTACT.email}`}
-                external
-                className="font-sans text-sm text-[#9C9992] hover:text-[#F2F1ED]"
+                className="group inline-flex items-center gap-2 text-muted transition-colors hover:text-foreground"
               >
-                <EnvelopeSimple weight="bold" className="shrink-0" />
+                <EnvelopeSimple weight="bold" className="shrink-0 text-foreground/70" />
                 <span>{CONTACT.email}</span>
-              </HoverLink>
-              <HoverLink
+                <ArrowUpRight size={10} className="opacity-0 transition-opacity group-hover:opacity-100" />
+              </a>
+              <a
                 href={CONTACT.whatsappUrl}
-                external
-                className="font-sans text-sm text-[#9C9992] hover:text-[#F2F1ED]"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 text-muted transition-colors hover:text-foreground"
               >
-                <Phone weight="bold" className="shrink-0" />
-                <span>{CONTACT.phoneDisplay}</span>
-              </HoverLink>
+                <Phone weight="bold" className="shrink-0 text-foreground/70" />
+                <span>{CONTACT.phoneDisplay} (WhatsApp)</span>
+                <ArrowUpRight size={10} className="opacity-0 transition-opacity group-hover:opacity-100" />
+              </a>
             </div>
 
-            <div className="mt-6 flex items-center gap-4">
-              {SOCIAL_LINKS.map((social) => {
-                const Icon = SOCIAL_ICONS[social.label];
-                return (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-[#9C9992] transition-colors hover:border-accent hover:text-accent"
-                  >
-                    <Icon weight="bold" className="h-4 w-4" />
-                  </a>
-                );
-              })}
-            </div>
+            {SOCIAL_LINKS.length > 0 && (
+              <div className="flex items-center gap-3 pt-2">
+                {SOCIAL_LINKS.map((social) => {
+                  const Icon = SOCIAL_ICONS[social.label];
+                  return (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="flex h-8 w-8 items-center justify-center rounded border border-line text-muted transition-colors hover:border-white/40 hover:text-foreground"
+                    >
+                      <Icon weight="bold" className="h-4 w-4" />
+                    </a>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          {/* Categories Column */}
+          {/* Disciplines Column */}
           <div>
-            <p className="font-mono text-xs font-bold uppercase tracking-wider text-[#9C9992]/80">
-              Disciplines
+            <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-foreground">
+              DISCIPLINES
             </p>
-            <nav className="mt-4 flex flex-col gap-3">
+            <nav className="mt-4 flex flex-col gap-2.5">
               {categories.length > 0 ? (
-                categories.map((cat) => (
-                  <HoverLink
+                categories.map((cat, idx) => (
+                  <Link
                     key={cat.slug}
                     href={`/work/${cat.slug}`}
-                    className="font-sans text-sm font-medium text-[#9C9992] hover:text-[#F2F1ED]"
+                    className="group flex items-center justify-between font-sans text-xs font-medium text-muted transition-colors hover:text-foreground"
                   >
-                    {cat.name}
-                  </HoverLink>
+                    <span>{cat.name}</span>
+                    <span className="font-mono text-[9px] text-muted/40 group-hover:text-foreground">
+                      0{idx + 1}
+                    </span>
+                  </Link>
                 ))
               ) : (
-                <HoverLink
+                <Link
                   href="/work"
-                  className="font-sans text-sm font-medium text-[#9C9992] hover:text-[#F2F1ED]"
+                  className="font-sans text-xs font-medium text-muted hover:text-foreground"
                 >
-                  Work
-                </HoverLink>
+                  Selected Work
+                </Link>
               )}
             </nav>
           </div>
 
           {/* Navigation Column */}
           <div>
-            <p className="font-mono text-xs font-bold uppercase tracking-wider text-[#9C9992]/80">
-              Navigation
+            <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-foreground">
+              INDEX
             </p>
-            <nav className="mt-4 flex flex-col gap-3">
+            <nav className="mt-4 flex flex-col gap-2.5">
               {navigationLinks.map((link) => (
-                <HoverLink
+                <Link
                   key={link.label}
                   href={link.href}
-                  className="font-sans text-sm font-medium text-[#9C9992] hover:text-[#F2F1ED]"
+                  className="font-sans text-xs font-medium text-muted transition-colors hover:text-foreground"
                 >
                   {link.label}
-                </HoverLink>
+                </Link>
               ))}
             </nav>
           </div>
 
           {/* CTA Column */}
           <div className="shrink-0 lg:text-right">
-            <p className="font-mono text-xs font-bold uppercase tracking-wider text-[#9C9992]/80">
-              Get Started
+            <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-foreground">
+              COMMISSIONS
             </p>
             <div className="mt-4">
               <Link
                 href="/contact"
-                className="inline-flex rounded-full bg-accent px-6 py-3 font-sans text-sm font-semibold text-white transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="inline-flex items-center gap-2 rounded border border-foreground bg-foreground px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-background transition-all duration-300 hover:bg-white"
               >
-                Start Your Project
+                <span>INITIATE PROJECT</span>
+                <ArrowUpRight size={12} weight="bold" />
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="mt-16 border-t border-[#2A2A2D] pt-8 flex flex-col gap-3 font-sans text-xs text-[#9C9992] sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} HK Designs. All rights reserved.</p>
-          <p>Graphic Designer &amp; Paint &amp; Roto Artist.</p>
+        {/* Bottom Bar */}
+        <div className="mt-16 border-t border-line/40 pt-8 flex flex-col gap-4 font-mono text-[10px] text-muted/60 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} HK DESIGNS. ALL RIGHTS RESERVED.</p>
+          <p className="text-muted/40">ETV NETWORK {"//"} BROADCAST &amp; VISUAL DESIGN</p>
         </div>
       </div>
     </footer>

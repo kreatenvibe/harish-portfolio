@@ -2,21 +2,17 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 const BASE =
-  "group relative inline-flex items-center gap-4 rounded-full py-1.5 pl-6 pr-1.5 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2";
+  "group relative inline-flex items-center gap-4 rounded-full py-1.5 pl-6 pr-1.5 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2";
 
 const VARIANTS = {
-  // foreground/background (not primary/white) so this inverts correctly
-  // between the light admin theme and the dark public theme — primary
-  // stays a constant near-black in both, which would disappear on a
-  // dark page.
   primary:
     "bg-foreground text-background hover:bg-foreground/90 focus-visible:ring-offset-background",
   accent:
-    "bg-white text-primary hover:bg-white/90 focus-visible:ring-offset-accent",
+    "bg-white text-background hover:bg-white/90 focus-visible:ring-offset-white",
   ghost:
-    "bg-transparent text-foreground hover:text-accent focus-visible:ring-offset-background",
+    "bg-transparent text-foreground hover:text-white focus-visible:ring-offset-background",
   "ghost-dark":
-    "bg-transparent text-white hover:text-white/70 focus-visible:ring-offset-primary",
+    "bg-transparent text-white hover:text-white/70 focus-visible:ring-offset-background",
 } as const;
 
 const ICON_SHELL = {

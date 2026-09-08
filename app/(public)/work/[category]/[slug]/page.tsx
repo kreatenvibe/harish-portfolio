@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 
 import { getProjectBySlug } from "@/lib/actions/project.action";
 import { getCategoryBySlug } from "@/lib/actions/category.action";
@@ -10,6 +10,8 @@ import { getProjectSections } from "@/lib/actions/section.action";
 import { getMediaBySection } from "@/lib/actions/media.action";
 
 import ProjectDetail from "@/components/sections/ProjectDetail";
+import { FrameCounter } from "@/components/frame/FrameCounter";
+import { TrackingPoint } from "@/components/frame/TrackingPoints";
 import type { IMedia, IProjectSection } from "@/database";
 
 export const dynamic = "force-dynamic";
@@ -104,10 +106,7 @@ export async function generateMetadata({
 export default async function ProjectPage({ params }: Props) {
   const { category: categorySlug, slug: projectSlug } = await params;
 
-  const data = await loadProjectAndCategory(
-    categorySlug,
-    projectSlug
-  );
+  const data = await loadProjectAndCategory(categorySlug, projectSlug);
 
   if (!data) {
     notFound();
@@ -115,21 +114,13 @@ export default async function ProjectPage({ params }: Props) {
 
   const { category, project } = data;
 
-  const sectionsResult = await getProjectSections(
-    String(project._id)
-  );
-
-  const sections: IProjectSection[] =
-    sectionsResult.data ?? [];
+  const sectionsResult = await getProjectSections(String(project._id));
+  const sections: IProjectSection[] = sectionsResult.data ?? [];
 
   const sectionsWithMedia = await Promise.all(
     sections.map(async (section) => {
-      const mediaResult = await getMediaBySection(
-        String(section._id)
-      );
-
-      const media: IMedia[] =
-        mediaResult.data ?? [];
+      const mediaResult = await getMediaBySection(String(section._id));
+      const media: IMedia[] = mediaResult.data ?? [];
 
       return {
         ...section,
@@ -140,22 +131,22 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* ===================================================================== */}
-      {/* 1. EDITORIAL HEADER & PROJECT IDENTITY                                */}
-      {/* ===================================================================== */}
-      <header className="border-b border-line bg-background pt-28 pb-16 lg:pt-36 lg:pb-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 space-y-10">
-          {/* Breadcrumbs & Discipline Pill */}
+      {/* 1. EDITORIAL HEADER & METADATA MATRIX */}
+      <header className="relative border-b border-line bg-background pt-24 pb-14 lg:pt-32 lg:pb-20 overflow-hidden">
+        <div className="absolute inset-0 hud-grid opacity-20 pointer-events-none" aria-hidden="true" />
+
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 space-y-8">
+          {/* Breadcrumbs */}
           <div className="flex flex-wrap items-center justify-between gap-4">
             <nav
               aria-label="Breadcrumb"
-              className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted"
+              className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-widest text-muted"
             >
               <Link
                 href="/work"
                 className="transition-colors hover:text-foreground"
               >
-                Work
+                [ WORK ARCHIVE ]
               </Link>
               <span className="text-line">/</span>
               <Link
@@ -165,71 +156,77 @@ export default async function ProjectPage({ params }: Props) {
                 {category.name}
               </Link>
               <span className="text-line">/</span>
-              <span className="text-accent font-semibold">{project.title}</span>
+              <span className="text-foreground">{project.title}</span>
             </nav>
 
-            <span className="inline-flex items-center gap-2 rounded-full bg-surface px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-accent shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-              {category.name}
-            </span>
+            <FrameCounter index="01" total={sectionsWithMedia.length + 1} label="CHAPTER BREAKDOWN" />
           </div>
 
-          {/* Main Title */}
+          {/* Main Project Headline */}
           <div className="space-y-4">
-            <h1 className="font-heading text-6xl font-black uppercase leading-[0.88] tracking-tight text-foreground sm:text-7xl md:text-8xl lg:text-9xl">
+            <h1 className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase leading-[0.88] tracking-tight text-foreground">
               {project.title}
             </h1>
           </div>
 
-          {/* Metadata Bento Strip (Paper surface cards with restrained elevation) */}
-          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 pt-4">
-            <div className="rounded-[var(--radius-card)] bg-surface p-6 shadow-card-resting transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted">
-                Category
+          {/* Technical Metadata Matrix (4-column HUD card strip) */}
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 pt-2">
+            <div className="relative rounded border border-line bg-surface p-5 space-y-2">
+              <span className="frame-corner-tl" aria-hidden="true" />
+              <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-muted">
+                DISCIPLINE
               </p>
-              <p className="mt-3 font-heading text-xl font-bold uppercase text-foreground">
+              <p className="font-heading text-xl font-bold uppercase text-foreground">
                 {category.name}
               </p>
             </div>
 
-            <div className="rounded-[var(--radius-card)] bg-surface p-6 shadow-card-resting transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted">
-                Client / Brand
+            <div className="relative rounded border border-line bg-surface p-5 space-y-2">
+              <span className="frame-corner-tl" aria-hidden="true" />
+              <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-muted">
+                CLIENT / STUDIO
               </p>
-              <p className="mt-3 font-heading text-xl font-bold uppercase text-foreground truncate">
-                {project.client || "Studio Work"}
-              </p>
-            </div>
-
-            <div className="rounded-[var(--radius-card)] bg-surface p-6 shadow-card-resting transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted">
-                Disciplines
-              </p>
-              <p className="mt-3 font-heading text-xl font-bold uppercase text-foreground truncate">
-                {project.tags?.[0] || "Visual Design"}
+              <p className="font-heading text-xl font-bold uppercase text-foreground truncate">
+                {project.client || "STUDIO PRODUCTION"}
               </p>
             </div>
 
-            <div className="rounded-[var(--radius-card)] bg-surface p-6 shadow-card-resting transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted">
-                Deliverables
+            <div className="relative rounded border border-line bg-surface p-5 space-y-2">
+              <span className="frame-corner-tl" aria-hidden="true" />
+              <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-muted">
+                YEAR / TAGS
               </p>
-              <p className="mt-3 font-heading text-xl font-bold uppercase text-accent">
+              <p className="font-heading text-xl font-bold uppercase text-foreground truncate">
+                {project.year ? `${project.year} • ` : ""}{project.tags?.[0] || "VISUAL SYSTEM"}
+              </p>
+            </div>
+
+            <div className="relative rounded border border-line bg-surface p-5 space-y-2">
+              <span className="frame-corner-tl" aria-hidden="true" />
+              <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-muted">
+                CHAPTERS
+              </p>
+              <p className="font-heading text-xl font-bold uppercase text-foreground">
                 {sectionsWithMedia.length > 0
-                  ? `${sectionsWithMedia.length} Case Chapters`
-                  : "Complete Suite"}
+                  ? `0${sectionsWithMedia.length} SECTIONS`
+                  : "01 MASTER PLATE"}
               </p>
             </div>
           </div>
         </div>
       </header>
 
-      {/* ===================================================================== */}
-      {/* 2. HERO COVER IMAGE (Framed Elevation)                                 */}
-      {/* ===================================================================== */}
+      {/* 2. HERO COVER IMAGE PLATE */}
       {project.coverImage?.url && (
-        <section className="mx-auto max-w-7xl px-6 lg:px-8 -mt-6 lg:-mt-10">
-          <div className="relative aspect-16/10 w-full overflow-hidden rounded-[var(--radius-card)] bg-surface shadow-card-hover">
+        <section className="mx-auto max-w-7xl px-6 lg:px-8 py-12 lg:py-16">
+          <div className="relative aspect-16/10 w-full overflow-hidden rounded border border-line bg-surface shadow-2xl">
+            <span className="frame-corner-tl" aria-hidden="true" />
+            <span className="frame-corner-tr" aria-hidden="true" />
+            <span className="frame-corner-bl" aria-hidden="true" />
+            <span className="frame-corner-br" aria-hidden="true" />
+            <TrackingPoint className="top-4 left-4" variant="bracket" />
+            <TrackingPoint className="bottom-4 right-4" variant="cross" />
+
             <Image
               src={project.coverImage.url}
               alt={project.title}
@@ -243,21 +240,19 @@ export default async function ProjectPage({ params }: Props) {
         </section>
       )}
 
-      {/* ===================================================================== */}
-      {/* 3. EDITORIAL CASE STUDY NARRATIVE & SECTIONS                          */}
-      {/* ===================================================================== */}
-      <main className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28 space-y-20 lg:space-y-28">
+      {/* 3. CASE STUDY NARRATIVE & CHAPTERS */}
+      <main className="mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-20 space-y-16 lg:space-y-24">
         {/* Project Overview Narrative */}
         {project.description && (
-          <div className="max-w-4xl space-y-6">
-            <span className="font-mono text-xs font-bold uppercase tracking-widest text-accent">
-              Project Brief &amp; Overview
-            </span>
-            <div className="rounded-[var(--radius-card)] bg-surface p-8 sm:p-12 shadow-card-resting">
-              <p className="font-sans text-lg md:text-xl leading-relaxed text-foreground/85 whitespace-pre-line">
-                {project.description}
-              </p>
-            </div>
+          <div className="relative rounded border border-line bg-surface p-8 sm:p-12 space-y-4">
+            <span className="frame-corner-tl" aria-hidden="true" />
+            <span className="frame-corner-tr" aria-hidden="true" />
+            <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted">
+              CHAPTER 00 // PROJECT BRIEF
+            </p>
+            <p className="font-sans text-lg md:text-xl leading-relaxed text-foreground/90 whitespace-pre-line">
+              {project.description}
+            </p>
           </div>
         )}
 
@@ -268,24 +263,23 @@ export default async function ProjectPage({ params }: Props) {
         />
       </main>
 
-      {/* ===================================================================== */}
-      {/* 4. PROJECT EXIT & INQUIRY FOOTER                                      */}
-      {/* ===================================================================== */}
-      <footer className="border-t border-line bg-surface/50 py-16 lg:py-24">
+      {/* 4. PROJECT EXIT & INQUIRY FOOTER */}
+      <footer className="border-t border-line bg-surface/40 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-6 sm:grid-cols-2">
             {/* Back to Discipline */}
             <Link
               href={`/work/${category.slug}`}
-              className="group flex flex-col justify-between rounded-[var(--radius-card)] bg-surface p-8 shadow-card-resting transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-card-hover"
+              className="group relative flex flex-col justify-between rounded-lg border border-line bg-surface/70 p-8 transition-all duration-300 hover:border-accent hover:bg-surface"
             >
+              <span className="frame-corner-tl" aria-hidden="true" />
               <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-muted">
                 <ArrowLeft weight="bold" className="transition-transform duration-300 group-hover:-translate-x-1" />
-                <span>Return to Category</span>
+                <span>RETURN TO {category.name}</span>
               </div>
               <div className="mt-8">
                 <span className="font-heading text-3xl sm:text-4xl font-bold uppercase text-foreground transition-colors group-hover:text-accent">
-                  {category.name}
+                  [ MORE {category.name} PLATES ]
                 </span>
               </div>
             </Link>
@@ -293,15 +287,16 @@ export default async function ProjectPage({ params }: Props) {
             {/* Next Project / Inquiry */}
             <Link
               href="/contact"
-              className="group flex flex-col justify-between rounded-[var(--radius-card)] bg-surface p-8 shadow-card-resting transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-card-hover"
+              className="group relative flex flex-col justify-between rounded-lg border border-line bg-surface/70 p-8 transition-all duration-300 hover:border-accent hover:bg-surface"
             >
+              <span className="frame-corner-tl" aria-hidden="true" />
               <div className="flex items-center justify-between font-mono text-xs font-semibold uppercase tracking-wider text-muted">
-                <span>Start a Collaboration</span>
-                <ArrowRight weight="bold" className="transition-transform duration-300 group-hover:translate-x-1 text-accent" />
+                <span>INITIATE SIMILAR PROJECT</span>
+                <ArrowUpRight weight="bold" className="transition-transform duration-300 group-hover:translate-x-1 text-accent" />
               </div>
               <div className="mt-8">
                 <span className="font-heading text-3xl sm:text-4xl font-bold uppercase text-foreground transition-colors group-hover:text-accent">
-                  Work With Me
+                  COMMISSION STUDIO WORK →
                 </span>
               </div>
             </Link>

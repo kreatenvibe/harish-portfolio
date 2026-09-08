@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDown, ArrowUpRight, List, X } from "@phosphor-icons/react";
+import { Timecode } from "@/components/frame/Timecode";
 import type { ICategory } from "@/database";
 
 export default function Navbar({
@@ -13,27 +14,48 @@ export default function Navbar({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [workDropdownOpen, setWorkDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname() || "";
 
   const isWorkActive = pathname.startsWith("/work");
   const isAboutActive = pathname.startsWith("/about");
+  const isServicesActive = pathname.startsWith("/services");
   const isBlogActive = pathname.startsWith("/blog");
   const isContactActive = pathname.startsWith("/contact");
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-background/60 backdrop-blur-md border-b border-foreground/5">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="z-50 relative flex items-center font-heading text-xl font-bold tracking-tight text-foreground"
-          >
-            HK<span className="text-accent">Designs</span>
-          </Link>
+      <header
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+          scrolled
+            ? "hud-glass border-b border-line py-3"
+            : "bg-[#0A0A0B]/90 backdrop-blur-md border-b border-line/40 py-4"
+        }`}
+      >
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8">
+          {/* Logo & Callout */}
+          <div className="flex items-center gap-6">
+            <Link
+              href="/"
+              className="group relative flex items-center font-heading text-xl font-bold tracking-tight text-foreground transition-opacity hover:opacity-80"
+            >
+              <span>HK DESIGNS</span>
+              <span className="ml-3 font-mono text-[9px] tracking-widest text-muted/60 uppercase hidden sm:inline-block">
+                {"//"} VISUAL DESIGN × PAINT &amp; ROTO
+              </span>
+            </Link>
+          </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden items-center gap-8 md:flex">
+          {/* Desktop Navigation Links */}
+          <div className="hidden items-center gap-7 md:flex">
             {/* Work dropdown */}
             <div
               className="relative"
@@ -42,51 +64,54 @@ export default function Navbar({
             >
               <Link
                 href="/work"
-                className={`flex items-center gap-1 font-sans text-sm font-medium transition-colors ${
+                className={`flex items-center gap-1.5 font-sans text-xs font-semibold uppercase tracking-widest transition-colors ${
                   isWorkActive
-                    ? "text-accent"
-                    : "text-foreground hover:text-accent"
+                    ? "text-foreground font-bold"
+                    : "text-muted hover:text-foreground"
                 }`}
               >
-                Work
+                <span>Work</span>
                 {categories.length > 0 && (
                   <CaretDown
-                    size={13}
+                    size={11}
                     weight="bold"
                     className={`transition-transform duration-200 ${
-                      workDropdownOpen ? "rotate-180" : ""
+                      workDropdownOpen ? "rotate-180 text-foreground" : ""
                     }`}
                   />
                 )}
               </Link>
 
               {categories.length > 0 && workDropdownOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56">
-                  <div className="rounded-xl border border-foreground/10 bg-background/95 p-2 shadow-xl backdrop-blur-xl">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-60">
+                  <div className="rounded border border-line bg-[#161619] p-2 shadow-2xl backdrop-blur-2xl">
                     <Link
                       href="/work"
-                      className={`block rounded-lg px-3.5 py-2 font-sans text-xs font-semibold uppercase tracking-wider transition-colors ${
+                      className={`block rounded px-3.5 py-2 font-mono text-[10px] font-semibold uppercase tracking-wider transition-colors ${
                         pathname === "/work"
-                          ? "bg-foreground/10 text-accent"
-                          : "text-muted hover:bg-foreground/5 hover:text-foreground"
+                          ? "bg-white/10 text-foreground"
+                          : "text-muted hover:bg-white/5 hover:text-foreground"
                       }`}
                     >
-                      All Projects
+                      [ ALL PROJECTS ]
                     </Link>
-                    <div className="my-1.5 h-px bg-foreground/10" />
-                    {categories.map((cat) => {
+                    <div className="my-1.5 h-px bg-line/60" />
+                    {categories.map((cat, idx) => {
                       const isActive = pathname === `/work/${cat.slug}`;
                       return (
                         <Link
                           key={cat.slug}
                           href={`/work/${cat.slug}`}
-                          className={`block rounded-lg px-3.5 py-2 font-sans text-sm font-medium transition-colors ${
+                          className={`flex items-center justify-between rounded px-3.5 py-2 font-sans text-xs font-medium transition-colors ${
                             isActive
-                              ? "bg-accent/15 text-accent"
-                              : "text-foreground/80 hover:bg-foreground/5 hover:text-foreground"
+                              ? "bg-white/10 text-foreground font-semibold"
+                              : "text-muted hover:bg-white/5 hover:text-foreground"
                           }`}
                         >
-                          {cat.name}
+                          <span>{cat.name}</span>
+                          <span className="font-mono text-[9px] text-muted/40">
+                            0{idx + 1}
+                          </span>
                         </Link>
                       );
                     })}
@@ -96,11 +121,22 @@ export default function Navbar({
             </div>
 
             <Link
+              href="/services"
+              className={`font-sans text-xs font-semibold uppercase tracking-widest transition-colors ${
+                isServicesActive
+                  ? "text-foreground font-bold"
+                  : "text-muted hover:text-foreground"
+              }`}
+            >
+              Services
+            </Link>
+
+            <Link
               href="/about"
-              className={`font-sans text-sm font-medium transition-colors ${
+              className={`font-sans text-xs font-semibold uppercase tracking-widest transition-colors ${
                 isAboutActive
-                  ? "text-accent"
-                  : "text-foreground hover:text-accent"
+                  ? "text-foreground font-bold"
+                  : "text-muted hover:text-foreground"
               }`}
             >
               About
@@ -108,10 +144,10 @@ export default function Navbar({
 
             <Link
               href="/blog"
-              className={`font-sans text-sm font-medium transition-colors ${
+              className={`font-sans text-xs font-semibold uppercase tracking-widest transition-colors ${
                 isBlogActive
-                  ? "text-accent"
-                  : "text-foreground hover:text-accent"
+                  ? "text-foreground font-bold"
+                  : "text-muted hover:text-foreground"
               }`}
             >
               Blog
@@ -119,69 +155,75 @@ export default function Navbar({
 
             <Link
               href="/contact"
-              className={`font-sans text-sm font-medium transition-colors ${
+              className={`font-sans text-xs font-semibold uppercase tracking-widest transition-colors ${
                 isContactActive
-                  ? "text-accent"
-                  : "text-foreground hover:text-accent"
+                  ? "text-foreground font-bold"
+                  : "text-muted hover:text-foreground"
               }`}
             >
               Contact
             </Link>
           </div>
 
-          {/* Desktop CTA */}
-          <Link
-            href="/contact"
-            className="hidden rounded-full bg-foreground px-5 py-2.5 font-sans text-sm font-semibold text-background transition-transform hover:-translate-y-0.5 md:block ml-4"
-          >
-            Start Your Project
-          </Link>
+          {/* Timecode & CTA */}
+          <div className="hidden lg:flex items-center gap-6">
+            <Timecode />
+
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded border border-line bg-surface px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-wider text-foreground transition-all duration-300 hover:border-white/40 hover:bg-white/10"
+            >
+              <span>INQUIRE</span>
+              <ArrowUpRight size={11} weight="bold" />
+            </Link>
+          </div>
 
           {/* Mobile Hamburger Button */}
-          <button
-            className="flex flex-col justify-center items-center w-8 h-8 space-y-1.5 md:hidden z-50 relative focus:outline-none"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle Menu"
-          >
-            <span
-              className={`block w-6 h-0.5 bg-foreground transition-transform duration-300 ${
-                isOpen ? "translate-y-2 rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-foreground transition-opacity duration-300 ${
-                isOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-foreground transition-transform duration-300 ${
-                isOpen ? "-translate-y-2 -rotate-45" : ""
-              }`}
-            />
-          </button>
+          <div className="flex items-center gap-3 md:hidden">
+            <button
+              className="flex h-9 w-9 items-center justify-center rounded border border-line bg-surface text-foreground transition-colors hover:border-white/40"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle Menu"
+            >
+              {isOpen ? <X size={18} weight="bold" /> : <List size={18} weight="bold" />}
+            </button>
+          </div>
         </nav>
       </header>
 
-      {/* Mobile Offcanvas Menu */}
+      {/* Mobile Drawer */}
       <div
-        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-40 bg-black/80 backdrop-blur-md transition-opacity duration-300 md:hidden ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsOpen(false)}
       />
 
       <div
-        className={`fixed top-0 right-0 z-50 h-screen w-4/5 max-w-sm bg-background/95 backdrop-blur-xl shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col px-6 py-20 overflow-y-auto ${
+        className={`fixed top-0 right-0 z-50 h-screen w-4/5 max-w-sm border-l border-line bg-[#0E0E10] backdrop-blur-2xl shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between px-6 py-16 overflow-y-auto ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between border-b border-line pb-4">
+            <span className="font-mono text-xs font-bold uppercase tracking-widest text-foreground">
+              NAVIGATION
+            </span>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-muted hover:text-foreground"
+              aria-label="Close menu"
+            >
+              <X size={20} weight="bold" />
+            </button>
+          </div>
+
           {/* Work & Categories */}
           <div>
             <Link
               href="/work"
-              className={`font-heading text-2xl font-bold transition-colors ${
-                isWorkActive ? "text-accent" : "text-foreground hover:text-accent"
+              className={`font-heading text-2xl font-bold uppercase transition-colors ${
+                isWorkActive ? "text-foreground font-black" : "text-muted hover:text-foreground"
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -189,14 +231,21 @@ export default function Navbar({
             </Link>
 
             {categories.length > 0 && (
-              <div className="mt-2.5 ml-3 flex flex-col gap-2 border-l-2 border-foreground/10 pl-3">
+              <div className="mt-3 ml-3 flex flex-col gap-2.5 border-l border-line pl-3.5">
+                <Link
+                  href="/work"
+                  className="font-mono text-xs uppercase tracking-wider text-muted hover:text-foreground"
+                  onClick={() => setIsOpen(false)}
+                >
+                  [ All Projects ]
+                </Link>
                 {categories.map((cat) => (
                   <Link
                     key={cat.slug}
                     href={`/work/${cat.slug}`}
                     className={`font-sans text-sm font-medium transition-colors ${
                       pathname === `/work/${cat.slug}`
-                        ? "text-accent font-semibold"
+                        ? "text-foreground font-semibold"
                         : "text-muted hover:text-foreground"
                     }`}
                     onClick={() => setIsOpen(false)}
@@ -209,9 +258,19 @@ export default function Navbar({
           </div>
 
           <Link
+            href="/services"
+            className={`font-heading text-2xl font-bold uppercase transition-colors ${
+              isServicesActive ? "text-foreground" : "text-muted hover:text-foreground"
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            Services
+          </Link>
+
+          <Link
             href="/about"
-            className={`font-heading text-2xl font-bold transition-colors ${
-              isAboutActive ? "text-accent" : "text-foreground hover:text-accent"
+            className={`font-heading text-2xl font-bold uppercase transition-colors ${
+              isAboutActive ? "text-foreground" : "text-muted hover:text-foreground"
             }`}
             onClick={() => setIsOpen(false)}
           >
@@ -220,8 +279,8 @@ export default function Navbar({
 
           <Link
             href="/blog"
-            className={`font-heading text-2xl font-bold transition-colors ${
-              isBlogActive ? "text-accent" : "text-foreground hover:text-accent"
+            className={`font-heading text-2xl font-bold uppercase transition-colors ${
+              isBlogActive ? "text-foreground" : "text-muted hover:text-foreground"
             }`}
             onClick={() => setIsOpen(false)}
           >
@@ -230,20 +289,23 @@ export default function Navbar({
 
           <Link
             href="/contact"
-            className={`font-heading text-2xl font-bold transition-colors ${
-              isContactActive ? "text-accent" : "text-foreground hover:text-accent"
+            className={`font-heading text-2xl font-bold uppercase transition-colors ${
+              isContactActive ? "text-foreground" : "text-muted hover:text-foreground"
             }`}
             onClick={() => setIsOpen(false)}
           >
             Contact
           </Link>
+        </div>
 
+        <div className="border-t border-line pt-6">
           <Link
             href="/contact"
-            className="mt-6 rounded-full bg-foreground px-6 py-3.5 text-center font-sans text-sm font-semibold text-background transition-transform active:scale-95"
+            className="flex items-center justify-center gap-2 rounded border border-line bg-surface py-3 text-center font-mono text-xs font-semibold uppercase tracking-wider text-foreground transition-colors hover:bg-white/10 hover:border-white/40"
             onClick={() => setIsOpen(false)}
           >
-            Start Your Project
+            <span>Start Your Project</span>
+            <ArrowUpRight size={14} weight="bold" />
           </Link>
         </div>
       </div>

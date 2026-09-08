@@ -28,9 +28,9 @@ export function FaqAccordion({ faqs }: { faqs: Faq[] }) {
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="grid w-full grid-cols-[2.5rem_1fr_2rem] items-start gap-x-5 py-7 text-left hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+                className="grid w-full grid-cols-[2.5rem_1fr_2rem] items-start gap-x-5 py-7 text-left hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
               >
-                <span className="pt-1 text-sm font-semibold text-accent">
+                <span className="pt-1 text-sm font-semibold text-muted font-mono">
                   0{index + 1}
                 </span>
 
@@ -39,7 +39,7 @@ export function FaqAccordion({ faqs }: { faqs: Faq[] }) {
                 </span>
 
                 <span
-                  className={`mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-foreground/5 text-accent ${
+                  className={`mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-foreground/5 text-foreground ${
                     isOpen ? "rotate-45" : "rotate-0"
                   }`}
                 >

@@ -1,204 +1,165 @@
 import Link from "next/link";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { CareerTimeline } from "@/components/sections/CareerTimeline";
+import { TechnicalLayerStack } from "@/components/sections/TechnicalLayerStack";
+import { FrameCounter } from "@/components/frame/FrameCounter";
+import { TrackingPoint } from "@/components/frame/TrackingPoints";
+
+export const metadata = {
+  title: "About — Harish Kumar G",
+  description:
+    "Graphic Designer and Paint & Roto artist with experience in broadcast media, brand systems, and VFX production.",
+};
 
 const approachPoints = [
   {
     number: "01",
-    title: "Look closely first.",
+    title: "Look Closely First.",
     description:
-      "Whether it's a plate that needs a wire removed or a brand that needs a logo, the work starts with understanding exactly what's needed and what “clean” or “on-brand” looks like for that project.",
+      "Whether it is a plate that needs a wire rig removed or a brand that needs an identity system, the work begins by understanding the foundational requirements and what flawless delivery looks like for that medium.",
   },
   {
     number: "02",
-    title: "Work with purpose.",
+    title: "Work With Purpose.",
     description:
-      "Every pass on a plate and every design decision should earn its place. The goal is a result that holds up under close review, not just something that looks finished at a glance.",
+      "Every pass on a plate and every typographic decision must earn its place. The goal is a clean result that holds up under close scrutiny, not just something that looks finished at a distance.",
   },
   {
     number: "03",
-    title: "Stay collaborative.",
+    title: "Stay Collaborative.",
     description:
-      "Good VFX and design work rarely happens in isolation. I share progress early, take feedback from senior artists and clients seriously, and adjust rather than defend a first pass.",
-  },
-];
-
-const experience = [
-  {
-    role: "Graphic Designer",
-    org: "ETV Network",
-    period: "2026 — Feb",
-    description:
-      "Creating visually engaging designs for broadcast and digital platforms, alongside freelance Paint & Roto work on web series productions.",
-  },
-  {
-    role: "Paint & Roto Artist",
-    org: "Mantrick Studios",
-    period: "2025 — 1 year",
-    description:
-      "Paint prep and rotoscopy work — clean plates, wire removals, and accurate roto mattes, collaborating with senior artists to improve workflow and shot efficiency.",
-  },
-  {
-    role: "Graphic Designer",
-    org: "Freelancing",
-    period: "2019 — 2025",
-    description:
-      "Branding assets, posters, and visual materials for a range of clients, matching each brand's identity and improving their visual communication.",
-  },
-  {
-    role: "Game Developer",
-    org: "APSSDC",
-    period: "2018 — 2019",
-    description:
-      "Gameplay features, core programming, and 2D art assets, working within a team to deliver functional game content.",
+      "Great broadcast, VFX, and design work relies on clear communication. I share work-in-progress early, absorb feedback from senior leads and clients, and refine iteratively.",
   },
 ];
 
 export default function AboutPage() {
   return (
-    <main className="bg-background text-foreground">
-      {/* Hero */}
-      <section className="mx-auto max-w-7xl px-6 pb-24 pt-20 lg:px-8 lg:pb-32 lg:pt-32">
-        <div className="max-w-5xl">
-          <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            About Harish
-          </p>
+    <main className="min-h-screen bg-background text-foreground">
+      {/* Editorial Header */}
+      <section className="relative border-b border-line px-6 pt-24 pb-16 lg:px-8 lg:pt-32 lg:pb-24 overflow-hidden">
+        <div className="absolute inset-0 hud-grid opacity-20 pointer-events-none" aria-hidden="true" />
 
-          <h1 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl">
-            Detail-driven work, whichever the medium.
-          </h1>
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-4xl space-y-6">
+            <FrameCounter index="01" total={3} label="IDENTITY DOSSIER" />
+
+            <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-foreground leading-[0.92]">
+              Harish Kumar G
+            </h1>
+
+            <p className="font-mono text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted">
+              GRAPHIC DESIGNER × PAINT &amp; ROTO ARTIST // ETV NETWORK
+            </p>
+
+            <p className="font-sans text-lg sm:text-xl leading-relaxed text-muted max-w-3xl">
+              Detail-oriented visual designer and rotoscopy/paint artist with hands-on
+              experience across broadcast media, commercial branding, and visual effects production pipelines.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Story */}
-      <section className="bg-surface text-foreground border-b border-line">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-          <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-24">
-            {/* Section heading */}
-            <div>
-              <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                About
-              </p>
+      {/* Story & Background Frame */}
+      <section className="border-b border-line bg-surface/40 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="relative rounded-lg border border-line bg-surface/70 p-8 sm:p-12 lg:p-16 overflow-hidden">
+            <span className="frame-corner-tl" aria-hidden="true" />
+            <span className="frame-corner-tr" aria-hidden="true" />
+            <span className="frame-corner-bl" aria-hidden="true" />
+            <span className="frame-corner-br" aria-hidden="true" />
+            <TrackingPoint className="top-6 right-6" variant="bracket" label="BIO_01" />
 
-              <h2 className="mt-5 font-heading text-4xl font-bold leading-tight sm:text-5xl text-foreground">
-                Harish Kumar G
-              </h2>
-            </div>
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 items-start">
+              <div>
+                <p className="font-mono text-xs font-bold uppercase tracking-widest text-accent">
+                  BACKGROUND &amp; PRACTICE
+                </p>
+                <h2 className="mt-3 font-heading text-3xl sm:text-4xl font-bold uppercase text-foreground">
+                  Disciplined craft across pixels and physical media.
+                </h2>
+              </div>
 
-            {/* Copy */}
-            <div className="space-y-8 font-sans text-lg leading-8 text-muted">
-              <p>
-                I&apos;m a Paint &amp; Roto artist and graphic designer with
-                hands-on experience across broadcast media, VFX production,
-                and freelance design and web series work.
-              </p>
-
-              <p>
-                I&apos;m currently working as a Graphic Designer at ETV
-                Network, while continuing to take on freelance Paint &amp;
-                Roto projects — delivering clean plates, precise roto mattes,
-                and high-quality visual output.
-              </p>
-
-              <p>
-                My background spans animation, VFX, and even game
-                development, which gives me a blend of technical discipline
-                and creative range that I bring to every project, whether
-                it&apos;s frame-by-frame cleanup work or a brand identity
-                built from the ground up.
-              </p>
-
-              <p className="font-heading text-2xl font-semibold leading-tight text-foreground sm:text-3xl">
-                I&apos;m committed to producing visually compelling work and
-                continuously growing within the VFX and design industry.
-              </p>
+              <div className="space-y-6 font-sans text-base sm:text-lg leading-relaxed text-muted">
+                <p>
+                  I am a Paint &amp; Roto artist and graphic designer with hands-on experience
+                  across broadcast television, VFX production, and independent client design.
+                </p>
+                <p>
+                  Currently working as a Graphic Designer at ETV Network, I create visually
+                  engaging design systems and broadcast graphics, alongside freelance Paint &amp;
+                  Roto work on web series productions—delivering clean plates, precise roto mattes, and high-fidelity output.
+                </p>
+                <p>
+                  My background spans animation, visual effects, and game development, providing a
+                  unique combination of systematic technical discipline and creative range.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Experience */}
-      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32 border-b border-line">
-        <div className="max-w-4xl">
-          <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            Experience
-          </p>
+      {/* Production Career Tracks */}
+      <CareerTimeline isStandalone />
 
-          <h2 className="mt-6 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            From broadcast VFX to brand design.
-          </h2>
-        </div>
+      {/* Technical Compositing Layer Stack */}
+      <TechnicalLayerStack />
 
-        <div className="mt-16 divide-y divide-foreground/10 border-t border-foreground/10">
-          {experience.map((item) => (
-            <div
-              key={`${item.role}-${item.org}`}
-              className="grid gap-2 py-8 sm:grid-cols-[1fr_2fr] sm:gap-8"
-            >
-              <div>
-                <p className="font-heading text-lg font-semibold text-foreground">
-                  {item.role}
-                </p>
-                <p className="mt-1 font-sans text-sm text-muted">
-                  {item.org} · {item.period}
-                </p>
-              </div>
-              <p className="font-sans leading-7 text-muted">{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Approach */}
-      <section className="bg-surface border-b border-line">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-          <div className="max-w-4xl">
-            <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-              Our Approach
-            </p>
-
-            <h2 className="mt-6 font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-              Look closely first. Work with purpose. Stay collaborative.
+      {/* Working Principles */}
+      <section className="border-b border-line bg-surface/30 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="max-w-3xl space-y-4 mb-14 lg:mb-18">
+            <FrameCounter index="03" total={3} label="METHODOLOGY" />
+            <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-foreground">
+              Production Philosophy.
             </h2>
           </div>
 
-          <div className="mt-16 grid gap-14 lg:grid-cols-3 lg:gap-16">
+          <div className="grid gap-8 md:grid-cols-3">
             {approachPoints.map((point) => (
-              <article key={point.number}>
-                <span className="font-heading text-5xl font-bold text-accent">
-                  {point.number}
+              <div
+                key={point.number}
+                className="relative rounded-lg border border-line/70 bg-surface/60 p-8 space-y-4"
+              >
+                <span className="frame-corner-tl" aria-hidden="true" />
+                <span className="frame-corner-tr" aria-hidden="true" />
+                <span className="font-mono text-xs font-bold uppercase tracking-widest text-accent">
+                  STEP_{point.number}
                 </span>
-
-                <h3 className="mt-6 font-heading text-2xl font-semibold">
+                <h3 className="font-heading text-2xl font-bold uppercase text-foreground">
                   {point.title}
                 </h3>
-
-                <p className="mt-4 font-sans leading-7 text-muted">
+                <p className="font-sans text-sm sm:text-base leading-relaxed text-muted">
                   {point.description}
                 </p>
-              </article>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-background">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-          <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                Let&apos;s Work Together
-              </p>
-
-              <h2 className="mt-4 font-heading text-4xl font-bold leading-tight sm:text-5xl">
-                Have a project in mind?
+      {/* Direct CTA */}
+      <section className="py-20 lg:py-28 bg-background">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 border border-line rounded-lg bg-surface/60 p-8 sm:p-12">
+            <div className="space-y-2">
+              <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted">
+                NEXT SEQUENCE
+              </span>
+              <h2 className="font-heading text-3xl sm:text-4xl font-bold uppercase text-foreground">
+                Ready to initiate a project?
               </h2>
+              <p className="font-sans text-sm text-muted">
+                Let us discuss your project deliverables, shot plates, or branding requirements.
+              </p>
             </div>
 
             <Link
               href="/contact"
-              className="inline-flex w-fit shrink-0 rounded-full bg-accent px-7 py-3.5 font-sans text-sm font-semibold text-white"
+              className="inline-flex items-center gap-2 rounded border border-foreground bg-foreground px-7 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-background transition-all hover:bg-white shrink-0"
             >
-              Start Your Project
+              <span>START YOUR PROJECT</span>
+              <ArrowUpRight size={14} weight="bold" />
             </Link>
           </div>
         </div>

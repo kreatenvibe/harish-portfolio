@@ -5,6 +5,7 @@ import { getCategoryBySlug } from "@/lib/actions/category.action";
 import { getProjects } from "@/lib/actions/project.action";
 import ProjectCard from "@/components/cards/ProjectCard";
 import FilterBar from "@/components/filters/FilterBar";
+import { FrameCounter } from "@/components/frame/FrameCounter";
 
 export const dynamic = "force-dynamic";
 
@@ -26,10 +27,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const category = result.data;
   return {
-    title: `${category.name} — Work`,
+    title: `${category.name} — Work Archive`,
     description:
       category.description ||
-      `Explore selected ${category.name} projects by Harish Kumar G.`,
+      `Explore selected ${category.name} portfolio plates by Harish Kumar G.`,
   };
 }
 
@@ -82,66 +83,78 @@ export default async function CategoryWorkPage({ params, searchParams }: Props) 
   }
 
   return (
-    <main className="bg-background text-foreground">
-      {/* Hero & Breadcrumb */}
-      <section className="mx-auto max-w-7xl px-6 pb-16 pt-20 lg:px-8 lg:pb-20 lg:pt-32">
-        <nav
-          aria-label="Breadcrumb"
-          className="mb-8 flex items-center font-sans text-sm font-semibold uppercase tracking-[0.15em] text-muted"
-        >
-          <Link
-            href="/work"
-            className="transition-colors hover:text-foreground"
+    <main className="min-h-screen bg-background text-foreground">
+      {/* Category Header */}
+      <section className="relative border-b border-line px-6 pt-24 pb-12 lg:px-8 lg:pt-32 lg:pb-16 overflow-hidden">
+        <div className="absolute inset-0 hud-grid opacity-20 pointer-events-none" aria-hidden="true" />
+
+        <div className="mx-auto max-w-7xl space-y-6">
+          {/* Breadcrumb Navigation */}
+          <nav
+            aria-label="Breadcrumb"
+            className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-widest text-muted"
           >
-            Work
-          </Link>
-          <span className="mx-3 text-foreground/20">/</span>
-          <span className="text-accent">{category.name}</span>
-        </nav>
+            <Link
+              href="/work"
+              className="transition-colors hover:text-foreground"
+            >
+              [ WORK ARCHIVE ]
+            </Link>
+            <span className="text-line">/</span>
+            <span className="text-foreground">{category.name}</span>
+          </nav>
 
-        <div className="max-w-4xl">
-          <h1 className="font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
-            {category.name}
-          </h1>
+          <div className="max-w-4xl space-y-4">
+            <FrameCounter index="02" total={7} label={`DISCIPLINE // ${category.name}`} />
 
-          {category.description && (
-            <p className="mt-6 max-w-2xl font-sans text-lg leading-8 text-muted sm:text-xl">
-              {category.description}
-            </p>
+            <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-foreground leading-[0.92]">
+              {category.name}
+            </h1>
+
+            {category.description && (
+              <p className="font-sans text-base sm:text-lg leading-relaxed text-muted max-w-2xl">
+                {category.description}
+              </p>
+            )}
+          </div>
+
+          {/* Secondary Filter Bar */}
+          {(tagFilters.length > 0 || query) && (
+            <div className="pt-6">
+              <FilterBar
+                filters={tagFilters}
+                searchPlaceholder={`Search within ${category.name.toLowerCase()}…`}
+              />
+            </div>
           )}
         </div>
-
-        {/* Secondary Filter Bar */}
-        {(tagFilters.length > 0 || query) && (
-          <div className="mt-12">
-            <FilterBar
-              filters={tagFilters}
-              searchPlaceholder={`Search ${category.name.toLowerCase()}…`}
-            />
-          </div>
-        )}
       </section>
 
       {/* Projects Grid */}
-      <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-8 lg:pb-32">
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
         {projects.length === 0 ? (
-          <div className="rounded-xl border border-foreground/10 bg-surface/50 p-12 text-center">
-            <p className="font-sans text-lg text-muted">
+          <div className="relative rounded border border-line bg-surface p-16 text-center space-y-4">
+            <span className="frame-corner-tl" aria-hidden="true" />
+            <span className="frame-corner-tr" aria-hidden="true" />
+            <p className="font-mono text-xs uppercase tracking-widest text-foreground font-semibold">
+              NO PLATES PUBLISHED
+            </p>
+            <p className="font-sans text-base text-muted">
               {query || filter
-                ? "No projects match your filter criteria."
-                : `No ${category.name.toLowerCase()} projects published yet.`}
+                ? "No projects match your current filter criteria."
+                : `No ${category.name.toLowerCase()} projects are currently published.`}
             </p>
             {(query || filter) && (
               <Link
                 href={`/work/${category.slug}`}
-                className="mt-4 inline-block font-sans text-sm font-semibold text-accent hover:underline"
+                className="inline-block rounded border border-line bg-surface px-4 py-2 font-mono text-xs uppercase tracking-wider text-foreground hover:border-white/40"
               >
-                Clear filters
+                Clear Search Filters
               </Link>
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {projects.map((project, index) => (
               <ProjectCard
                 key={String(project._id)}
@@ -152,33 +165,6 @@ export default async function CategoryWorkPage({ params, searchParams }: Props) 
             ))}
           </div>
         )}
-      </section>
-
-      {/* Category CTA */}
-      <section className="bg-surface">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-          <div className="max-w-4xl">
-            <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-              Start a Project
-            </p>
-
-            <h2 className="mt-6 font-heading text-4xl font-bold leading-[1] tracking-tight sm:text-5xl lg:text-6xl">
-              Need {category.name.toLowerCase()} for your brand or studio?
-            </h2>
-
-            <p className="mt-6 max-w-2xl font-sans text-lg leading-8 text-muted">
-              Let&apos;s discuss your requirements, timeline, and how we can
-              bring high quality and attention to detail to your project.
-            </p>
-
-            <Link
-              href="/contact"
-              className="mt-8 inline-flex rounded-full bg-accent px-7 py-3.5 font-sans text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
-            >
-              Get In Touch
-            </Link>
-          </div>
-        </div>
       </section>
     </main>
   );

@@ -1,76 +1,89 @@
-import Link from "next/link";
-import { EnvelopeSimple, Phone } from "@phosphor-icons/react/dist/ssr";
+import { EnvelopeSimple, Phone, MapPin } from "@phosphor-icons/react/dist/ssr";
 import ContactForm from "@/components/sections/ContactForm";
+import { FrameCounter } from "@/components/frame/FrameCounter";
+import { TrackingPoint } from "@/components/frame/TrackingPoints";
 import { CONTACT } from "@/lib/contact";
+
+export const metadata = {
+  title: "Contact — Initiate Project",
+  description:
+    "Get in touch with Harish Kumar G for brand identity, packaging, print design, or VFX paint & roto commissions.",
+};
 
 export default function ContactPage() {
   return (
-    <main className="bg-background text-foreground">
-      {/* Hero */}
-      <section className="mx-auto max-w-7xl px-6 pb-20 pt-20 lg:px-8 lg:pb-28 lg:pt-32">
-        <div className="grid gap-16 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
-          {/* Intro */}
-          <div>
-            <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-              Start Your Project
-            </p>
+    <main className="min-h-screen bg-background text-foreground">
+      {/* Header */}
+      <section className="relative border-b border-line px-6 pt-24 pb-16 lg:px-8 lg:pt-32 lg:pb-24 overflow-hidden">
+        <div className="absolute inset-0 hud-grid opacity-20 pointer-events-none" aria-hidden="true" />
 
-            <h1 className="mt-6 font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
-              Tell me about your project.
-            </h1>
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 items-start">
+            {/* Intro & Direct Channels */}
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <FrameCounter index="07" total={7} label="CONTACT // INITIATE" />
 
-            <p className="mt-8 max-w-xl font-sans text-lg leading-8 text-muted sm:text-xl">
-              You do not need every detail figured out yet. Tell me about the
-              footage or brief, the deadline you&apos;re working with, and
-              what you have in mind. I&apos;ll help you work out the right
-              approach.
-            </p>
+                <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-foreground leading-[0.92]">
+                  Initiate a Project.
+                </h1>
 
-            <div className="mt-10">
-              <p className="font-sans text-sm font-semibold text-foreground">
-                Prefer to reach out directly?
-              </p>
+                <p className="font-sans text-base sm:text-lg leading-relaxed text-muted">
+                  Share your project scope, shot plates, or branding deliverables.
+                  I will review the requirements and follow up with estimated delivery timelines and strategic approach.
+                </p>
+              </div>
 
-              <div className="mt-4 flex flex-col gap-3">
-                <a
-                  href={`mailto:${CONTACT.email}`}
-                  className="inline-flex items-center gap-2 font-sans text-sm font-semibold text-accent"
-                >
-                  <EnvelopeSimple weight="bold" className="shrink-0" />
-                  {CONTACT.email}
-                </a>
-                <a
-                  href={CONTACT.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-sans text-sm font-semibold text-accent"
-                >
-                  <Phone weight="bold" className="shrink-0" />
-                  {CONTACT.phoneDisplay} (WhatsApp)
-                </a>
+              {/* Direct Info Box */}
+              <div className="relative rounded-lg border border-line bg-surface/60 p-6 space-y-5 font-mono text-xs">
+                <span className="frame-corner-tl" aria-hidden="true" />
+                <span className="frame-corner-tr" aria-hidden="true" />
+                <TrackingPoint className="top-4 right-4" variant="cross" />
+
+                <div className="border-b border-line/40 pb-3 text-foreground font-semibold tracking-widest uppercase text-[10px]">
+                  DIRECT CHANNELS
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-1">
+                    <span className="text-muted/60 text-[10px] uppercase">EMAIL</span>
+                    <a
+                      href={`mailto:${CONTACT.email}`}
+                      className="flex items-center gap-2 text-foreground font-semibold hover:underline"
+                    >
+                      <EnvelopeSimple size={15} weight="bold" />
+                      <span>{CONTACT.email}</span>
+                    </a>
+                  </div>
+
+                  <div className="space-y-1">
+                    <span className="text-muted/60 text-[10px] uppercase">PHONE / WHATSAPP</span>
+                    <a
+                      href={CONTACT.whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-foreground font-semibold hover:underline"
+                    >
+                      <Phone size={15} weight="bold" />
+                      <span>{CONTACT.phoneDisplay} (WhatsApp)</span>
+                    </a>
+                  </div>
+
+                  <div className="space-y-1">
+                    <span className="text-muted/60 text-[10px] uppercase">BASE LOCATION</span>
+                    <div className="flex items-center gap-2 text-muted">
+                      <MapPin size={15} weight="bold" />
+                      <span className="font-sans text-xs">Hyderabad, India • ETV Network</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Form */}
-          <ContactForm />
-        </div>
-      </section>
-
-      {/* Bottom CTA */}
-      <section className="bg-surface">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-24">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="font-heading text-3xl font-bold sm:text-4xl">
-              Have a project to discuss?
-            </h2>
-
-            <Link
-              href="#project-form"
-              className="inline-flex w-fit rounded-full bg-foreground px-7 py-3.5 font-sans text-sm font-semibold text-background"
-            >
-              Get In Touch
-            </Link>
+            {/* Form Column */}
+            <div>
+              <ContactForm />
+            </div>
           </div>
         </div>
       </section>

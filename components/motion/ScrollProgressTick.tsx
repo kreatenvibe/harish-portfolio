@@ -53,18 +53,18 @@ export function ScrollProgressTick() {
         <div className="absolute right-0 top-[60%] w-1.5 h-px bg-line" />
         <div className="absolute right-0 top-[100%] w-1.5 h-px bg-line" />
 
-        {/* Active Red Track Indicator */}
+        {/* Active Track Indicator */}
         <div
           ref={barRef}
-          className="absolute right-0 top-0 h-[25%] w-[2px] bg-accent will-change-transform shadow-[0_0_8px_rgba(229,57,53,0.4)]"
+          className="absolute right-0 top-0 h-[25%] w-[2px] bg-foreground will-change-transform"
         />
 
         {/* Dynamic Monospace Percent Indicator */}
-        <div className="flex items-center gap-2 text-accent font-bold">
+        <div className="flex items-center gap-2 text-foreground/80 font-bold">
           <span className="font-mono text-[10px] tracking-widest">
             {progressPercent}
           </span>
-          <span className="h-px w-2 bg-accent" />
+          <span className="h-px w-2 bg-foreground/60" />
         </div>
       </div>
     </aside>

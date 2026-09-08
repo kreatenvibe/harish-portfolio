@@ -46,7 +46,7 @@ export default function FilterBar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={searchPlaceholder}
-          className="w-64 rounded-full border border-foreground/10 bg-background py-2 pl-9 pr-4 font-sans text-sm text-foreground outline-none focus:border-accent"
+          className="w-64 rounded-full border border-foreground/10 bg-background py-2 pl-9 pr-4 font-sans text-sm text-foreground outline-none focus:border-white/40"
         />
       </form>
 

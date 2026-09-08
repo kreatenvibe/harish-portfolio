@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { submitLead } from "@/lib/actions/lead.action";
+import { ArrowUpRight } from "@phosphor-icons/react";
 
 const FIELD_CLASS =
-  "mt-3 w-full rounded-xl bg-surface px-4 py-3.5 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:bg-surface-hover";
+  "mt-2 w-full rounded border border-line bg-background/80 px-4 py-3 font-sans text-sm text-foreground outline-none transition-colors placeholder:text-muted/50 focus:border-white/40 focus:bg-surface";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
@@ -17,8 +18,6 @@ export default function ContactForm() {
     setStatus("submitting");
     setErrorMessage("");
 
-    // Capture the form element before the await — React nulls out
-    // e.currentTarget once the event has finished dispatching.
     const form = e.currentTarget;
     const formData = new FormData(form);
     const result = await submitLead({
@@ -46,21 +45,34 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div id="project-form" className="rounded-2xl bg-surface p-10 text-center">
-        <p className="font-heading text-2xl font-bold text-foreground">
-          Thanks — I&apos;ve got it.
+      <div id="project-form" className="relative rounded-lg border border-line bg-surface/80 p-10 text-center space-y-4">
+        <span className="frame-corner-tl" aria-hidden="true" />
+        <span className="frame-corner-tr" aria-hidden="true" />
+        <span className="signal-dot mx-auto" />
+        <p className="font-heading text-3xl font-bold uppercase text-foreground">
+          TRANSMISSION RECEIVED // INITIATED
         </p>
-        <p className="mt-3 font-sans text-base text-muted">
-          I&apos;ll get back to you shortly to discuss your project.
+        <p className="font-sans text-sm text-muted max-w-md mx-auto">
+          Thank you for reaching out. I have received your project details and will follow up shortly with approach and scope recommendations.
         </p>
       </div>
     );
   }
 
   return (
-    <div id="project-form">
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {/* Honeypot — hidden from real users, bots tend to fill every field */}
+    <div id="project-form" className="relative rounded-lg border border-line bg-surface/60 p-6 sm:p-10">
+      <span className="frame-corner-tl" aria-hidden="true" />
+      <span className="frame-corner-tr" aria-hidden="true" />
+      <span className="frame-corner-bl" aria-hidden="true" />
+      <span className="frame-corner-br" aria-hidden="true" />
+
+      <div className="flex items-center justify-between border-b border-line/40 pb-4 mb-8 font-mono text-[10px] tracking-widest text-muted uppercase">
+        <span className="text-foreground/80 font-semibold">PROJECT INTAKE FORM</span>
+        <span>DELIVERY SPEC</span>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Honeypot */}
         <input
           type="text"
           name="website"
@@ -70,39 +82,40 @@ export default function ContactForm() {
           aria-hidden="true"
         />
 
-        {/* Name */}
-        <div>
-          <label htmlFor="name" className="font-sans text-sm font-semibold">
-            Name
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            required
-            className={FIELD_CLASS}
-            placeholder="Your name"
-          />
-        </div>
+        {/* Name & Studio Grid */}
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label htmlFor="name" className="font-mono text-xs font-semibold uppercase tracking-wider text-muted">
+              Name *
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              className={FIELD_CLASS}
+              placeholder="Your full name"
+            />
+          </div>
 
-        {/* Studio / Company */}
-        <div>
-          <label htmlFor="business" className="font-sans text-sm font-semibold">
-            Studio / Company (optional)
-          </label>
-          <input
-            id="business"
-            name="business"
-            type="text"
-            className={FIELD_CLASS}
-            placeholder="If you're reaching out on behalf of one"
-          />
+          <div>
+            <label htmlFor="business" className="font-mono text-xs font-semibold uppercase tracking-wider text-muted">
+              Studio / Company
+            </label>
+            <input
+              id="business"
+              name="business"
+              type="text"
+              className={FIELD_CLASS}
+              placeholder="Studio or brand name"
+            />
+          </div>
         </div>
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="font-sans text-sm font-semibold">
-            Email
+          <label htmlFor="email" className="font-mono text-xs font-semibold uppercase tracking-wider text-muted">
+            Email Address *
           </label>
           <input
             id="email"
@@ -110,95 +123,70 @@ export default function ContactForm() {
             type="email"
             required
             className={FIELD_CLASS}
-            placeholder="you@company.com"
+            placeholder="you@studio.com"
           />
         </div>
 
-        {/* Project type */}
+        {/* Project Scope */}
         <div>
           <label
             htmlFor="business-description"
-            className="font-sans text-sm font-semibold"
+            className="font-mono text-xs font-semibold uppercase tracking-wider text-muted"
           >
-            What kind of project is this?
+            Discipline &amp; Project Type
           </label>
           <textarea
             id="business-description"
             name="business-description"
-            rows={3}
+            rows={2}
             className={`${FIELD_CLASS} resize-none`}
-            placeholder="Paint & roto for a shoot, a brand identity, packaging, etc."
+            placeholder="Brand Identity, Packaging, Paint Prep / Roto, Motion, or Print Design"
           />
         </div>
 
-        {/* Goal */}
+        {/* Deliverables & Timeline */}
         <div>
-          <label htmlFor="improvement" className="font-sans text-sm font-semibold">
-            What are you trying to achieve?
-          </label>
-          <textarea
-            id="improvement"
-            name="improvement"
-            rows={4}
-            className={`${FIELD_CLASS} resize-none`}
-            placeholder="What does a finished result look like for you?"
-          />
-        </div>
-
-        {/* Reference / style */}
-        <div>
-          <label htmlFor="current-tools" className="font-sans text-sm font-semibold">
-            Any reference or style you have in mind?
-          </label>
-          <textarea
-            id="current-tools"
-            name="current-tools"
-            rows={4}
-            className={`${FIELD_CLASS} resize-none`}
-            placeholder="Links, plates, brand assets, or examples you like"
-          />
-        </div>
-
-        {/* Timeline / deliverable */}
-        <div>
-          <label htmlFor="what-to-build" className="font-sans text-sm font-semibold">
-            What&apos;s the deadline and what needs delivering?
+          <label htmlFor="what-to-build" className="font-mono text-xs font-semibold uppercase tracking-wider text-muted">
+            Deliverables &amp; Deadline
           </label>
           <textarea
             id="what-to-build"
             name="what-to-build"
-            rows={4}
+            rows={3}
             className={`${FIELD_CLASS} resize-none`}
-            placeholder="Tell me what you have in mind, even if you are not sure yet."
+            placeholder="Key deliverables, number of shot plates, and expected delivery timeline"
           />
         </div>
 
-        {/* Anything Else */}
+        {/* Additional details */}
         <div>
-          <label htmlFor="anything-else" className="font-sans text-sm font-semibold">
-            Anything else I should know?
+          <label htmlFor="anything-else" className="font-mono text-xs font-semibold uppercase tracking-wider text-muted">
+            Additional Context or Plate References
           </label>
           <textarea
             id="anything-else"
             name="anything-else"
-            rows={4}
-            className="mt-3 w-full resize-none bg-transparent px-0 py-3 font-sans text-base text-foreground outline-none placeholder:text-muted/60 focus:border-accent"
-            placeholder="Anything else that might help me understand your project"
+            rows={2}
+            className={`${FIELD_CLASS} resize-none`}
+            placeholder="Links to footage references, moodboards, or existing brand guidelines"
           />
         </div>
 
         {errorMessage && (
-          <p className="font-sans text-sm text-accent">{errorMessage}</p>
+          <p className="font-mono text-xs text-red-400 font-semibold">{errorMessage}</p>
         )}
 
-        {/* Submit */}
-        <button
-          type="submit"
-          disabled={status === "submitting"}
-          className="inline-flex rounded-full bg-accent px-7 py-3.5 font-sans text-sm font-semibold text-white disabled:opacity-50"
-        >
-          {status === "submitting" ? "Sending…" : "Start Your Project"}
-        </button>
+        {/* Submit Button */}
+        <div className="pt-2">
+          <button
+            type="submit"
+            disabled={status === "submitting"}
+            className="inline-flex items-center gap-2 rounded border border-foreground bg-foreground px-8 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-background transition-all hover:bg-white disabled:opacity-50 cursor-pointer"
+          >
+            <span>{status === "submitting" ? "TRANSMITTING..." : "SUBMIT PROJECT BRIEF"}</span>
+            <ArrowUpRight size={14} weight="bold" />
+          </button>
+        </div>
       </form>
     </div>
   );

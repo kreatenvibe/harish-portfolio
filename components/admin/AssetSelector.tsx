@@ -143,7 +143,7 @@ export default function AssetSelector({
       const foldersRes = await fetch(`/api/folders?path=${encodeURIComponent(currentPath)}`);
       const foldersData = await foldersRes.json();
       setFolders(Array.isArray(foldersData) ? foldersData : []);
-    } catch (err) {
+    } catch {
       alert("Failed to create folder");
     } finally {
       setLoading(false);
@@ -164,7 +164,7 @@ export default function AssetSelector({
       const filesRes = await fetch(`/api/assets?folder=${encodeURIComponent(currentPath)}`);
       const data = await filesRes.json();
       setFiles(Array.isArray(data) ? data : []);
-    } catch (err) {
+    } catch {
       alert("Failed to move file");
     } finally {
       setLoading(false);
@@ -184,35 +184,35 @@ export default function AssetSelector({
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center"
+      className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-background rounded-lg w-215 max-w-[95vw] h-150 max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div className="bg-background rounded-lg border border-line w-215 max-w-[95vw] h-150 max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="flex justify-between items-center px-6 py-5 border-b border-foreground/10 shrink-0">
+        <div className="flex justify-between items-center px-6 py-4 border-b border-line shrink-0">
           <div>
-            <p className="font-heading text-[22px] text-foreground m-0">
+            <p className="font-heading text-2xl font-bold uppercase tracking-tight text-foreground m-0">
               {multiple
                 ? "Select Media"
                 : accept === "video"
                   ? "Select Video"
                   : "Select Image"}
             </p>
-            <p className="font-sans text-[14px] text-muted mt-1">{currentPath}</p>
+            <p className="font-mono text-xs text-muted mt-0.5">{currentPath}</p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="font-sans text-[24px] text-muted hover:text-foreground leading-none px-2 py-1"
+            className="font-sans text-2xl text-muted hover:text-foreground leading-none px-2 py-1 cursor-pointer transition-colors"
           >
             ×
           </button>
         </div>
 
         {/* Upload toolbar */}
-        <div className="px-6 py-3 border-b border-foreground/10 flex gap-3 items-center shrink-0">
+        <div className="px-6 py-3 border-b border-line flex gap-3 items-center shrink-0">
           <input
             ref={fileRef}
             type="file"
@@ -234,27 +234,27 @@ export default function AssetSelector({
             type="button"
             onClick={() => fileRef.current?.click()}
             disabled={uploadProgress > 0}
-            className="rounded-full border border-foreground/15 px-4 py-1.5 font-sans text-[14px] font-semibold text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
+            className="rounded-md border border-line bg-surface px-4 py-1.5 font-sans text-xs font-semibold text-foreground transition-colors hover:border-white/40 hover:bg-surface-hover disabled:opacity-50 cursor-pointer"
           >
             {accept === "video" ? "Upload Video" : accept === "all" ? "Upload File" : "Upload Image"}
           </button>
           <button
             type="button"
             onClick={handleCreateFolder}
-            className="flex items-center gap-1.5 rounded-full border border-foreground/15 px-4 py-1.5 font-sans text-[14px] font-semibold text-foreground transition-colors hover:border-accent hover:text-accent"
+            className="flex items-center gap-1.5 rounded-md border border-line bg-surface px-4 py-1.5 font-sans text-xs font-semibold text-foreground transition-colors hover:border-white/40 hover:bg-surface-hover cursor-pointer"
           >
-            <FolderPlus size={16} />
+            <FolderPlus size={15} />
             New Folder
           </button>
           {uploadProgress > 0 && (
             <div className="flex items-center gap-2">
-              <div className="w-50 h-1 bg-foreground/10 rounded-sm overflow-hidden">
+              <div className="w-48 h-1.5 bg-surface border border-line rounded-sm overflow-hidden">
                 <div
-                  className="h-full bg-accent transition-all duration-200"
+                  className="h-full bg-foreground transition-all duration-200"
                   style={{ width: `${uploadProgress}%` }}
                 />
               </div>
-              <span className="font-sans text-[13px] text-muted">
+              <span className="font-mono text-xs text-muted">
                 {uploadProgress}%
               </span>
             </div>
@@ -263,12 +263,12 @@ export default function AssetSelector({
 
         {/* Folders row */}
         {(folders.length > 0 || currentPath !== "/") && (
-          <div className="px-6 py-2 border-b border-foreground/10 flex gap-2 flex-wrap items-center shrink-0">
+          <div className="px-6 py-2.5 border-b border-line flex gap-2 flex-wrap items-center shrink-0 bg-surface/30">
             {currentPath !== "/" && (
               <button
                 type="button"
                 onClick={handleBack}
-                className="font-sans text-[14px] text-muted hover:text-foreground px-2 py-1"
+                className="font-mono text-xs text-muted hover:text-foreground px-2 py-1 cursor-pointer transition-colors"
               >
                 ← back
               </button>
@@ -278,9 +278,9 @@ export default function AssetSelector({
                 key={folder.id}
                 type="button"
                 onClick={() => setCurrentPath(folder.path)}
-                className="flex items-center gap-2 font-sans text-[15px] bg-[#f4f4f2] border border-foreground/10 hover:border-accent rounded px-3 py-1.5 transition-colors"
+                className="flex items-center gap-2 font-sans text-xs bg-surface border border-line hover:border-white/40 text-foreground rounded-md px-3 py-1.5 transition-colors cursor-pointer"
               >
-                <FolderOpen size={18} className="text-accent" />
+                <FolderOpen size={16} className="text-muted" />
                 {folder.name}
               </button>
             ))}
@@ -290,15 +290,15 @@ export default function AssetSelector({
         {/* Files grid */}
         <div className="p-6 grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] auto-rows-40 gap-4 overflow-y-auto flex-1 min-h-0 content-start">
           {loading ? (
-            <div className="col-span-full text-center p-12 font-sans text-[16px] text-muted">
+            <div className="col-span-full text-center p-12 font-sans text-sm text-muted">
               Loading…
             </div>
           ) : error ? (
-            <div className="col-span-full text-center p-12 font-sans text-[14px] text-accent">
+            <div className="col-span-full text-center p-12 font-mono text-xs text-red-400">
               {error}
             </div>
           ) : visibleFiles.length === 0 ? (
-            <div className="col-span-full text-center p-12 font-sans text-[16px] text-muted">
+            <div className="col-span-full text-center p-12 font-sans text-sm text-muted">
               {accept === "video" ? "No videos here." : accept === "all" ? "No media here." : "No images here."}
             </div>
           ) : (
@@ -319,8 +319,6 @@ export default function AssetSelector({
               };
 
               return (
-                // A <div> (not <button>) — it wraps the "Move File" button
-                // below, and a <button> can't contain another <button>.
                 <div
                   key={file.id}
                   role="button"
@@ -334,22 +332,24 @@ export default function AssetSelector({
                       handleSelect();
                     }
                   }}
-                  className={`group relative border-[1.5px] rounded-md overflow-hidden text-left transition-colors flex flex-col h-full cursor-pointer ${isSelected
-                      ? "border-accent"
-                      : "border-foreground/10 hover:border-accent"
-                    }`}
+                  className={`group relative border rounded-md overflow-hidden text-left transition-colors flex flex-col h-full cursor-pointer ${
+                    isSelected
+                      ? "border-white ring-1 ring-white bg-surface"
+                      : "border-line bg-surface hover:border-white/40"
+                  }`}
                 >
                   {multiple && (
                     <span
-                      className={`absolute right-2 top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full border-2 ${isSelected
-                          ? "border-accent bg-accent text-white"
-                          : "border-white bg-black/30 text-transparent"
-                        }`}
+                      className={`absolute right-2 top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full border ${
+                        isSelected
+                          ? "border-foreground bg-foreground text-background"
+                          : "border-line bg-surface text-transparent"
+                      }`}
                     >
                       <Check size={12} weight="bold" />
                     </span>
                   )}
-                  <div className="relative w-full flex-1 bg-[#f4f4f2] flex items-center justify-center">
+                  <div className="relative w-full flex-1 bg-background flex items-center justify-center">
                     {kind === "video" ? (
                       <FilmSlate size={32} className="text-muted" />
                     ) : kind === "pdf" ? (
@@ -377,13 +377,13 @@ export default function AssetSelector({
                         handleMoveFile(file);
                       }}
                       title="Move File"
-                      className="flex h-7 w-7 items-center justify-center rounded-md bg-background/90 text-foreground hover:bg-accent hover:text-white border border-foreground/10 shadow-sm transition-colors"
+                      className="flex h-7 w-7 items-center justify-center rounded-md bg-surface text-muted hover:bg-surface-hover hover:text-foreground border border-line shadow-sm transition-colors cursor-pointer"
                     >
                       <ArrowsOut size={14} />
                     </button>
                   </div>
 
-                  <div className="w-full font-sans text-[13px] text-muted px-2 py-1.5 truncate shrink-0 bg-background">
+                  <div className="w-full font-mono text-xs text-muted px-2.5 py-1.5 truncate shrink-0 bg-surface border-t border-line">
                     {file.name}
                   </div>
                 </div>
@@ -394,8 +394,8 @@ export default function AssetSelector({
 
         {/* Multi-select footer */}
         {multiple && (
-          <div className="px-6 py-4 border-t border-foreground/10 flex items-center justify-between shrink-0">
-            <span className="font-sans text-[14px] text-muted">
+          <div className="px-6 py-3.5 border-t border-line flex items-center justify-between shrink-0 bg-surface/30">
+            <span className="font-mono text-xs text-muted">
               {selected.size} selected
             </span>
             <button
@@ -410,7 +410,7 @@ export default function AssetSelector({
                 onSelectMultiple?.(items);
                 onClose();
               }}
-              className="rounded-full bg-primary px-5 py-2 font-sans text-[14px] font-semibold text-white disabled:opacity-40"
+              className="rounded-md bg-foreground px-5 py-2 font-sans text-xs font-semibold text-background hover:bg-white disabled:opacity-40 cursor-pointer transition-colors"
             >
               Add {selected.size > 0 ? selected.size : ""} Media
             </button>

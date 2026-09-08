@@ -28,19 +28,19 @@ export default async function AdminCategoriesPage({
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="font-heading text-3xl font-bold text-foreground">
+          <h1 className="font-heading text-4xl font-bold uppercase tracking-tight text-foreground">
             Categories
           </h1>
-          <p className="mt-2 font-sans text-sm text-muted">
+          <p className="mt-1 font-mono text-xs text-muted">
             {result.data?.total ?? 0} categor
             {result.data?.total === 1 ? "y" : "ies"}
           </p>
         </div>
         <Link
           href="/admin/categories/new"
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-sans text-sm font-semibold text-white"
+          className="inline-flex items-center gap-2 rounded-md bg-foreground px-5 py-2.5 font-sans text-xs font-semibold uppercase tracking-wider text-background transition-colors hover:bg-white cursor-pointer"
         >
-          <Plus size={16} />
+          <Plus size={15} />
           New Category
         </Link>
       </div>

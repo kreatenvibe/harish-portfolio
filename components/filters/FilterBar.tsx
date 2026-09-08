@@ -46,7 +46,7 @@ export default function FilterBar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={searchPlaceholder}
-          className="w-64 rounded-full border border-foreground/10 bg-background py-2 pl-9 pr-4 font-sans text-sm text-foreground outline-none focus:border-white/40"
+          className="w-64 rounded-md border border-line bg-surface py-2 pl-9 pr-4 font-sans text-xs text-foreground placeholder:text-muted outline-none transition-colors focus:border-white/40 focus:ring-1 focus:ring-white/40"
         />
       </form>
 
@@ -55,10 +55,10 @@ export default function FilterBar({
           <button
             type="button"
             onClick={() => navigate({ filter: null })}
-            className={`rounded-full px-3.5 py-1.5 font-sans text-xs font-semibold transition-colors ${
+            className={`rounded-md px-3.5 py-1.5 font-sans text-xs font-semibold transition-colors cursor-pointer ${
               activeFilter === ""
-                ? "bg-primary text-white"
-                : "bg-foreground/5 text-muted hover:bg-foreground/10"
+                ? "bg-foreground text-background"
+                : "border border-line bg-surface text-muted hover:text-foreground hover:border-white/30"
             }`}
           >
             All
@@ -68,10 +68,10 @@ export default function FilterBar({
               key={f.value}
               type="button"
               onClick={() => navigate({ filter: f.value })}
-              className={`rounded-full px-3.5 py-1.5 font-sans text-xs font-semibold transition-colors ${
+              className={`rounded-md px-3.5 py-1.5 font-sans text-xs font-semibold transition-colors cursor-pointer ${
                 activeFilter === f.value
-                  ? "bg-primary text-white"
-                  : "bg-foreground/5 text-muted hover:bg-foreground/10"
+                  ? "bg-foreground text-background"
+                  : "border border-line bg-surface text-muted hover:text-foreground hover:border-white/30"
               }`}
             >
               {f.label}

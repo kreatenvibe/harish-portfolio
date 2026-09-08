@@ -34,12 +34,12 @@ export default function AdminDeleteButton({
         type="button"
         onClick={handleDelete}
         disabled={isPending}
-        className="inline-flex items-center gap-1.5 rounded-full border border-foreground/15 px-3 py-1.5 font-sans text-xs font-semibold text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
+        className="inline-flex items-center gap-1.5 rounded-md border border-line bg-surface px-3 py-1.5 font-sans text-xs font-semibold text-muted transition-colors hover:border-red-500/50 hover:text-red-400 disabled:opacity-50 cursor-pointer"
       >
         <Trash size={14} />
         {isPending ? "Deleting…" : "Delete"}
       </button>
-      {error && <span className="font-sans text-xs text-accent">{error}</span>}
+      {error && <span className="font-mono text-xs text-red-400">{error}</span>}
     </span>
   );
 }

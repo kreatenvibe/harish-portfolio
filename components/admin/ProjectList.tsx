@@ -14,9 +14,9 @@ import ReorderButtons from "@/components/admin/ReorderButtons";
 import type { IProject, ProjectStatus } from "@/database";
 
 const STATUS_STYLES: Record<ProjectStatus, string> = {
-  draft: "bg-foreground/5 text-muted",
-  published: "bg-accent/10 text-accent",
-  archived: "bg-foreground/10 text-muted",
+  draft: "border border-line/60 bg-background text-muted",
+  published: "border border-line bg-surface text-foreground",
+  archived: "border border-line/40 bg-background/50 text-muted/60",
 };
 
 export default function ProjectList({
@@ -98,14 +98,14 @@ export default function ProjectList({
 
   return (
     <div>
-      {error && <p className="mb-4 font-sans text-sm text-accent">{error}</p>}
-      <div className="divide-y divide-foreground/10 border-t border-foreground/10">
+      {error && <p className="mb-4 font-mono text-xs text-red-400">{error}</p>}
+      <div className="divide-y divide-line border-t border-b border-line">
         {items.map((project, i) => {
           const categoryName = categoryNameById[String(project.categoryId)];
           return (
             <div
               key={String(project._id)}
-              className="flex items-center justify-between gap-6 py-5"
+              className="flex items-center justify-between gap-6 py-4"
             >
               <div className="min-w-0">
                 {showDeleted ? (
@@ -115,7 +115,7 @@ export default function ProjectList({
                 ) : (
                   <Link
                     href={`/admin/work/${project._id}/edit`}
-                    className="font-heading text-lg font-semibold text-foreground hover:text-accent"
+                    className="font-heading text-lg font-semibold text-foreground hover:text-white transition-colors"
                   >
                     {project.title}
                   </Link>
@@ -133,16 +133,16 @@ export default function ProjectList({
                       onClick={() => handleToggleFeatured(project)}
                       disabled={isPending}
                       aria-label={project.isFeatured ? "Unfeature" : "Feature"}
-                      className={`flex h-8 w-8 items-center justify-center rounded-full border transition-colors disabled:opacity-50 ${
+                      className={`flex h-7 w-7 items-center justify-center rounded-md border transition-colors disabled:opacity-50 cursor-pointer ${
                         project.isFeatured
-                          ? "border-accent text-accent"
-                          : "border-foreground/15 text-muted hover:text-foreground"
+                          ? "border-line bg-surface text-foreground"
+                          : "border-line bg-surface/40 text-muted hover:text-foreground"
                       }`}
                     >
                       <Star size={14} weight={project.isFeatured ? "fill" : "regular"} />
                     </button>
                     <span
-                      className={`rounded-full px-3 py-1.5 font-sans text-xs font-semibold capitalize ${STATUS_STYLES[project.status]}`}
+                      className={`rounded-md px-2.5 py-1 font-mono text-xs font-medium capitalize ${STATUS_STYLES[project.status]}`}
                     >
                       {project.status}
                     </span>
@@ -161,7 +161,7 @@ export default function ProjectList({
                     showDeleted ? handleRestore(project) : handleDelete(project)
                   }
                   disabled={isPending}
-                  className="inline-flex items-center rounded-full border border-foreground/15 px-3 py-1.5 font-sans text-xs font-semibold text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
+                  className="inline-flex items-center rounded-md border border-line bg-surface px-3 py-1.5 font-sans text-xs font-semibold text-muted transition-colors hover:border-red-500/50 hover:text-red-400 disabled:opacity-50 cursor-pointer"
                 >
                   {showDeleted ? "Restore" : "Delete"}
                 </button>

@@ -12,13 +12,13 @@ export default async function NewProjectPage() {
 
   return (
     <div>
-      <h1 className="font-heading text-3xl font-bold text-foreground">
+      <h1 className="font-heading text-4xl uppercase tracking-wider text-foreground">
         New Project
       </h1>
       {categories.length === 0 && (
-        <p className="mt-4 font-sans text-sm text-accent">
+        <p className="mt-4 rounded-md border border-line bg-surface p-4 font-mono text-xs text-muted">
           You need at least one category before creating a project.{" "}
-          <Link href="/admin/categories/new" className="underline">
+          <Link href="/admin/categories/new" className="text-foreground underline">
             Create one
           </Link>
           .

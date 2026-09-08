@@ -30,18 +30,18 @@ export default async function AdminBlogPage({
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="font-heading text-3xl font-bold text-foreground">
+          <h1 className="font-heading text-4xl uppercase tracking-wider text-foreground">
             Blog
           </h1>
-          <p className="mt-2 font-sans text-sm text-muted">
+          <p className="mt-1 font-mono text-xs uppercase tracking-widest text-muted">
             {result.data?.total ?? 0} post{result.data?.total === 1 ? "" : "s"}
           </p>
         </div>
         <Link
           href="/admin/blog/new"
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-sans text-sm font-semibold text-white"
+          className="inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-2.5 font-sans text-xs font-semibold uppercase tracking-wider text-background transition-colors hover:bg-white cursor-pointer"
         >
-          <Plus size={16} />
+          <Plus size={15} weight="bold" />
           New Post
         </Link>
       </div>
@@ -56,7 +56,7 @@ export default async function AdminBlogPage({
         />
       </div>
 
-      <div className="mt-8 divide-y divide-foreground/10 border-t border-foreground/10">
+      <div className="mt-8 divide-y divide-line border-t border-line">
         {posts.length === 0 ? (
           <p className="py-12 text-center font-sans text-sm text-muted">
             No posts yet.
@@ -70,14 +70,16 @@ export default async function AdminBlogPage({
               <div className="min-w-0">
                 <Link
                   href={`/admin/blog/${post._id}/edit`}
-                  className="font-heading text-lg font-semibold text-foreground hover:text-accent"
+                  className="font-sans text-base font-semibold text-foreground transition-colors hover:underline hover:text-white"
                 >
                   {post.title}
                 </Link>
-                <p className="mt-1 truncate font-sans text-sm text-muted">
-                  {post.excerpt}
-                </p>
-                <p className="mt-1 font-sans text-xs text-muted">
+                {post.excerpt && (
+                  <p className="mt-1 truncate font-sans text-sm text-muted">
+                    {post.excerpt}
+                  </p>
+                )}
+                <p className="mt-1 font-mono text-xs text-muted">
                   {post.publishedAt
                     ? formatDate(post.publishedAt)
                     : `Created ${formatDate(post.createdAt!)}`}

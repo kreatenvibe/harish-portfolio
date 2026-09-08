@@ -36,7 +36,7 @@ function Divider() {
       style={{
         width: "1px",
         height: "20px",
-        background: "rgb(10 10 10 / 0.12)",
+        background: "var(--line)",
         margin: "0 4px",
         flexShrink: 0,
       }}
@@ -70,7 +70,7 @@ function ToolbarBtn({
         padding: "6px 10px",
         borderRadius: "4px",
         fontFamily: "var(--font-sans)",
-        fontSize: "15px",
+        fontSize: "14px",
         color: isActive ? "var(--background)" : "var(--muted)",
         background: isActive ? "var(--foreground)" : "transparent",
         border: "none",
@@ -79,11 +79,11 @@ function ToolbarBtn({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        transition: "background 0.1s, color 0.1s",
+        transition: "background 0.15s, color 0.15s",
       }}
       onMouseEnter={(e) => {
         if (!isActive && !disabled)
-          (e.currentTarget as HTMLButtonElement).style.background = "#eeeeec";
+          (e.currentTarget as HTMLButtonElement).style.background = "var(--surface-hover)";
       }}
       onMouseLeave={(e) => {
         if (!isActive)
@@ -131,10 +131,10 @@ function LinkBtn({ editor }: { editor: Editor }) {
             top: "calc(100% + 4px)",
             left: 0,
             zIndex: 200,
-            background: "var(--background)",
-            border: "1.5px solid rgb(10 10 10 / 0.12)",
+            background: "var(--surface)",
+            border: "1px solid var(--line)",
             borderRadius: "6px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
             padding: "12px",
             width: "280px",
             display: "flex",
@@ -145,7 +145,8 @@ function LinkBtn({ editor }: { editor: Editor }) {
           <p
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "14px",
+              fontSize: "13px",
+              fontWeight: 600,
               margin: 0,
               color: "var(--foreground)",
             }}
@@ -163,13 +164,15 @@ function LinkBtn({ editor }: { editor: Editor }) {
             placeholder="https://example.com"
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "14px",
+              fontSize: "13px",
               padding: "6px 10px",
-              border: "1.5px solid rgb(10 10 10 / 0.12)",
+              border: "1px solid var(--line)",
               borderRadius: "4px",
               outline: "none",
               width: "100%",
               boxSizing: "border-box",
+              background: "var(--background)",
+              color: "var(--foreground)",
             }}
           />
           <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
@@ -179,10 +182,10 @@ function LinkBtn({ editor }: { editor: Editor }) {
               onClick={() => setShow(false)}
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: "14px",
+                fontSize: "13px",
                 padding: "4px 12px",
                 background: "transparent",
-                border: "1.5px solid rgb(10 10 10 / 0.12)",
+                border: "1px solid var(--line)",
                 borderRadius: "4px",
                 cursor: "pointer",
                 color: "var(--muted)",
@@ -196,10 +199,10 @@ function LinkBtn({ editor }: { editor: Editor }) {
               onClick={apply}
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: "14px",
+                fontSize: "13px",
                 padding: "4px 12px",
                 background: "var(--foreground)",
-                border: "1.5px solid var(--foreground)",
+                border: "1px solid var(--foreground)",
                 borderRadius: "4px",
                 cursor: "pointer",
                 color: "var(--background)",
@@ -250,8 +253,8 @@ export function Toolbar({ editor, onImageInsert, fullscreen, onFullscreenToggle 
   return (
     <div
       style={{
-        background: "#f4f4f2",
-        borderBottom: "1.5px solid rgb(10 10 10 / 0.12)",
+        background: "var(--surface)",
+        borderBottom: "1px solid var(--line)",
         padding: "8px 12px",
         display: "flex",
         flexWrap: "wrap",

@@ -77,13 +77,13 @@ export default function CategoryList({
   return (
     <div>
       {error && (
-        <p className="mb-4 font-sans text-sm text-accent">{error}</p>
+        <p className="mb-4 font-mono text-xs text-red-400">{error}</p>
       )}
-      <div className="divide-y divide-foreground/10 border-t border-foreground/10">
+      <div className="divide-y divide-line border-t border-b border-line">
         {items.map((category, i) => (
           <div
             key={String(category._id)}
-            className="flex items-center justify-between gap-6 py-5"
+            className="flex items-center justify-between gap-6 py-4"
           >
             <div className="min-w-0">
               {showDeleted ? (
@@ -93,7 +93,7 @@ export default function CategoryList({
               ) : (
                 <Link
                   href={`/admin/categories/${category._id}/edit`}
-                  className="font-heading text-lg font-semibold text-foreground hover:text-accent"
+                  className="font-heading text-lg font-semibold text-foreground hover:text-white transition-colors"
                 >
                   {category.name}
                 </Link>
@@ -108,10 +108,10 @@ export default function CategoryList({
               {!showDeleted && (
                 <>
                   <span
-                    className={`rounded-full px-3 py-1.5 font-sans text-xs font-semibold ${
+                    className={`rounded-md px-2.5 py-1 font-mono text-xs font-medium border ${
                       category.isActive
-                        ? "bg-accent/10 text-accent"
-                        : "bg-foreground/5 text-muted"
+                        ? "border-line bg-surface text-foreground"
+                        : "border-line/60 bg-background text-muted"
                     }`}
                   >
                     {category.isActive ? "Active" : "Inactive"}
@@ -131,7 +131,7 @@ export default function CategoryList({
                   showDeleted ? handleRestore(category) : handleDelete(category)
                 }
                 disabled={isPending}
-                className="inline-flex items-center rounded-full border border-foreground/15 px-3 py-1.5 font-sans text-xs font-semibold text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
+                className="inline-flex items-center rounded-md border border-line bg-surface px-3 py-1.5 font-sans text-xs font-semibold text-muted transition-colors hover:border-red-500/50 hover:text-red-400 disabled:opacity-50 cursor-pointer"
               >
                 {showDeleted ? "Restore" : "Delete"}
               </button>

@@ -7,20 +7,22 @@ export const metadata = {
 export default function AdminLoginPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-6">
-      <div className="w-full max-w-sm text-center">
-        <p className="font-heading text-2xl font-bold tracking-tight">
-          HK<span className="text-accent">Designs</span>
+      <div className="w-full max-w-sm text-center rounded-lg border border-line bg-surface/50 p-8 sm:p-10 shadow-2xl">
+        <p className="font-heading text-3xl font-bold tracking-tight text-foreground uppercase">
+          HK DESIGNS
         </p>
-        <h1 className="mt-8 font-heading text-3xl font-bold text-foreground">
-          Admin sign in
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-muted mt-1">
+          ADMIN CMS
+        </p>
+        <h1 className="mt-8 font-heading text-2xl font-bold uppercase text-foreground">
+          Sign In
         </h1>
-        <p className="mt-3 font-sans text-sm text-muted">
-          Sign in with an authorized Google account to manage Categories,
-          Work, Blog, and Leads.
+        <p className="mt-2 font-sans text-xs text-muted leading-relaxed">
+          Authorized portfolio management console.
         </p>
 
         <form
-          className="mt-10"
+          className="mt-8"
           action={async () => {
             "use server";
             await signIn("google", { redirectTo: "/admin" });
@@ -28,7 +30,7 @@ export default function AdminLoginPage() {
         >
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-primary px-6 py-3.5 font-sans text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+            className="inline-flex w-full items-center justify-center gap-3 rounded-md bg-foreground px-6 py-3 font-sans text-xs font-semibold uppercase tracking-wider text-background transition-colors hover:bg-white cursor-pointer"
           >
             <GoogleIcon />
             Sign in with Google

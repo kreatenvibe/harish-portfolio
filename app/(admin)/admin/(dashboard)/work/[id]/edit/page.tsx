@@ -29,15 +29,15 @@ export default async function EditProjectPage({
 
   return (
     <div>
-      <h1 className="font-heading text-3xl font-bold text-foreground">
+      <h1 className="font-heading text-4xl uppercase tracking-wider text-foreground">
         Edit Project
       </h1>
       <div className="mt-8">
         <ProjectForm project={projectResult.data} categories={categories} />
       </div>
 
-      <div className="mt-14 max-w-3xl">
-        <h2 className="font-heading text-2xl font-bold text-foreground">
+      <div className="mt-14 max-w-3xl border-t border-line pt-10">
+        <h2 className="font-heading text-2xl uppercase tracking-wider text-foreground">
           Sections
         </h2>
         <p className="mt-2 font-sans text-sm text-muted">

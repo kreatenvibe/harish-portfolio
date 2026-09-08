@@ -51,11 +51,11 @@ function BubbleBtn({
         justifyContent: "center",
         color: isActive ? "var(--background)" : "var(--muted)",
         background: isActive ? "var(--foreground)" : "transparent",
-        transition: "background 0.1s, color 0.1s",
+        transition: "background 0.15s, color 0.15s",
       }}
       onMouseEnter={(e) => {
         if (!isActive)
-          (e.currentTarget as HTMLButtonElement).style.background = "#eeeeec";
+          (e.currentTarget as HTMLButtonElement).style.background = "var(--surface-hover)";
       }}
       onMouseLeave={(e) => {
         if (!isActive)
@@ -117,10 +117,10 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
       editor={editor}
       shouldShow={({ editor: e }) => !e.state.selection.empty || showLinkRef.current}
       style={{
-        background: "var(--background)",
-        border: "1.5px solid rgb(10 10 10 / 0.12)",
+        background: "var(--surface)",
+        border: "1px solid var(--line)",
         borderRadius: "6px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
         padding: "4px 6px",
         display: "flex",
         flexDirection: "column",
@@ -152,7 +152,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
           <Code size={14} />
         </BubbleBtn>
 
-        <div style={{ width: "1px", height: "20px", background: "rgb(10 10 10 / 0.12)", margin: "0 2px" }} />
+        <div style={{ width: "1px", height: "20px", background: "var(--line)", margin: "0 2px" }} />
 
         <BubbleBtn title="Bullet list" onClick={() => editor.chain().focus().toggleBulletList().run()} isActive={state.isBulletList}>
           <List size={14} />
@@ -164,7 +164,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
           <Quote size={14} />
         </BubbleBtn>
 
-        <div style={{ width: "1px", height: "20px", background: "rgb(10 10 10 / 0.12)", margin: "0 2px" }} />
+        <div style={{ width: "1px", height: "20px", background: "var(--line)", margin: "0 2px" }} />
 
         <BubbleBtn
           title={state.isLink ? "Edit link" : "Insert link"}
@@ -178,7 +178,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
       {showLink && (
         <div
           style={{
-            borderTop: "1px solid rgb(10 10 10 / 0.12)",
+            borderTop: "1px solid var(--line)",
             paddingTop: "8px",
             marginTop: "2px",
             display: "flex",
@@ -200,10 +200,12 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
               fontFamily: "var(--font-sans)",
               fontSize: "13px",
               padding: "4px 8px",
-              border: "1.5px solid rgb(10 10 10 / 0.12)",
+              border: "1px solid var(--line)",
               borderRadius: "4px",
               outline: "none",
               minWidth: 0,
+              background: "var(--background)",
+              color: "var(--foreground)",
             }}
           />
           <button
@@ -215,7 +217,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
               fontSize: "13px",
               padding: "3px 8px",
               background: "transparent",
-              border: "1.5px solid rgb(10 10 10 / 0.12)",
+              border: "1px solid var(--line)",
               borderRadius: "4px",
               cursor: "pointer",
               color: "var(--muted)",
@@ -233,7 +235,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
               fontSize: "13px",
               padding: "3px 8px",
               background: "var(--foreground)",
-              border: "1.5px solid var(--foreground)",
+              border: "1px solid var(--foreground)",
               borderRadius: "4px",
               cursor: "pointer",
               color: "var(--background)",

@@ -120,14 +120,14 @@ export default function ProjectSectionsManager({
 
   return (
     <div>
-      {error && <p className="mb-4 font-sans text-sm text-accent">{error}</p>}
+      {error && <p className="mb-4 font-mono text-xs text-red-400">{error}</p>}
 
       {sections.length === 0 ? (
         <p className="py-6 font-sans text-sm text-muted">
           No sections yet. Add one below.
         </p>
       ) : (
-        <div className="divide-y divide-foreground/10 border-y border-foreground/10">
+        <div className="divide-y divide-line border-y border-line">
           {sections.map((section, i) => {
             const id = String(section._id);
             const isExpanded = expandedId === id;
@@ -139,7 +139,7 @@ export default function ProjectSectionsManager({
                   <button
                     type="button"
                     onClick={() => setExpandedId(isExpanded ? null : id)}
-                    className="flex min-w-0 flex-1 items-center gap-2 text-left"
+                    className="flex min-w-0 flex-1 items-center gap-2 text-left cursor-pointer"
                   >
                     {isExpanded ? <CaretUp size={16} /> : <CaretDown size={16} />}
                     <span className="truncate font-heading text-base font-semibold text-foreground">
@@ -158,7 +158,7 @@ export default function ProjectSectionsManager({
                       type="button"
                       onClick={() => startEdit(section)}
                       aria-label="Edit section"
-                      className="flex h-7 w-7 items-center justify-center rounded-full border border-foreground/15 text-foreground transition-colors hover:border-accent hover:text-accent"
+                      className="flex h-7 w-7 items-center justify-center rounded-md border border-line bg-surface text-muted transition-colors hover:border-white/40 hover:text-foreground cursor-pointer"
                     >
                       <PencilSimple size={13} />
                     </button>
@@ -167,7 +167,7 @@ export default function ProjectSectionsManager({
                       onClick={() => handleDelete(section)}
                       disabled={isPending}
                       aria-label="Delete section"
-                      className="flex h-7 w-7 items-center justify-center rounded-full border border-foreground/15 text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
+                      className="flex h-7 w-7 items-center justify-center rounded-md border border-line bg-surface text-muted transition-colors hover:border-red-500/50 hover:text-red-400 disabled:opacity-50 cursor-pointer"
                     >
                       <Trash size={13} />
                     </button>
@@ -175,19 +175,19 @@ export default function ProjectSectionsManager({
                 </div>
 
                 {isEditing ? (
-                  <div className="mt-4 rounded-xl bg-[#f4f4f2] p-4">
+                  <div className="mt-4 rounded-md border border-line bg-surface/50 p-4">
                     <input
                       type="text"
                       value={editTitle}
                       onChange={(e) => setEditTitle(e.target.value)}
-                      className="w-full rounded-lg bg-background px-3 py-2 font-sans text-sm text-foreground outline-none"
+                      className="w-full rounded-md border border-line bg-surface px-3 py-2 font-sans text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-white/40 focus:ring-1 focus:ring-white/40"
                       placeholder="Section title"
                     />
                     <textarea
                       rows={2}
                       value={editDescription}
                       onChange={(e) => setEditDescription(e.target.value)}
-                      className="mt-2 w-full resize-none rounded-lg bg-background px-3 py-2 font-sans text-sm text-foreground outline-none"
+                      className="mt-2 w-full resize-none rounded-md border border-line bg-surface px-3 py-2 font-sans text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-white/40 focus:ring-1 focus:ring-white/40"
                       placeholder="Description (optional)"
                     />
                     <div className="mt-2 flex gap-2">
@@ -195,14 +195,14 @@ export default function ProjectSectionsManager({
                         type="button"
                         onClick={() => saveEdit(id)}
                         disabled={isPending}
-                        className="rounded-full bg-primary px-4 py-1.5 font-sans text-xs font-semibold text-white disabled:opacity-50"
+                        className="rounded-md bg-foreground px-4 py-1.5 font-sans text-xs font-semibold text-background hover:bg-white disabled:opacity-50 cursor-pointer transition-colors"
                       >
                         Save
                       </button>
                       <button
                         type="button"
                         onClick={() => setEditingId(null)}
-                        className="font-sans text-xs font-semibold text-muted hover:text-foreground"
+                        className="font-sans text-xs font-semibold text-muted hover:text-foreground transition-colors cursor-pointer"
                       >
                         Cancel
                       </button>
@@ -236,7 +236,7 @@ export default function ProjectSectionsManager({
             type="text"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
-            className="mt-1 w-full rounded-lg bg-[#f4f4f2] px-3 py-2 font-sans text-sm text-foreground outline-none focus:bg-[#eeeeec]"
+            className="mt-1 w-full rounded-md border border-line bg-surface px-3 py-2 font-sans text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-white/40 focus:ring-1 focus:ring-white/40"
             placeholder="e.g. Overview, Gallery, Process"
           />
         </div>
@@ -248,13 +248,13 @@ export default function ProjectSectionsManager({
             type="text"
             value={newDescription}
             onChange={(e) => setNewDescription(e.target.value)}
-            className="mt-1 w-full rounded-lg bg-[#f4f4f2] px-3 py-2 font-sans text-sm text-foreground outline-none focus:bg-[#eeeeec]"
+            className="mt-1 w-full rounded-md border border-line bg-surface px-3 py-2 font-sans text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-white/40 focus:ring-1 focus:ring-white/40"
           />
         </div>
         <button
           type="submit"
           disabled={adding || !newTitle.trim()}
-          className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 font-sans text-sm font-semibold text-white disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 font-sans text-sm font-semibold text-background transition-colors hover:bg-white disabled:opacity-50 cursor-pointer"
         >
           <Plus size={14} />
           {adding ? "Adding…" : "Add section"}

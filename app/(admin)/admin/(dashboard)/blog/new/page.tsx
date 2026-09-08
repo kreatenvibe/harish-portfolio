@@ -7,7 +7,7 @@ export const metadata = {
 export default function NewBlogPostPage() {
   return (
     <div>
-      <h1 className="font-heading text-3xl font-bold text-foreground">
+      <h1 className="font-heading text-4xl uppercase tracking-wider text-foreground">
         New Post
       </h1>
       <div className="mt-8">

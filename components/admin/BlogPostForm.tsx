@@ -9,6 +9,9 @@ import AssetSelector from "@/components/admin/AssetSelector";
 import { createBlogPost, updateBlogPost } from "@/lib/actions/blog.action";
 import type { IBlogPost } from "@/database";
 
+const FIELD_CLASS =
+  "mt-2 w-full rounded-md border border-line bg-surface px-4 py-2.5 font-sans text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-white/40 focus:ring-1 focus:ring-white/40";
+
 export default function BlogPostForm({ post }: { post?: IBlogPost }) {
   const router = useRouter();
   const isEdit = !!post;
@@ -81,7 +84,7 @@ export default function BlogPostForm({ post }: { post?: IBlogPost }) {
           required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="mt-2 w-full rounded-xl bg-[#f4f4f2] px-4 py-3 font-sans text-base text-foreground outline-none focus:bg-[#eeeeec]"
+          className={FIELD_CLASS}
           placeholder="Post title"
         />
       </div>
@@ -95,7 +98,7 @@ export default function BlogPostForm({ post }: { post?: IBlogPost }) {
           rows={2}
           value={excerpt}
           onChange={(e) => setExcerpt(e.target.value)}
-          className="mt-2 w-full resize-none rounded-xl bg-[#f4f4f2] px-4 py-3 font-sans text-base text-foreground outline-none focus:bg-[#eeeeec]"
+          className={`${FIELD_CLASS} resize-none`}
           placeholder="Short summary shown in listings"
         />
       </div>
@@ -106,7 +109,7 @@ export default function BlogPostForm({ post }: { post?: IBlogPost }) {
         </label>
         <div className="mt-2 flex items-center gap-4">
           {coverImage?.url && (
-            <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-lg bg-[#f4f4f2]">
+            <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-md border border-line bg-surface">
               <Image
                 src={coverImage.url}
                 alt=""
@@ -118,7 +121,7 @@ export default function BlogPostForm({ post }: { post?: IBlogPost }) {
               <button
                 type="button"
                 onClick={() => setCoverImage(undefined)}
-                className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white"
+                className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/70 text-white cursor-pointer"
               >
                 <X size={12} />
               </button>
@@ -130,7 +133,7 @@ export default function BlogPostForm({ post }: { post?: IBlogPost }) {
               setAssetTarget("cover");
               setAssetSelectorOpen(true);
             }}
-            className="rounded-full border border-foreground/15 px-4 py-2 font-sans text-sm font-semibold text-foreground transition-colors hover:border-accent hover:text-accent"
+            className="inline-flex items-center rounded-md border border-line bg-surface px-4 py-2 font-sans text-xs font-semibold text-foreground transition-colors hover:border-white/40 hover:bg-surface-hover cursor-pointer"
           >
             {coverImage?.url ? "Change image" : "Choose image"}
           </button>
@@ -163,17 +166,17 @@ export default function BlogPostForm({ post }: { post?: IBlogPost }) {
           type="text"
           value={tags}
           onChange={(e) => setTags(e.target.value)}
-          className="mt-2 w-full rounded-xl bg-[#f4f4f2] px-4 py-3 font-sans text-base text-foreground outline-none focus:bg-[#eeeeec]"
+          className={FIELD_CLASS}
           placeholder="Comma-separated, e.g. product, engineering"
         />
       </div>
 
-      <label className="mt-6 flex w-fit items-center gap-2.5">
+      <label className="mt-6 flex w-fit items-center gap-2.5 cursor-pointer">
         <input
           type="checkbox"
           checked={published}
           onChange={(e) => setPublished(e.target.checked)}
-          className="h-4 w-4 accent-accent"
+          className="h-4 w-4 rounded border-line bg-surface text-foreground focus:ring-0 focus:ring-offset-0"
         />
         <span className="font-sans text-sm font-semibold text-foreground">
           Published
@@ -181,21 +184,21 @@ export default function BlogPostForm({ post }: { post?: IBlogPost }) {
       </label>
 
       {error && (
-        <p className="mt-6 font-sans text-sm text-accent">{error}</p>
+        <p className="mt-6 font-mono text-xs text-red-400">{error}</p>
       )}
 
       <div className="mt-10 flex items-center gap-3">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex rounded-full bg-primary px-7 py-3.5 font-sans text-sm font-semibold text-white disabled:opacity-50"
+          className="inline-flex items-center justify-center rounded-md bg-foreground px-6 py-2.5 font-sans text-sm font-semibold text-background transition-colors hover:bg-white disabled:opacity-50 cursor-pointer"
         >
           {isSubmitting ? "Saving…" : isEdit ? "Save changes" : "Create post"}
         </button>
         <button
           type="button"
           onClick={() => router.push("/admin/blog")}
-          className="font-sans text-sm font-semibold text-muted hover:text-foreground"
+          className="font-sans text-sm font-semibold text-muted hover:text-foreground transition-colors cursor-pointer"
         >
           Cancel
         </button>

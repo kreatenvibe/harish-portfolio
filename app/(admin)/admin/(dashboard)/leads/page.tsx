@@ -22,10 +22,10 @@ export default async function AdminLeadsPage() {
 
   return (
     <div>
-      <h1 className="font-heading text-3xl font-bold text-foreground">
+      <h1 className="font-heading text-4xl uppercase tracking-wider text-foreground">
         Leads
       </h1>
-      <p className="mt-2 font-sans text-sm text-muted">
+      <p className="mt-1 font-mono text-xs uppercase tracking-widest text-muted">
         {leads.length} submission{leads.length === 1 ? "" : "s"} ·{" "}
         {unreadCount} unread
       </p>
@@ -39,27 +39,29 @@ export default async function AdminLeadsPage() {
           leads.map((lead) => (
             <div
               key={String(lead._id)}
-              className={`rounded-xl border p-6 ${
-                lead.read ? "border-foreground/10" : "border-accent/40"
+              className={`rounded-lg border p-6 transition-colors ${
+                lead.read
+                  ? "border-line bg-surface/40"
+                  : "border-white/30 bg-surface"
               }`}
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <p className="font-heading text-lg font-semibold text-foreground">
+                  <p className="font-sans text-base font-semibold text-foreground">
                     {lead.name}
                     {lead.business && (
-                      <span className="ml-2 font-sans text-sm font-normal text-muted">
+                      <span className="ml-2 font-sans text-xs font-normal text-muted">
                         · {lead.business}
                       </span>
                     )}
                   </p>
                   <a
                     href={`mailto:${lead.email}`}
-                    className="font-sans text-sm text-accent"
+                    className="font-mono text-xs text-foreground/80 hover:text-white hover:underline"
                   >
                     {lead.email}
                   </a>
-                  <p className="mt-1 font-sans text-xs text-muted">
+                  <p className="mt-1 font-mono text-[11px] text-muted">
                     {formatDate(lead.createdAt!)}
                   </p>
                 </div>
@@ -75,15 +77,15 @@ export default async function AdminLeadsPage() {
                 </div>
               </div>
 
-              <div className="mt-5 space-y-4 border-t border-foreground/10 pt-5">
+              <div className="mt-5 space-y-4 border-t border-line pt-5">
                 {FIELDS.map(
                   ({ key, label }) =>
                     lead[key] && (
                       <div key={key}>
-                        <p className="font-sans text-xs font-semibold uppercase tracking-[0.1em] text-muted">
+                        <p className="font-mono text-[11px] uppercase tracking-wider text-muted">
                           {label}
                         </p>
-                        <p className="mt-1 font-sans text-sm text-foreground">
+                        <p className="mt-1 font-sans text-sm leading-relaxed text-foreground">
                           {lead[key]}
                         </p>
                       </div>

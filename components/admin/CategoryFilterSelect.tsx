@@ -25,7 +25,7 @@ export default function CategoryFilterSelect({
     <select
       value={value}
       onChange={(e) => handleChange(e.target.value)}
-      className="rounded-full border border-foreground/10 bg-background px-3.5 py-2 font-sans text-sm text-foreground outline-none focus:border-accent"
+      className="rounded-md border border-line bg-surface px-3.5 py-2 font-sans text-sm text-foreground outline-none transition-colors focus:border-white/40 focus:ring-1 focus:ring-white/40"
     >
       <option value="">All categories</option>
       {categories.map((category) => (

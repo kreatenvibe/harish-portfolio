@@ -26,10 +26,10 @@ export default function LeadReadToggle({
       type="button"
       onClick={handleToggle}
       disabled={isPending}
-      className={`inline-flex items-center rounded-full px-3 py-1.5 font-sans text-xs font-semibold transition-colors disabled:opacity-50 ${
+      className={`inline-flex items-center rounded-md px-2.5 py-1 font-mono text-xs font-medium border transition-colors disabled:opacity-50 cursor-pointer ${
         read
-          ? "bg-foreground/5 text-muted hover:bg-foreground/10"
-          : "bg-accent/10 text-accent hover:bg-accent/20"
+          ? "border-line/60 bg-background text-muted hover:border-line hover:text-foreground"
+          : "border-line bg-surface text-foreground hover:bg-surface-hover"
       }`}
     >
       {isPending ? "Updating…" : read ? "Mark unread" : "Mark read"}

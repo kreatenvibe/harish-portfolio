@@ -22,7 +22,7 @@ export default function ReorderButtons({
         onClick={onMoveUp}
         disabled={disableUp || isPending}
         aria-label="Move up"
-        className="flex h-7 w-7 items-center justify-center rounded-full border border-foreground/15 text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-30"
+        className="flex h-7 w-7 items-center justify-center rounded-md border border-line bg-surface text-muted transition-colors hover:border-white/40 hover:text-foreground disabled:opacity-30 cursor-pointer"
       >
         <CaretUp size={13} />
       </button>
@@ -31,7 +31,7 @@ export default function ReorderButtons({
         onClick={onMoveDown}
         disabled={disableDown || isPending}
         aria-label="Move down"
-        className="flex h-7 w-7 items-center justify-center rounded-full border border-foreground/15 text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-30"
+        className="flex h-7 w-7 items-center justify-center rounded-md border border-line bg-surface text-muted transition-colors hover:border-white/40 hover:text-foreground disabled:opacity-30 cursor-pointer"
       >
         <CaretDown size={13} />
       </button>

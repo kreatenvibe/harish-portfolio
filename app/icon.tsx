@@ -18,17 +18,18 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0A0A0A",
+          background: "#0A0A0B",
+          border: "1.5px solid #2A2A2D",
           borderRadius: 6,
           fontFamily: "system-ui, -apple-system, sans-serif",
           fontWeight: 900,
-          fontSize: 16,
+          fontSize: 15,
           letterSpacing: "-0.04em",
+          color: "#F2F1ED",
           lineHeight: 1,
         }}
       >
-        <span style={{ color: "#FFFFFF" }}>H</span>
-        <span style={{ color: "#E53935" }}>K</span>
+        HK
       </div>
     ),
     {

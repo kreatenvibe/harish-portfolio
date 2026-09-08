@@ -202,8 +202,8 @@ export default function MediaManager({
   };
 
   return (
-    <div className="rounded-xl bg-[#f9f9f8] p-4">
-      {error && <p className="mb-3 font-sans text-xs text-accent">{error}</p>}
+    <div className="rounded-md border border-line bg-surface/30 p-4">
+      {error && <p className="mb-3 font-mono text-xs text-red-400">{error}</p>}
 
       {loading ? (
         <p className="font-sans text-sm text-muted">Loading media…</p>
@@ -217,12 +217,12 @@ export default function MediaManager({
             return (
               <div
                 key={id}
-                className="overflow-hidden rounded-lg border border-foreground/10 bg-background"
+                className="overflow-hidden rounded-md border border-line bg-surface"
               >
-                <div className="relative aspect-square w-full bg-[#f4f4f2]">
+                <div className="relative aspect-square w-full bg-background border-b border-line">
                   <MediaThumb item={item} />
                 </div>
-                <div className="p-2">
+                <div className="p-2.5">
                   <p className="truncate font-sans text-xs font-semibold text-foreground">
                     {item.title || item.type}
                   </p>
@@ -239,7 +239,7 @@ export default function MediaManager({
                         type="button"
                         onClick={() => startEdit(item)}
                         aria-label="Edit media"
-                        className="flex h-7 w-7 items-center justify-center rounded-full border border-foreground/15 text-foreground transition-colors hover:border-accent hover:text-accent"
+                        className="flex h-7 w-7 items-center justify-center rounded-md border border-line bg-surface text-muted transition-colors hover:border-white/40 hover:text-foreground cursor-pointer"
                       >
                         <PencilSimple size={12} />
                       </button>
@@ -248,7 +248,7 @@ export default function MediaManager({
                         onClick={() => handleDelete(item)}
                         disabled={isPending}
                         aria-label="Delete media"
-                        className="flex h-7 w-7 items-center justify-center rounded-full border border-foreground/15 text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
+                        className="flex h-7 w-7 items-center justify-center rounded-md border border-line bg-surface text-muted transition-colors hover:border-red-500/50 hover:text-red-400 disabled:opacity-50 cursor-pointer"
                       >
                         <Trash size={12} />
                       </button>
@@ -257,7 +257,7 @@ export default function MediaManager({
                 </div>
 
                 {isEditing && (
-                  <div className="space-y-2 border-t border-foreground/10 p-2">
+                  <div className="space-y-2 border-t border-line p-2.5 bg-background/50">
                     <input
                       type="text"
                       value={editFields.title}
@@ -265,7 +265,7 @@ export default function MediaManager({
                         setEditFields((f) => ({ ...f, title: e.target.value }))
                       }
                       placeholder="Title"
-                      className="w-full rounded-md bg-[#f4f4f2] px-2 py-1.5 font-sans text-xs text-foreground outline-none"
+                      className="w-full rounded-md border border-line bg-surface px-2 py-1.5 font-sans text-xs text-foreground outline-none placeholder:text-muted focus:border-white/40"
                     />
                     <input
                       type="text"
@@ -274,7 +274,7 @@ export default function MediaManager({
                         setEditFields((f) => ({ ...f, altText: e.target.value }))
                       }
                       placeholder="Alt text"
-                      className="w-full rounded-md bg-[#f4f4f2] px-2 py-1.5 font-sans text-xs text-foreground outline-none"
+                      className="w-full rounded-md border border-line bg-surface px-2 py-1.5 font-sans text-xs text-foreground outline-none placeholder:text-muted focus:border-white/40"
                     />
                     <input
                       type="text"
@@ -283,7 +283,7 @@ export default function MediaManager({
                         setEditFields((f) => ({ ...f, caption: e.target.value }))
                       }
                       placeholder="Caption"
-                      className="w-full rounded-md bg-[#f4f4f2] px-2 py-1.5 font-sans text-xs text-foreground outline-none"
+                      className="w-full rounded-md border border-line bg-surface px-2 py-1.5 font-sans text-xs text-foreground outline-none placeholder:text-muted focus:border-white/40"
                     />
                     <textarea
                       rows={2}
@@ -292,21 +292,21 @@ export default function MediaManager({
                         setEditFields((f) => ({ ...f, description: e.target.value }))
                       }
                       placeholder="Description"
-                      className="w-full resize-none rounded-md bg-[#f4f4f2] px-2 py-1.5 font-sans text-xs text-foreground outline-none"
+                      className="w-full resize-none rounded-md border border-line bg-surface px-2 py-1.5 font-sans text-xs text-foreground outline-none placeholder:text-muted focus:border-white/40"
                     />
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 pt-1">
                       <button
                         type="button"
                         onClick={() => saveEdit(id)}
                         disabled={isPending}
-                        className="rounded-full bg-primary px-3 py-1 font-sans text-xs font-semibold text-white disabled:opacity-50"
+                        className="rounded-md bg-foreground px-3 py-1 font-sans text-xs font-semibold text-background hover:bg-white disabled:opacity-50 cursor-pointer transition-colors"
                       >
                         Save
                       </button>
                       <button
                         type="button"
                         onClick={() => setEditingId(null)}
-                        className="font-sans text-xs font-semibold text-muted hover:text-foreground"
+                        className="font-sans text-xs font-semibold text-muted hover:text-foreground transition-colors cursor-pointer"
                       >
                         Cancel
                       </button>
@@ -323,7 +323,7 @@ export default function MediaManager({
         <button
           type="button"
           onClick={() => setAssetSelectorOpen(true)}
-          className="inline-flex items-center gap-1.5 rounded-full border border-foreground/15 px-4 py-2 font-sans text-xs font-semibold text-foreground transition-colors hover:border-accent hover:text-accent"
+          className="inline-flex items-center gap-1.5 rounded-md border border-line bg-surface px-4 py-2 font-sans text-xs font-semibold text-foreground transition-colors hover:border-white/40 hover:bg-surface-hover cursor-pointer"
         >
           <Plus size={14} />
           Add media
@@ -331,14 +331,14 @@ export default function MediaManager({
         <button
           type="button"
           onClick={toggleDeleted}
-          className="font-sans text-xs font-semibold text-muted hover:text-foreground"
+          className="font-sans text-xs font-semibold text-muted hover:text-foreground transition-colors cursor-pointer"
         >
           {showDeleted ? "Hide deleted" : "Show deleted"}
         </button>
       </div>
 
       {showDeleted && (
-        <div className="mt-4 border-t border-foreground/10 pt-4">
+        <div className="mt-4 border-t border-line pt-4">
           {deletedMedia.length === 0 ? (
             <p className="font-sans text-xs text-muted">No deleted media.</p>
           ) : (
@@ -346,12 +346,12 @@ export default function MediaManager({
               {deletedMedia.map((item) => (
                 <div
                   key={String(item._id)}
-                  className="overflow-hidden rounded-lg border border-foreground/10 bg-background opacity-60"
+                  className="overflow-hidden rounded-md border border-line bg-surface opacity-60"
                 >
-                  <div className="relative aspect-square w-full bg-[#f4f4f2]">
+                  <div className="relative aspect-square w-full bg-background border-b border-line">
                     <MediaThumb item={item} />
                   </div>
-                  <div className="p-2">
+                  <div className="p-2.5">
                     <p className="truncate font-sans text-xs font-semibold text-foreground">
                       {item.title || item.type}
                     </p>
@@ -359,7 +359,7 @@ export default function MediaManager({
                       type="button"
                       onClick={() => handleRestore(item)}
                       disabled={isPending}
-                      className="mt-2 w-full rounded-full border border-foreground/15 px-3 py-1 font-sans text-xs font-semibold text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
+                      className="mt-2 w-full rounded-md border border-line bg-surface px-3 py-1 font-sans text-xs font-semibold text-foreground transition-colors hover:border-white/40 hover:bg-surface-hover disabled:opacity-50 cursor-pointer"
                     >
                       Restore
                     </button>

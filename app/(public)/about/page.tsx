@@ -48,12 +48,11 @@ export default function AboutPage() {
             </h1>
 
             <p className="font-mono text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted">
-              GRAPHIC DESIGNER × PAINT &amp; ROTO ARTIST // ETV NETWORK
+              GRAPHIC DESIGNER // ETV NETWORK
             </p>
 
             <p className="font-sans text-lg sm:text-xl leading-relaxed text-muted max-w-3xl">
-              Detail-oriented visual designer and rotoscopy/paint artist with hands-on
-              experience across broadcast media, commercial branding, and visual effects production pipelines.
+              Graphic Designer with experience creating branding assets, posters, and visual materials across corporate and freelance settings, currently designing for broadcast and digital platforms at ETV Network.
             </p>
           </div>
         </div>
@@ -75,23 +74,19 @@ export default function AboutPage() {
                   BACKGROUND &amp; PRACTICE
                 </p>
                 <h2 className="mt-3 font-heading text-3xl sm:text-4xl font-bold uppercase text-foreground">
-                  Disciplined craft across pixels and physical media.
+                  Disciplined craft across print, digital, and broadcast media.
                 </h2>
               </div>
 
               <div className="space-y-6 font-sans text-base sm:text-lg leading-relaxed text-muted">
                 <p>
-                  I am a Paint &amp; Roto artist and graphic designer with hands-on experience
-                  across broadcast television, VFX production, and independent client design.
+                  I am a Graphic Designer currently creating visual content for broadcast and digital platforms at ETV Network, designing within brand and editorial guidelines across broadcast channels and social media.
                 </p>
                 <p>
-                  Currently working as a Graphic Designer at ETV Network, I create visually
-                  engaging design systems and broadcast graphics, alongside freelance Paint &amp;
-                  Roto work on web series productions—delivering clean plates, precise roto mattes, and high-fidelity output.
+                  With experience spanning corporate in-house roles and independent freelance practice, I have created complete brand identity systems, real estate marketing collateral, product packaging, and digital assets.
                 </p>
                 <p>
-                  My background spans animation, visual effects, and game development, providing a
-                  unique combination of systematic technical discipline and creative range.
+                  My background in game art and animation/VFX adds a strong technical and production-pipeline understanding to my design work, allowing me to collaborate effectively across print, digital, and motion-based visual media.
                 </p>
               </div>
             </div>

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { X } from "@phosphor-icons/react";
 import AssetSelector from "@/components/admin/AssetSelector";
 import { createProject, updateProject } from "@/lib/actions/project.action";
+import { getImageKitUrl } from "@/lib/imagekit";
 import type { IProject, ICategory } from "@/database";
 
 const FIELD_CLASS =
@@ -165,7 +166,7 @@ export default function ProjectForm({
           {coverImage?.url && (
             <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-md border border-line bg-surface">
               <Image
-                src={coverImage.url}
+                src={getImageKitUrl(coverImage.url, { width: 300 })}
                 alt=""
                 fill
                 sizes="128px"

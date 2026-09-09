@@ -8,6 +8,7 @@ import { getProjectBySlug } from "@/lib/actions/project.action";
 import { getCategoryBySlug } from "@/lib/actions/category.action";
 import { getProjectSections } from "@/lib/actions/section.action";
 import { getMediaBySection } from "@/lib/actions/media.action";
+import { getImageKitUrl } from "@/lib/imagekit";
 
 import ProjectDetail from "@/components/sections/ProjectDetail";
 import { FrameCounter } from "@/components/frame/FrameCounter";
@@ -228,7 +229,7 @@ export default async function ProjectPage({ params }: Props) {
             <TrackingPoint className="bottom-4 right-4" variant="cross" />
 
             <Image
-              src={project.coverImage.url}
+              src={getImageKitUrl(project.coverImage.url)}
               alt={project.title}
               fill
               priority

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "@phosphor-icons/react";
+import { getImageKitUrl } from "@/lib/imagekit";
 import type { IProject } from "@/database";
 
 interface ProjectMatteCardProps {
@@ -49,17 +50,17 @@ export function ProjectMatteCard({
       {/* Artwork Plate */}
       <div className="relative aspect-16/10 w-full overflow-hidden bg-[#141416]">
         {project.coverImage?.url ? (
-          <Image
-            src={project.coverImage.url}
-            alt={project.title}
-            fill
-            priority={index < 4}
-            loading={index < 4 ? "eager" : "lazy"}
-            data-card-image
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            unoptimized
-          />
+            <Image
+              src={getImageKitUrl(project.coverImage.url)}
+              alt={project.title}
+              fill
+              priority={index < 4}
+              loading={index < 4 ? "eager" : "lazy"}
+              data-card-image
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover scale-[1.14] transition-transform duration-700 ease-out group-hover:scale-[1.20]"
+              unoptimized
+            />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-[#151518]">
             <span className="font-heading text-2xl uppercase tracking-widest text-muted/30">

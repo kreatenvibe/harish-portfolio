@@ -49,7 +49,7 @@ export default function Navbar({
             >
               <span>HK DESIGNS</span>
               <span className="ml-3 font-mono text-[9px] tracking-widest text-muted/60 uppercase hidden sm:inline-block">
-                {"//"} VISUAL DESIGN × PAINT &amp; ROTO
+                {"//"} GRAPHIC DESIGN × BRANDING &amp; BROADCAST
               </span>
             </Link>
           </div>

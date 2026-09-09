@@ -12,67 +12,67 @@ export const metadata = {
 const SERVICES = [
   {
     code: "SERVICE_01",
-    title: "Brand Identity & Design Systems",
-    scope: "Vector Systems, Typography, Mathematical Alignment, Comprehensive Guidelines",
+    title: "Brand Identity & Design",
+    scope: "Logo Design, Brand Identity, Visual Identity Systems, Brand Style Guides, Brand Collateral",
     description:
-      "Creating durable brand identities from initial concept to full implementation. We build cohesive visual languages, typography hierarchies, and scalable vector assets that maintain consistency across all formats.",
+      "Creating comprehensive brand identities and visual systems. Building memorable logo marks, cohesive brand style guides, color architectures, and full suites of marketing and corporate collateral.",
     deliverables: [
-      "Primary & Secondary Logo Marks",
+      "Logo Design & Brand Marks",
+      "Brand Identity & Visual Systems",
       "Comprehensive Brand Style Guides",
-      "Typography & Color Architectures",
-      "Digital & Vector Asset Toolkits",
+      "Corporate & Marketing Collateral",
     ],
   },
   {
     code: "SERVICE_02",
-    title: "Product Packaging Design",
-    scope: "Dielines, Surface Materials, Box Architecture, Retail Presence",
+    title: "Poster & Print Design",
+    scope: "Posters, Banners, Pamphlets, Print Materials, Marketing Collateral",
     description:
-      "Engineering tactile packaging solutions that stand out on retail shelves and unboxing experiences. We combine spatial layout, substrate considerations, and print production specs for flawless manufacturing.",
+      "Designing high-impact print collateral and outreach materials for campaigns, real estate projects, and corporate initiatives with meticulous typographic and layout discipline.",
     deliverables: [
-      "Custom Dieline Layouts & Structures",
-      "Label Systems & Product Containers",
-      "Print-Ready CMYK & Spot Separation",
-      "Photorealistic 3D / Matte Presentation",
+      "Event, Promotional & Launch Posters",
+      "Large-Format Banners & Signage",
+      "Pamphlets, Flyers & Brochures",
+      "Real Estate & Campaign Print Materials",
     ],
   },
   {
     code: "SERVICE_03",
-    title: "Social Media & Motion Campaigns",
-    scope: "9:16 Vertical Content, Digital Canvases, Broadcast Pacing",
+    title: "Packaging & Product Design",
+    scope: "Product Packaging, Packaging Visual Design, Product Presentation",
     description:
-      "Designing high-cadence digital campaign assets and broadcast motion graphics that capture immediate attention. Tailored for multi-channel digital distribution with rhythmic typographic pacing.",
+      "Designing tangible product packaging and visual presentations that command attention on retail shelves and digital showcases, balancing aesthetic clarity with product utility.",
     deliverables: [
-      "Vertical 9:16 Story & Reel Frameworks",
-      "Dynamic Broadcast Title Packages",
-      "Multi-Channel Campaign Toolkits",
-      "Promotional Motion Sequences",
+      "Product Packaging Design",
+      "Packaging Visual Layouts & Labels",
+      "Product Presentation Graphics",
+      "Print-Ready Packaging Assets",
     ],
   },
   {
     code: "SERVICE_04",
-    title: "Print & Editorial Production",
-    scope: "Publication Layouts, Posters, Tactile Collateral, Registration Precision",
+    title: "Digital & Social Media Design",
+    scope: "Digital Visual Content, Social Media Graphics, Digital Campaign Visuals, Broadcast/Digital Design Assets",
     description:
-      "Physical and editorial print design executed with rigorous typographic care, grid systems, and print finishing knowledge from paper stock to binding.",
+      "Designing visual content and campaign graphics for broadcast networks and digital platforms, operating within editorial standards and brand guidelines.",
     deliverables: [
-      "Editorial Books & Publications",
-      "Large-Format Event Posters",
-      "Stationery & Marketing Collateral",
-      "Print Registration & Pre-Press Files",
+      "Broadcast Visual Design Assets",
+      "Channel Social Media Graphics",
+      "Digital Campaign Visuals",
+      "Platform-Specific Visual Assets",
     ],
   },
   {
     code: "SERVICE_05",
-    title: "Paint & Roto VFX Prep",
-    scope: "Wire Removal, Clean Plates, Tracking Cleanup, Sub-Pixel Rotoscopy",
+    title: "E-Commerce & Mockups",
+    scope: "Amazon Listing Design, Product Images, Infographics, A+ Content, App Mockups, Website Mockups",
     description:
-      "Frame-by-frame visual effects preparation for film, broadcast television, and commercial footage. Delivering artifact-free clean plates and accurate roto mattes that integrate seamlessly into compositing pipelines.",
+      "Creating high-conversion e-commerce visuals, feature-driven product infographics, comprehensive Amazon A+ content, and realistic UI mockups for digital products and platforms.",
     deliverables: [
-      "Wire Rig & Equipment Removals",
-      "Tracking Marker & Blemish Cleanup",
-      "Plate Reconstruction & Grain Matching",
-      "Sub-Pixel Organic & Hard-Surface Roto",
+      "Amazon Listing Visual Sets & Main Images",
+      "Product Feature Infographics",
+      "Enhanced Brand / A+ Content Layouts",
+      "App & Website Mockups",
     ],
   },
 ];
@@ -92,7 +92,7 @@ export default function ServicesPage() {
               Studio Capabilities.
             </h1>
             <p className="font-sans text-base sm:text-lg leading-relaxed text-muted">
-              Tailored visual design systems and frame-accurate visual effects plate preparation for studios, directors, and ambitious brands.
+              Tailored graphic design systems, print collateral, product packaging, and broadcast visual assets for corporate and independent platforms.
             </p>
           </div>
         </div>

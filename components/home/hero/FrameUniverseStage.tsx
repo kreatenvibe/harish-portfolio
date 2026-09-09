@@ -5,31 +5,34 @@ import Link from "next/link";
 import gsap from "gsap";
 import { ArrowDown, ArrowUpRight } from "@phosphor-icons/react";
 import { TrackingPoint } from "@/components/frame/TrackingPoints";
+import { HeroProjectStack } from "./HeroProjectStack";
 import { prefersReducedMotion } from "@/lib/motion";
 import type { IProject } from "@/database";
 
 interface FrameUniverseStageProps {
   projects?: IProject[];
+  categorySlugMap?: Record<string, string>;
 }
 
 // DETERMINISTIC HERO STACKING LAYER SYSTEM:
 // --hero-bg: 10       (Hero background frame, shell, corner brackets)
-// --hero-artwork: 20  (Portfolio artwork plates — renders BEHIND WebGL camera)
-// --hero-webgl: 30    (Persistent 3D Camera WebGL Canvas)
-// --hero-content: 40  (Hero typography HK DESIGNS & narrative — renders IN FRONT OF WebGL)
+// --hero-artwork: 20  (Portfolio artwork plates & fanned stack)
+// --hero-content: 40  (Hero typography HK DESIGNS & narrative)
 // --hero-controls: 50 (Interactive CTA buttons — guaranteed clickability)
 // --hero-hud: 60      (Top metadata header & tracking markers)
 
-export function FrameUniverseStage({ projects = [] }: FrameUniverseStageProps) {
+export function FrameUniverseStage({
+  projects = [],
+  categorySlugMap = {},
+}: FrameUniverseStageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const darknessOverlayRef = useRef<HTMLDivElement>(null);
   const cinematicBarRef = useRef<HTMLDivElement>(null);
   const frameBorderRef = useRef<HTMLDivElement>(null);
   const typographyRef = useRef<HTMLDivElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
   const trackingRef = useRef<HTMLDivElement>(null);
   const metaRef = useRef<HTMLDivElement>(null);
-
-  const primaryProject = projects[0];
 
   useEffect(() => {
     const isReduced = prefersReducedMotion();
@@ -41,6 +44,7 @@ export function FrameUniverseStage({ projects = [] }: FrameUniverseStageProps) {
           [
             frameBorderRef.current,
             typographyRef.current,
+            stackRef.current,
             trackingRef.current,
             metaRef.current,
           ],
@@ -59,6 +63,7 @@ export function FrameUniverseStage({ projects = [] }: FrameUniverseStageProps) {
         opacity: 0,
         y: 20,
       });
+      gsap.set(stackRef.current, { opacity: 0, y: 24, scale: 0.96 });
       gsap.set(trackingRef.current, { opacity: 0 });
       gsap.set(metaRef.current, { opacity: 0, y: -8 });
 
@@ -109,6 +114,19 @@ export function FrameUniverseStage({ projects = [] }: FrameUniverseStageProps) {
             clearProps: "transform",
           },
           "-=0.2"
+        )
+        // 6. Portfolio Stack reveals smoothly
+        .to(
+          stackRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: "power2.out",
+            clearProps: "opacity,y,scale",
+          },
+          "-=0.3"
         );
     }, containerRef);
 
@@ -118,7 +136,7 @@ export function FrameUniverseStage({ projects = [] }: FrameUniverseStageProps) {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[92dvh] w-full flex items-center justify-center bg-[#0A0A0B] px-4 py-8 sm:px-6 lg:px-8 border-b border-line"
+      className="relative min-h-[92dvh] w-full flex items-center justify-center bg-[#0A0A0B] px-4 py-8 sm:px-6 lg:px-8 border-b border-line overflow-hidden"
     >
       {/* 1. Cinematic Opening Layer (Top Overlay) */}
       <div
@@ -131,10 +149,10 @@ export function FrameUniverseStage({ projects = [] }: FrameUniverseStageProps) {
         />
       </div>
 
-      {/* Main Cinematic Frame Shell (z-index: auto — DOES NOT TRAP CHILDREN) */}
+      {/* Main Cinematic Frame Shell */}
       <div
         ref={frameBorderRef}
-        className="relative w-full max-w-7xl min-h-[78vh] rounded border border-line bg-[#121214] p-6 sm:p-10 lg:p-14 flex flex-col justify-between shadow-2xl"
+        className="relative w-full max-w-7xl min-h-[78vh] rounded border border-line bg-[#121214] p-6 sm:p-10 lg:p-14 flex flex-col justify-between shadow-2xl overflow-hidden"
       >
         {/* Precision Corner Ticks (Z-INDEX 10) */}
         <span className="frame-corner-tl" aria-hidden="true" />
@@ -181,12 +199,12 @@ export function FrameUniverseStage({ projects = [] }: FrameUniverseStageProps) {
                 HK DESIGNS
               </h1>
               <p className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold uppercase text-muted tracking-tight">
-                Visual Design × Paint &amp; Roto
+                Graphic Designer
               </p>
             </div>
 
             <p className="max-w-xl font-sans text-base sm:text-lg leading-relaxed text-muted">
-              Detail-oriented Graphic Designer and Paint &amp; Roto artist delivering brand identity systems, packaging, broadcast graphics, and frame-accurate VFX plate cleanups.
+              Graphic Designer with experience across branding, posters and print design, product packaging, digital and social media, and broadcast graphics—currently designing at ETV Network.
             </p>
 
             {/* CTAs (Z-INDEX 50: INTERACTIVE CONTROLS) */}
@@ -209,20 +227,12 @@ export function FrameUniverseStage({ projects = [] }: FrameUniverseStageProps) {
             </div>
           </div>
 
-          {/* Right Column: 3D Photographic Composition Stage Framing (Z-INDEX 40: METADATA) */}
-          <div className="relative z-[40] flex flex-col items-center lg:items-end justify-end min-h-[380px] sm:min-h-[440px] pt-2 pb-8 pointer-events-none">
-            {primaryProject && (
-              <div className="relative z-[40] flex items-end justify-between w-full max-w-[500px] border-b border-line/40 pb-3 font-mono text-[10px] text-foreground">
-                <div>
-                  <p className="font-bold text-sm uppercase font-heading">{primaryProject.title}</p>
-                  <p className="text-muted text-[9px] uppercase tracking-wider">{primaryProject.client || "FEATURED PRODUCTION"}</p>
-                </div>
-                <div className="flex items-center gap-2 font-mono text-[9px] text-muted/60 uppercase tracking-widest">
-                  <span className="signal-dot" />
-                  <span>PLATE_001 {"//"} OPTICAL CAPTURE</span>
-                </div>
-              </div>
-            )}
+          {/* Right Column: Fanned / Stacked Portfolio Image Composition */}
+          <div ref={stackRef} className="relative z-[40] w-full flex items-center justify-center lg:justify-end">
+            <HeroProjectStack
+              projects={projects}
+              categorySlugMap={categorySlugMap}
+            />
           </div>
         </div>
 

@@ -7,33 +7,41 @@ const TIMELINE_TRACKS = [
     period: "2026 — PRESENT",
     role: "Graphic Designer",
     org: "ETV Network",
-    type: "BROADCAST MEDIA",
+    type: "BROADCAST & DIGITAL MEDIA",
     scope:
-      "Delivering high-visibility visual design and broadcast graphics across broadcast & digital platforms, alongside independent Paint & Roto work on studio web series.",
+      "Design visual content for broadcast and digital platforms, working within brand and editorial guidelines. Currently designing for ETV Andhra Pradesh, ETV Telangana, and ETV Network social media.",
   },
   {
-    period: "2025 (1 YEAR)",
-    role: "Paint & Roto Artist",
-    org: "Mantrick Studios",
-    type: "VFX PRODUCTION",
-    scope:
-      "Paint prep, clean plate generation, wire removals, and pixel-precise roto mattes, collaborating closely with senior artists to accelerate shot delivery.",
-  },
-  {
-    period: "2019 — 2025",
+    period: "JAN 2023 — JAN 2026",
     role: "Graphic Designer",
-    org: "Studio Freelance",
-    type: "BRAND & PRINT",
+    org: "Mylaru Infra",
+    type: "BRAND & REAL ESTATE PRINT",
     scope:
-      "Crafting brand identity systems, product packaging, campaign collateral, and digital materials for client rosters across diverse industries.",
+      "Designed posters, banners, pamphlets, and print materials for real estate projects and local outreach campaigns. Built the complete brand identity for Mylaru Infra and created full branding for its sister concern, Mylaru Group.",
+  },
+  {
+    period: "FREELANCE",
+    role: "Freelance Graphic Designer",
+    org: "Independent",
+    type: "BRANDING & PACKAGING",
+    scope:
+      "Branding and identity design, product packaging and visual design, Amazon listing design, product images, infographics, A+ content, and app/website mockups.",
   },
   {
     period: "2018 — 2019",
-    role: "Game Developer",
+    role: "2D Assets Designer for Games",
     org: "APSSDC",
-    type: "CORE SYSTEMS & 2D ART",
+    type: "GAME PRODUCTION",
     scope:
-      "Engine programming, gameplay mechanics, and 2D visual assets within collaborative production pipelines.",
+      "Created 2D art assets for game projects while working collaboratively within game production teams.",
+  },
+  {
+    period: "2018",
+    role: "2D Artist",
+    org: "IGDC Game Development Program",
+    type: "GAME ART & PROTOTYPING",
+    scope:
+      "Created gaming assets and contributed to functional game prototypes while applying art and design principles.",
   },
 ];
 

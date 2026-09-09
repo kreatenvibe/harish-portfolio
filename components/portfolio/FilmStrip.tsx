@@ -65,13 +65,14 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
           0
         );
 
-        // Subtle opposing internal plate parallax
+        // Subtle opposing internal plate parallax with scale bleed to eliminate edge gaps
         if (cardImages.length > 0) {
           tl.fromTo(
             cardImages,
-            { xPercent: -5 },
+            { xPercent: -5, scale: 1.14 },
             {
               xPercent: 5,
+              scale: 1.14,
               ease: "none",
             },
             0

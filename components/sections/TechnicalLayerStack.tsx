@@ -5,39 +5,39 @@ import { FrameCounter } from "@/components/frame/FrameCounter";
 const COMPOSITING_LAYERS = [
   {
     layer: "LAYER 01",
-    name: "Visual Design & Art Direction",
-    disciplines: "Graphic Design / Editorial Systems / Layout",
-    focus: "Composition, typographic contrast, and deliberate hierarchy across surfaces.",
+    name: "Brand Identity & Visual Design",
+    disciplines: "Adobe Photoshop / Adobe Illustrator",
+    focus: "Logo systems, brand style guides, vector marks, and typography hierarchies across corporate and freelance projects.",
   },
   {
     layer: "LAYER 02",
-    name: "Brand Systems & Identity",
-    disciplines: "Logo Systems / Style Guides / Guidelines",
-    focus: "Vector geometry, brand architectures, and cross-platform identity consistency.",
+    name: "Poster & Print Collateral",
+    disciplines: "Adobe Photoshop / Adobe Illustrator",
+    focus: "Posters, banners, pamphlets, and print production materials for real estate and local outreach campaigns.",
   },
   {
     layer: "LAYER 03",
-    name: "Paint Prep & Clean Plates",
-    disciplines: "Wire Removal / Tracking Marker Cleanup / Plate Reconstruction",
-    focus: "Frame-accurate grain matching, artifact removal, and background recreation.",
+    name: "Packaging & E-Commerce Visuals",
+    disciplines: "Adobe Photoshop / Adobe Illustrator",
+    focus: "Product packaging, visual layouts, Amazon listing graphics, infographics, A+ content, and mockups.",
   },
   {
     layer: "LAYER 04",
-    name: "Rotoscopy & Matte Generation",
-    disciplines: "Silhouette / Organic Shapes / Hard Surface Extraction",
-    focus: "Sub-pixel edge fidelity, motion blur preservation, and complex matte isolation.",
+    name: "Broadcast Visual Content",
+    disciplines: "Adobe Photoshop / Adobe Illustrator / Adobe Premiere Pro",
+    focus: "Visual content for broadcast platforms (ETV Andhra Pradesh & Telangana) and channel social media within brand guidelines.",
   },
   {
     layer: "LAYER 05",
-    name: "Packaging & Physical Production",
-    disciplines: "Dieline Architecture / Finishes / Print Specs",
-    focus: "Precision dielines, CMYK/spot color separation, and material tactile depth.",
+    name: "Motion Graphics & Video",
+    disciplines: "Adobe After Effects / Adobe Premiere Pro",
+    focus: "Broadcast motion assets, campaign video edits, and digital visual pacing.",
   },
   {
     layer: "LAYER 06",
-    name: "Broadcast & Motion Collateral",
-    disciplines: "Broadcast Graphics / 9:16 Campaign Motion",
-    focus: "Pacing, timing curves, and high-cadence digital video delivery.",
+    name: "3D & VFX Pipeline Background",
+    disciplines: "Autodesk Maya / Silhouette",
+    focus: "Supporting background in 3D assets, game art, and animation/VFX adding technical and production pipeline understanding.",
   },
 ];
 
@@ -49,10 +49,10 @@ export function TechnicalLayerStack() {
         <div className="relative z-[40] max-w-3xl space-y-4 mb-14 lg:mb-18">
           <FrameCounter index={5} total={7} label="TECHNICAL STACK" />
           <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-foreground">
-            Compositing Layer Stack.
+            Design &amp; Software Stack.
           </h2>
           <p className="font-sans text-base sm:text-lg text-muted">
-            Capabilities structured as a multi-pass compositing stack—each layer adding systematic refinement from raw concept to finished plate.
+            Graphic design capabilities structured with technical discipline—combining core visual design tools with motion, video, and 3D/VFX pipeline background.
           </p>
         </div>
 

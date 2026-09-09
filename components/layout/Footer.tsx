@@ -61,9 +61,9 @@ export default function Footer({
             </Link>
 
             <p className="font-sans text-sm leading-6 text-muted">
-              Harish Kumar G — Visual Designer &amp; Paint &amp; Roto Artist at ETV
-              Network. Building brand identity systems, product packaging, motion
-              campaigns, and pixel-accurate VFX cleanup.
+              Harish Kumar G — Graphic Designer at ETV Network. Building brand
+              identity systems, posters and print collateral, product packaging,
+              digital campaigns, and broadcast design assets.
             </p>
 
             <div className="flex flex-col gap-2.5 font-mono text-xs">

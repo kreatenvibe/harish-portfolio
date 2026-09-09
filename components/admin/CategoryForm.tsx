@@ -6,6 +6,7 @@ import Image from "next/image";
 import { X } from "@phosphor-icons/react";
 import AssetSelector from "@/components/admin/AssetSelector";
 import { createCategory, updateCategory } from "@/lib/actions/category.action";
+import { getImageKitUrl } from "@/lib/imagekit";
 import type { ICategory } from "@/database";
 
 const FIELD_CLASS =
@@ -92,7 +93,7 @@ export default function CategoryForm({ category }: { category?: ICategory }) {
           {coverImage?.url && (
             <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-md border border-line bg-surface">
               <Image
-                src={coverImage.url}
+                src={getImageKitUrl(coverImage.url, { width: 300 })}
                 alt=""
                 fill
                 sizes="128px"

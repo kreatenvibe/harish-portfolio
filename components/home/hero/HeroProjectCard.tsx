@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getImageKitUrl } from "@/lib/imagekit";
 
 type HeroProjectCardProps = {
   number: string;
@@ -30,6 +31,8 @@ export function HeroProjectCard({
   const cardContainerClasses =
     "relative overflow-hidden rounded-none border border-black/15 dark:border-white/15 bg-surface shadow-[0_16px_40px_-8px_rgba(10,10,10,0.25),0_6px_18px_-4px_rgba(10,10,10,0.14),0_0_0_1px_rgba(10,10,10,0.08)] transition-all duration-500 group-hover:shadow-[0_28px_60px_-12px_rgba(10,10,10,0.35),0_12px_26px_-4px_rgba(10,10,10,0.2),0_0_0_1px_rgba(10,10,10,0.12)]";
 
+  const resolvedImageSrc = getImageKitUrl(imageSrc);
+
   if (variant === "social") {
     return (
       <Link
@@ -55,7 +58,7 @@ export function HeroProjectCard({
             </div>
 
             <Image
-              src={imageSrc}
+              src={resolvedImageSrc}
               alt={imageAlt}
               fill
               sizes="(max-width: 768px) 80vw, (max-width: 1200px) 40vw, 30vw"
@@ -96,7 +99,7 @@ export function HeroProjectCard({
             <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/30 to-transparent pointer-events-none z-10" />
 
             <Image
-              src={imageSrc}
+              src={resolvedImageSrc}
               alt={imageAlt}
               fill
               sizes="(max-width: 768px) 95vw, (max-width: 1200px) 55vw, 42vw"
@@ -149,7 +152,7 @@ export function HeroProjectCard({
             </div>
 
             <Image
-              src={imageSrc}
+              src={resolvedImageSrc}
               alt={imageAlt}
               fill
               sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 34vw"
@@ -198,7 +201,7 @@ export function HeroProjectCard({
           </div>
 
           <Image
-            src={imageSrc}
+            src={resolvedImageSrc}
             alt={imageAlt}
             fill
             sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 40vw"

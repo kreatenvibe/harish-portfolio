@@ -7,6 +7,7 @@ import { X } from "@phosphor-icons/react";
 import TextEditor from "@/components/editor/TextEditor";
 import AssetSelector from "@/components/admin/AssetSelector";
 import { createBlogPost, updateBlogPost } from "@/lib/actions/blog.action";
+import { getImageKitUrl } from "@/lib/imagekit";
 import type { IBlogPost } from "@/database";
 
 const FIELD_CLASS =
@@ -111,7 +112,7 @@ export default function BlogPostForm({ post }: { post?: IBlogPost }) {
           {coverImage?.url && (
             <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-md border border-line bg-surface">
               <Image
-                src={coverImage.url}
+                src={getImageKitUrl(coverImage.url, { width: 300 })}
                 alt=""
                 fill
                 sizes="128px"

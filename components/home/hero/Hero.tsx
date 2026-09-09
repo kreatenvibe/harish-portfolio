@@ -5,8 +5,17 @@ import type { IProject } from "@/database";
 
 interface HeroProps {
   featuredProjects?: IProject[];
+  categorySlugMap?: Record<string, string>;
 }
 
-export function Hero({ featuredProjects = [] }: HeroProps) {
-  return <FrameUniverseStage projects={featuredProjects} />;
+export function Hero({
+  featuredProjects = [],
+  categorySlugMap = {},
+}: HeroProps) {
+  return (
+    <FrameUniverseStage
+      projects={featuredProjects}
+      categorySlugMap={categorySlugMap}
+    />
+  );
 }

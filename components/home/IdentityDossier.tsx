@@ -6,10 +6,10 @@ import { FrameCounter } from "@/components/frame/FrameCounter";
 import { TrackingPoint } from "@/components/frame/TrackingPoints";
 
 const CAPABILITIES = [
-  { code: "01", title: "Rotoscopy & Masking", desc: "Organic & hard-surface matte extraction with edge fidelity" },
-  { code: "02", title: "Clean Plates & Paint Prep", desc: "Wire removal, marker cleanup, and plate reconstruction" },
-  { code: "03", title: "Brand Identity Systems", desc: "Vector identities, typography systems, and brand guidelines" },
-  { code: "04", title: "Packaging & Print Production", desc: "Dielines, surface finishes, and editorial publication design" },
+  { code: "01", title: "Brand Identity & Systems", desc: "Logo marks, comprehensive brand style guides, and visual systems" },
+  { code: "02", title: "Posters & Print Collateral", desc: "Posters, banners, pamphlets, and real estate campaign materials" },
+  { code: "03", title: "Packaging & E-Commerce", desc: "Product packaging, Amazon listings, infographics, and UI mockups" },
+  { code: "04", title: "Broadcast & Digital Media", desc: "Channel graphics, social media content, and digital campaign visuals" },
 ];
 
 export function IdentityDossier() {
@@ -43,23 +43,19 @@ export function IdentityDossier() {
               <div className="inline-flex items-center gap-2 rounded border border-line bg-[#161619] px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
                 <span className="text-foreground">ETV NETWORK</span>
                 <span className="text-line">•</span>
-                <span>GRAPHIC DESIGNER &amp; PAINT &amp; ROTO ARTIST</span>
+                <span>GRAPHIC DESIGNER</span>
               </div>
 
               <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-foreground leading-[0.95]">
-                Crafting visual systems with plate-accurate precision.
+                Crafting visual materials with systematic design precision.
               </h2>
 
               <div className="space-y-4 font-sans text-base sm:text-lg leading-relaxed text-muted">
                 <p>
-                  Detail-driven Graphic Designer and Paint &amp; Roto artist
-                  with extensive experience across broadcast media, commercial branding
-                  systems, and visual effects production.
+                  Graphic Designer with experience creating branding assets, posters, and visual materials across corporate and freelance settings, currently designing for broadcast and digital platforms at ETV Network.
                 </p>
                 <p>
-                  Currently working as a Graphic Designer at ETV Network,
-                  delivering tailored visual solutions, broadcast graphics, and
-                  frame-accurate VFX plate cleanups for studios and brands.
+                  Brings an additional background in game art and animation/VFX, adding a strong technical and production-pipeline understanding to design work. Detail-oriented, collaborative, and comfortable working across print, digital, and motion-based visual media.
                 </p>
               </div>
 

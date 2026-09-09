@@ -20,6 +20,7 @@ import {
   restoreMedia,
   reorderMedia,
 } from "@/lib/actions/media.action";
+import { getImageKitUrl } from "@/lib/imagekit";
 import type { IMedia } from "@/database";
 
 function MediaThumb({ item }: { item: IMedia }) {
@@ -46,7 +47,7 @@ function MediaThumb({ item }: { item: IMedia }) {
   }
   return (
     <Image
-      src={item.url}
+      src={getImageKitUrl(item.url, { width: 400 })}
       alt={item.altText ?? item.title ?? ""}
       fill
       sizes="160px"

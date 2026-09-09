@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { TrackingPoint } from "@/components/frame/TrackingPoints";
+import { getImageKitUrl } from "@/lib/imagekit";
 import type { IProject, IProjectSection, IMedia } from "@/database";
 
 type SectionWithMedia = IProjectSection & { media: IMedia[] };
@@ -65,7 +66,7 @@ function MediaBlock({ item }: { item: IMedia }) {
       <span className="frame-corner-br" aria-hidden="true" />
 
       <Image
-        src={item.url}
+        src={getImageKitUrl(item.url)}
         alt={item.altText || item.title || ""}
         width={1400}
         height={900}

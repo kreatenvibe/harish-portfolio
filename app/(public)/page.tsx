@@ -33,11 +33,14 @@ export default async function Home() {
 
   return (
     <div className="relative w-full bg-background text-foreground">
-      {/* PERSISTENT 3D CAMERA SPATIAL JOURNEY */}
-      <CameraJourneyCanvas />
+      {/* PERSISTENT 3D CAMERA SPATIAL JOURNEY (Disabled for portfolio composition showcase) */}
+      {/* <CameraJourneyCanvas /> */}
 
       {/* FRAME 00 / 01 — OPENING STAGE & HERO */}
-      <Hero featuredProjects={featuredProjects} />
+      <Hero
+        featuredProjects={featuredProjects}
+        categorySlugMap={categorySlugMap}
+      />
 
       {/* FRAME 02 — SELECTED WORK / FILM STRIP SHOWCASE */}
       <FeaturedSection

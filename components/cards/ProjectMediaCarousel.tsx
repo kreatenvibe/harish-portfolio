@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { getImageKitUrl } from "@/lib/imagekit";
 
 interface MediaItem {
   url: string;
@@ -112,7 +113,7 @@ function MediaItem({ item, alt }: { item: MediaItem; alt: string }) {
 
   return (
     <Image
-      src={item.url}
+      src={getImageKitUrl(item.url)}
       alt={alt}
       fill
       sizes="(min-width: 1024px) 50vw, 100vw"

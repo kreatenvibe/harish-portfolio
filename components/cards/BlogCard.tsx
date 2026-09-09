@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { formatDate } from "@/lib/utils";
+import { getImageKitUrl } from "@/lib/imagekit";
 import type { IBlogPost } from "@/database";
 
 export default function BlogCard({ post }: { post: IBlogPost }) {
@@ -33,7 +34,7 @@ export default function BlogCard({ post }: { post: IBlogPost }) {
       <div className="relative aspect-16/10 w-full overflow-hidden bg-surface">
         {post.coverImage?.url ? (
           <Image
-            src={post.coverImage.url}
+            src={getImageKitUrl(post.coverImage.url)}
             alt={post.title}
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"

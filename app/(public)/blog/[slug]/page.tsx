@@ -5,6 +5,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { getBlogPostBySlug } from "@/lib/actions/blog.action";
 import { formatDate } from "@/lib/utils";
+import { getImageKitUrl } from "@/lib/imagekit";
 import { FrameCounter } from "@/components/frame/FrameCounter";
 import { TrackingPoint } from "@/components/frame/TrackingPoints";
 
@@ -20,11 +21,15 @@ const markdownComponents: Components = {
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 className="mt-8 font-heading text-xl sm:text-2xl font-semibold uppercase text-foreground/90">
+    <h3 className="mt-8 font-heading text-xl sm:text-2xl font-bold uppercase text-foreground">
       {children}
     </h3>
   ),
-  p: ({ children }) => <p className="mt-6 text-foreground/85 leading-relaxed text-base sm:text-lg first:mt-0">{children}</p>,
+  p: ({ children }) => (
+    <p className="mt-6 text-base sm:text-lg leading-relaxed text-muted first:mt-0">
+      {children}
+    </p>
+  ),
   a: ({ href, children }) => (
     <a
       href={href}
@@ -36,18 +41,22 @@ const markdownComponents: Components = {
     </a>
   ),
   ul: ({ children }) => (
-    <ul className="mt-6 list-disc space-y-2.5 pl-6 text-muted font-sans text-base sm:text-lg">{children}</ul>
+    <ul className="mt-6 list-disc space-y-2 pl-6 text-muted">
+      {children}
+    </ul>
   ),
   ol: ({ children }) => (
-    <ol className="mt-6 list-decimal space-y-2.5 pl-6 text-muted font-sans text-base sm:text-lg">{children}</ol>
+    <ol className="mt-6 list-decimal space-y-2 pl-6 text-muted">
+      {children}
+    </ol>
   ),
   blockquote: ({ children }) => (
-    <blockquote className="mt-8 border-l-2 border-line bg-surface/40 p-6 rounded-r-lg font-sans text-foreground/90 italic">
+    <blockquote className="my-8 border-l-2 border-foreground pl-6 font-heading text-xl italic uppercase text-foreground">
       {children}
     </blockquote>
   ),
   code: ({ children }) => (
-    <code className="rounded border border-line bg-surface px-1.5 py-0.5 font-mono text-[0.88em] text-foreground">
+    <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-sm text-foreground">
       {children}
     </code>
   ),
@@ -131,7 +140,7 @@ export default async function BlogPostPage({
             <span className="frame-corner-tr" aria-hidden="true" />
             <TrackingPoint className="top-4 left-4" variant="bracket" label="ARTICLE_COVER" />
             <Image
-              src={post.coverImage.url}
+              src={getImageKitUrl(post.coverImage.url)}
               alt={post.title}
               fill
               sizes="(min-width: 1024px) 896px, 100vw"

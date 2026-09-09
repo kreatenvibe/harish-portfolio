@@ -125,7 +125,7 @@ export function HeroProjectStack({
       }}
     >
       {/* DESKTOP / TABLET FANNED STAGE */}
-      <div className="relative w-full max-w-[420px] sm:max-w-[460px] lg:max-w-[500px] h-[340px] sm:h-[390px] lg:h-[430px] flex items-center justify-center">
+      <div className="relative w-full max-w-[420px] sm:max-w-[460px] lg:max-w-[500px] 2xl:max-w-[560px] 3xl:max-w-[620px] h-[340px] sm:h-[390px] lg:h-[430px] 2xl:h-[470px] 3xl:h-[510px] flex items-center justify-center">
         {stack.map((project, idx) => {
           const config = cardConfigs[idx] || cardConfigs[0];
           const isDirectlyHovered = hoveredIdx === idx;

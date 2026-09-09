@@ -28,6 +28,7 @@ export interface IProject {
   order: number;
   status: ProjectStatus;
   isFeatured: boolean;
+  enableFullscreenGallery?: boolean;
   seo?: IProjectSEO;
   // Flexible per-project extras a fixed schema can't anticipate.
   customMetadata?: Record<string, unknown>;
@@ -60,6 +61,7 @@ const ProjectSchema = new Schema<IProject>(
       default: "draft",
     },
     isFeatured: { type: Boolean, default: false },
+    enableFullscreenGallery: { type: Boolean, default: true },
     seo: {
       title: { type: String },
       description: { type: String },

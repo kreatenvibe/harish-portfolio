@@ -152,7 +152,7 @@ export function FrameUniverseStage({
       {/* Main Cinematic Frame Shell */}
       <div
         ref={frameBorderRef}
-        className="relative w-full max-w-7xl min-h-[78vh] rounded border border-line bg-[#121214] p-6 sm:p-10 lg:p-14 flex flex-col justify-between shadow-2xl overflow-hidden"
+        className="relative w-full max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1720px] min-h-[78vh] 2xl:min-h-[82vh] rounded border border-line bg-[#121214] p-6 sm:p-10 lg:p-14 2xl:p-16 flex flex-col justify-between shadow-2xl overflow-hidden"
       >
         {/* Precision Corner Ticks (Z-INDEX 10) */}
         <span className="frame-corner-tl" aria-hidden="true" />
@@ -185,7 +185,7 @@ export function FrameUniverseStage({
         </div>
 
         {/* Center Stage: Split Composition Grid */}
-        <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 items-center my-auto py-8">
+        <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.9fr] 2xl:grid-cols-[1.15fr_0.85fr] lg:gap-12 2xl:gap-16 items-center my-auto py-8">
           {/* Left Column: Authentic HK Designs Typography (Z-INDEX 40: CONTENT & Z-INDEX 50: CONTROLS) */}
           <div ref={typographyRef} className="relative z-[40] space-y-6">
             <div className="inline-flex items-center gap-2 rounded border border-line bg-surface px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-muted">
@@ -195,15 +195,15 @@ export function FrameUniverseStage({
             </div>
 
             <div className="space-y-2">
-              <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.92] tracking-tight text-foreground">
+              <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl 2xl:text-[6rem] font-black uppercase leading-[0.92] tracking-tight text-foreground">
                 HK DESIGNS
               </h1>
-              <p className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold uppercase text-muted tracking-tight">
+              <p className="font-heading text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl font-bold uppercase text-muted tracking-tight">
                 Graphic Designer
               </p>
             </div>
 
-            <p className="max-w-xl font-sans text-base sm:text-lg leading-relaxed text-muted">
+            <p className="max-w-xl 2xl:max-w-2xl font-sans text-base sm:text-lg 2xl:text-xl leading-relaxed text-muted">
               Graphic Designer with experience across branding, posters and print design, product packaging, digital and social media, and broadcast graphics—currently designing at ETV Network.
             </p>
 

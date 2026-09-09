@@ -136,7 +136,7 @@ export default async function ProjectPage({ params }: Props) {
       <header className="relative border-b border-line bg-background pt-24 pb-14 lg:pt-32 lg:pb-20 overflow-hidden">
         <div className="absolute inset-0 hud-grid opacity-20 pointer-events-none" aria-hidden="true" />
 
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 space-y-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1720px] px-6 lg:px-8 2xl:px-12 3xl:px-16 space-y-8">
           {/* Breadcrumbs */}
           <div className="flex flex-wrap items-center justify-between gap-4">
             <nav
@@ -165,7 +165,7 @@ export default async function ProjectPage({ params }: Props) {
 
           {/* Main Project Headline */}
           <div className="space-y-4">
-            <h1 className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase leading-[0.88] tracking-tight text-foreground">
+            <h1 className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl 2xl:text-[9.5rem] font-black uppercase leading-[0.88] tracking-tight text-foreground">
               {project.title}
             </h1>
           </div>
@@ -219,7 +219,7 @@ export default async function ProjectPage({ params }: Props) {
 
       {/* 2. HERO COVER IMAGE PLATE */}
       {project.coverImage?.url && (
-        <section className="mx-auto max-w-7xl px-6 lg:px-8 py-12 lg:py-16">
+        <section className="mx-auto max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1720px] px-6 lg:px-8 2xl:px-12 3xl:px-16 py-12 lg:py-16">
           <div className="relative aspect-16/10 w-full overflow-hidden rounded border border-line bg-surface shadow-2xl">
             <span className="frame-corner-tl" aria-hidden="true" />
             <span className="frame-corner-tr" aria-hidden="true" />
@@ -229,11 +229,11 @@ export default async function ProjectPage({ params }: Props) {
             <TrackingPoint className="bottom-4 right-4" variant="cross" />
 
             <Image
-              src={getImageKitUrl(project.coverImage.url)}
+              src={getImageKitUrl(project.coverImage.url, { width: 2200 })}
               alt={project.title}
               fill
               priority
-              sizes="(max-width: 1400px) 100vw, 1400px"
+              sizes="(max-width: 1920px) 100vw, 1920px"
               className="object-cover"
               unoptimized
             />
@@ -242,16 +242,16 @@ export default async function ProjectPage({ params }: Props) {
       )}
 
       {/* 3. CASE STUDY NARRATIVE & CHAPTERS */}
-      <main className="mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-20 space-y-16 lg:space-y-24">
+      <main className="mx-auto max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1720px] px-6 py-12 lg:px-8 lg:py-20 2xl:px-12 3xl:px-16 space-y-16 lg:space-y-24">
         {/* Project Overview Narrative */}
         {project.description && (
-          <div className="relative rounded border border-line bg-surface p-8 sm:p-12 space-y-4">
+          <div className="relative rounded border border-line bg-surface p-8 sm:p-12 space-y-4 shadow-xl">
             <span className="frame-corner-tl" aria-hidden="true" />
             <span className="frame-corner-tr" aria-hidden="true" />
             <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted">
               CHAPTER 00 // PROJECT BRIEF
             </p>
-            <p className="font-sans text-lg md:text-xl leading-relaxed text-foreground/90 whitespace-pre-line">
+            <p className="font-sans text-lg md:text-xl leading-relaxed text-foreground/90 max-w-5xl whitespace-pre-line">
               {project.description}
             </p>
           </div>
@@ -266,7 +266,7 @@ export default async function ProjectPage({ params }: Props) {
 
       {/* 4. PROJECT EXIT & INQUIRY FOOTER */}
       <footer className="border-t border-line bg-surface/40 py-16 lg:py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1720px] px-6 lg:px-8 2xl:px-12 3xl:px-16">
           <div className="grid gap-6 sm:grid-cols-2">
             {/* Back to Discipline */}
             <Link

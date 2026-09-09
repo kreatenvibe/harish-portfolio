@@ -53,6 +53,7 @@ const CreateProjectSchema = z.object({
   order: z.number().optional(),
   status: z.enum(["draft", "published", "archived"]).optional(),
   isFeatured: z.boolean().optional(),
+  enableFullscreenGallery: z.boolean().optional(),
   seo: SEOSchema.optional(),
   customMetadata: z.record(z.string(), z.unknown()).optional(),
 });

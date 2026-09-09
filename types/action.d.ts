@@ -44,6 +44,7 @@ export interface CreateProjectParams {
   order?: number;
   status?: "draft" | "published" | "archived";
   isFeatured?: boolean;
+  enableFullscreenGallery?: boolean;
   seo?: ProjectSEOParams;
   customMetadata?: Record<string, unknown>;
 }

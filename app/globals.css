@@ -49,6 +49,9 @@
   --shadow-card-resting: var(--shadow-resting);
   --shadow-card-hover: var(--shadow-hover);
   --radius-card: var(--radius-card);
+
+  /* Responsive Breakpoints */
+  --breakpoint-3xl: 1920px;
 }
 
 .shadow-card-resting {

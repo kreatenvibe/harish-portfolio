@@ -45,6 +45,9 @@ export default function ProjectForm({
   const [order, setOrder] = useState(project?.order ?? 0);
   const [status, setStatus] = useState(project?.status ?? "draft");
   const [isFeatured, setIsFeatured] = useState(project?.isFeatured ?? false);
+  const [enableFullscreenGallery, setEnableFullscreenGallery] = useState(
+    project?.enableFullscreenGallery ?? true
+  );
   const [seoTitle, setSeoTitle] = useState(project?.seo?.title ?? "");
   const [seoDescription, setSeoDescription] = useState(project?.seo?.description ?? "");
   const [customMetadataRaw, setCustomMetadataRaw] = useState(
@@ -85,6 +88,7 @@ export default function ProjectForm({
       order,
       status,
       isFeatured,
+      enableFullscreenGallery,
       seo:
         seoTitle || seoDescription
           ? { title: seoTitle || undefined, description: seoDescription || undefined }
@@ -258,17 +262,30 @@ export default function ProjectForm({
             <option value="archived">Archived</option>
           </select>
         </div>
-        <label className="mt-8 flex w-fit items-center gap-2.5 sm:mt-auto sm:pb-3.5 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={isFeatured}
-            onChange={(e) => setIsFeatured(e.target.checked)}
-            className="h-4 w-4 rounded border-line bg-surface text-foreground focus:ring-0 focus:ring-offset-0"
-          />
-          <span className="font-sans text-sm font-semibold text-foreground">
-            Featured
-          </span>
-        </label>
+        <div className="mt-6 sm:mt-auto sm:pb-2.5 flex flex-wrap items-center gap-6">
+          <label className="flex w-fit items-center gap-2.5 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isFeatured}
+              onChange={(e) => setIsFeatured(e.target.checked)}
+              className="h-4 w-4 rounded border-line bg-surface text-foreground focus:ring-0 focus:ring-offset-0"
+            />
+            <span className="font-sans text-sm font-semibold text-foreground">
+              Featured
+            </span>
+          </label>
+          <label className="flex w-fit items-center gap-2.5 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={enableFullscreenGallery}
+              onChange={(e) => setEnableFullscreenGallery(e.target.checked)}
+              className="h-4 w-4 rounded border-line bg-surface text-foreground focus:ring-0 focus:ring-offset-0"
+            />
+            <span className="font-sans text-sm font-semibold text-foreground">
+              Fullscreen Gallery Lightbox
+            </span>
+          </label>
+        </div>
       </div>
 
       <fieldset className="mt-8 rounded-md border border-line p-5">

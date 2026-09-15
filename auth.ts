@@ -6,6 +6,16 @@ const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? "")
   .map((email) => email.trim().toLowerCase())
   .filter(Boolean);
 
+// Ensure Auth.js uses the production domain on Vercel rather than VERCEL_URL preview hash domains
+if (!process.env.AUTH_URL && !process.env.NEXTAUTH_URL) {
+  if (process.env.NODE_ENV === "production") {
+    process.env.AUTH_URL =
+      process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : "https://harish-portfolio-wine-two.vercel.app";
+  }
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
   providers: [
@@ -30,13 +40,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
     async redirect({ url, baseUrl }) {
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
-      try {
-        if (new URL(url).origin === baseUrl) return url;
-      } catch {
-        // invalid URL string, fallback
+      const canonicalBase =
+        process.env.AUTH_URL ||
+        process.env.NEXTAUTH_URL ||
+        baseUrl ||
+        "https://harish-portfolio-wine-two.vercel.app";
+
+      if (url.startsWith("/")) {
+        return `${canonicalBase}${url}`;
       }
-      return `${baseUrl}/admin`;
+      try {
+        const parsed = new URL(url);
+        // If redirect target is any vercel.app deployment URL or matches canonical base, route to canonical domain
+        if (
+          parsed.origin === canonicalBase ||
+          parsed.hostname.endsWith(".vercel.app") ||
+          parsed.origin === baseUrl
+        ) {
+          return `${canonicalBase}${parsed.pathname}${parsed.search}`;
+        }
+      } catch {
+        // fallback
+      }
+      return `${canonicalBase}/admin`;
     },
     // Gates proxy.ts: since signIn already blocks non-admin accounts,
     // any existing session here is guaranteed to be an admin.

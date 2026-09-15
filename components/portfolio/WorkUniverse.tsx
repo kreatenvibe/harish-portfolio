@@ -56,8 +56,8 @@ export function WorkUniverse({ categories }: WorkUniverseProps) {
             Four Visual Worlds.
           </h2>
           <p className="font-sans text-base sm:text-lg leading-relaxed text-muted">
-            The studio operates across four specialized disciplines—translating
-            systematic design rigor and frame-accurate precision across digital
+            The studio operates across specialized disciplines—translating
+            systematic design rigor and typographic precision across digital
             and physical touchpoints.
           </p>
         </div>

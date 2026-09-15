@@ -5,6 +5,9 @@ declare namespace NodeJS {
     AUTH_SECRET: string;
     AUTH_GOOGLE_ID: string;
     AUTH_GOOGLE_SECRET: string;
+    AUTH_URL?: string;
+    AUTH_TRUST_HOST?: string | boolean;
+    NEXTAUTH_URL?: string;
     ADMIN_EMAILS: string;
     IMAGEKIT_PUBLIC_KEY: string;
     IMAGEKIT_PRIVATE_KEY: string;

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { CaretDown, ArrowUpRight, List, X } from "@phosphor-icons/react";
-import { Timecode } from "@/components/frame/Timecode";
 import type { ICategory } from "@/database";
 
 export default function Navbar({
@@ -165,10 +164,8 @@ export default function Navbar({
             </Link>
           </div>
 
-          {/* Timecode & CTA */}
+          {/* CTA */}
           <div className="hidden lg:flex items-center gap-6">
-            <Timecode />
-
             <Link
               href="/contact"
               className="inline-flex items-center gap-2 rounded border border-line bg-surface px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-wider text-foreground transition-all duration-300 hover:border-white/40 hover:bg-white/10"

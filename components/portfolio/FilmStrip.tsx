@@ -103,7 +103,7 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
             <div className="space-y-2">
               <FrameCounter index={1} total={7} label="SELECTED WORK" />
               <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-foreground">
-                Film Strip Showcase.
+                Highlights.
               </h2>
             </div>
 

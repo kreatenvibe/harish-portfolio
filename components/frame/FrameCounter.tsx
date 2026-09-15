@@ -20,7 +20,7 @@ export function FrameCounter({
     >
       <div className="flex items-center gap-1.5 text-foreground/80 font-semibold">
         <span className="h-1 w-1 rounded-full bg-white/70" />
-        <span>FRAME {formattedIndex}</span>
+        <span>SECTION {formattedIndex}</span>
       </div>
       <span className="text-line">/</span>
       <span className="text-muted/40">{formattedTotal}</span>

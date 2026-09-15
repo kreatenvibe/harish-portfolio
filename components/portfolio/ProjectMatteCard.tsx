@@ -40,7 +40,7 @@ export function ProjectMatteCard({
       <div className="flex items-center justify-between border-b border-line/40 px-4 py-2 font-mono text-[9px] tracking-widest text-muted uppercase">
         <div className="flex items-center gap-2">
           <span className="h-1 w-1 rounded-full bg-white/50 transition-transform duration-300 group-hover:scale-150" />
-          <span>FRAME_{formattedIndex}</span>
+          <span>PROJECT_{formattedIndex}</span>
         </div>
         <div className="flex items-center gap-2 text-foreground/75 font-semibold">
           <span>{project.tags?.[0] || "VISUAL_WORK"}</span>

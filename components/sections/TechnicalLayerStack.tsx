@@ -17,7 +17,7 @@ const COMPOSITING_LAYERS = [
   },
   {
     layer: "LAYER 03",
-    name: "Packaging & E-Commerce Visuals",
+    name: "Mockup Visuals",
     disciplines: "Adobe Photoshop / Adobe Illustrator",
     focus: "Product packaging, visual layouts, Amazon listing graphics, infographics, A+ content, and mockups.",
   },

@@ -1,6 +1,6 @@
 export const CONTACT = {
   email: "gughkpdtr@gmail.com",
-  phoneDisplay: "+91 91827 75963",
+  phoneDisplay: "+91 XXXXX XXXXX",
   phoneE164: "+919182775963",
   whatsappUrl: "https://wa.me/919182775963",
 } as const;

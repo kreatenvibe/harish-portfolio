@@ -40,11 +40,10 @@ export default function Footer({
         <div className="mx-auto flex max-w-7xl items-center justify-between font-mono text-[9px] tracking-widest text-muted/60 uppercase">
           <div className="flex items-center gap-2">
             <span className="signal-dot" />
-            <span className="text-foreground/75 font-semibold">HK DESIGNS {"//"} SEQUENCE CLOSURE</span>
+            <span className="text-foreground/75 font-semibold">HK DESIGNS</span>
           </div>
           <div className="hidden sm:flex items-center gap-4 text-muted/40">
-            <span>24FPS EDITORIAL</span>
-            <span>FRAME: 007 {"//"} FINAL</span>
+            <span>GRAPHIC DESIGN &amp; BRANDING</span>
           </div>
         </div>
       </div>

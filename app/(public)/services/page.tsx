@@ -38,7 +38,7 @@ const SERVICES = [
   },
   {
     code: "SERVICE_03",
-    title: "Packaging & Product Design",
+    title: "Product Design",
     scope: "Product Packaging, Packaging Visual Design, Product Presentation",
     description:
       "Designing tangible product packaging and visual presentations that command attention on retail shelves and digital showcases, balancing aesthetic clarity with product utility.",
@@ -64,7 +64,7 @@ const SERVICES = [
   },
   {
     code: "SERVICE_05",
-    title: "E-Commerce & Mockups",
+    title: "Mockups",
     scope: "Amazon Listing Design, Product Images, Infographics, A+ Content, App Mockups, Website Mockups",
     description:
       "Creating high-conversion e-commerce visuals, feature-driven product infographics, comprehensive Amazon A+ content, and realistic UI mockups for digital products and platforms.",
@@ -73,6 +73,19 @@ const SERVICES = [
       "Product Feature Infographics",
       "Enhanced Brand / A+ Content Layouts",
       "App & Website Mockups",
+    ],
+  },
+  {
+    code: "SERVICE_06",
+    title: "AI Posters",
+    scope: "AI Art Direction, Conceptual Key Art, High-Res Composite Posters, Cinematic Visuals, Prompt Engineering",
+    description:
+      "Crafting surreal, cinematic, and high-concept posters by combining advanced generative AI workflows with meticulous digital retouching, custom typography, and editorial color grading.",
+    deliverables: [
+      "Cinematic & Conceptual Key Art Posters",
+      "AI Asset Generation & Custom Prompt Crafting",
+      "High-Resolution Retouching & Upscaling",
+      "Typography Integration & Print-Ready Delivery",
     ],
   },
 ];
@@ -89,7 +102,7 @@ export default function ServicesPage() {
 
           <div className="max-w-3xl space-y-4">
             <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-foreground leading-[0.92]">
-              Studio Capabilities.
+              Designed to Distinguish.
             </h1>
             <p className="font-sans text-base sm:text-lg leading-relaxed text-muted">
               Tailored graphic design systems, print collateral, product packaging, and broadcast visual assets for corporate and independent platforms.

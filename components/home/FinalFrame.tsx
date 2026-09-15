@@ -23,7 +23,7 @@ export function FinalFrame() {
 
           {/* Top Meta */}
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line/40 pb-5 font-mono text-[9px] tracking-widest text-muted uppercase mb-10">
-            <FrameCounter index={6} total={7} label="FINAL FRAME // INITIATE" />
+            <FrameCounter index={6} total={7} label="CONTACT // INITIATE" />
             <div className="flex items-center gap-2">
               <span className="signal-dot" />
               <span className="text-foreground/80 font-semibold">DELIVERY PIPELINE OPEN</span>
@@ -34,12 +34,12 @@ export function FinalFrame() {
             {/* Left Narrative */}
             <div className="space-y-6">
               <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-foreground leading-[0.92]">
-                Have a brand to shape or footage to clean?
+                Have a brand to shape or project to build?
               </h2>
 
               <p className="max-w-xl font-sans text-base sm:text-lg leading-relaxed text-muted">
-                Tell me about your deliverables, timeline, or shot plates.
-                Whether it is comprehensive brand systems or frame-accurate paint &amp; roto cleanup, let us determine the exact scope.
+                Tell me about your deliverables, timeline, or creative requirements.
+                Whether it is comprehensive brand systems, print collateral, product packaging, or digital visual assets, let us determine the exact scope.
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-2">

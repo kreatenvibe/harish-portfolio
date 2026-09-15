@@ -175,7 +175,7 @@ export function FrameUniverseStage({
         >
           <div className="flex items-center gap-2">
             <span className="signal-dot" />
-            <span className="text-foreground font-semibold">FRAME 000 {"//"} COMPOSITING STAGE</span>
+            <span className="text-foreground font-semibold">HK DESIGNS {"//"} GRAPHIC DESIGN</span>
           </div>
 
           <div className="hidden sm:flex items-center gap-4 text-muted/60">

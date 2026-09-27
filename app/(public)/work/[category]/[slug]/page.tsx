@@ -233,6 +233,7 @@ export default async function ProjectPage({ params }: Props) {
               alt={project.title}
               fill
               priority
+              loading="eager"
               sizes="(max-width: 1920px) 100vw, 1920px"
               className="object-cover"
               unoptimized

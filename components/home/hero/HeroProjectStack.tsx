@@ -179,7 +179,8 @@ export function HeroProjectStack({
                     sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 400px"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     unoptimized
-                    priority={idx === 0}
+                    priority
+                    loading="eager"
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-[#151518]">

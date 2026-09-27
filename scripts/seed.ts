@@ -63,16 +63,24 @@ async function main() {
     const Lead = (await import("../database/models/Lead.model")).default;
     const mongoose = (await import("mongoose")).default;
 
-    // Helper to fetch and sort image files from a specific ImageKit folder
+    // Helper to fetch and sort image files from a specific ImageKit folder (with pagination)
     async function fetchImageKitFolderFiles(folderPath: string): Promise<{ files: IKRawFile[]; failed: boolean }> {
         try {
-            const rawFiles = await ikFetch<IKRawFile[]>(
-                `/files?path=${folderPath}&limit=100`
-            );
-            if (!Array.isArray(rawFiles)) {
-                return { files: [], failed: false };
+            let skip = 0;
+            const limit = 100;
+            const allFiles: IKRawFile[] = [];
+
+            while (true) {
+                const rawFiles = await ikFetch<IKRawFile[]>(
+                    `/files?path=${encodeURIComponent(folderPath)}&limit=${limit}&skip=${skip}`
+                );
+                if (!Array.isArray(rawFiles) || rawFiles.length === 0) break;
+                allFiles.push(...rawFiles);
+                if (rawFiles.length < limit) break;
+                skip += limit;
             }
-            const imageFiles = rawFiles
+
+            const imageFiles = allFiles
                 .filter((f) => f.fileType === "image" || /\.(jpe?g|png|webp|avif|gif|svg)$/i.test(f.name))
                 .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
             return { files: imageFiles, failed: false };
@@ -130,9 +138,9 @@ async function main() {
             order: 0,
         },
         {
-            name: "AI Posters",
-            slug: "ai-posters",
-            description: "AI-assisted poster concepts and visual explorations developed for creative experimentation and future poster projects.",
+            name: "AI-Assisted Poster Design",
+            slug: "ai-assisted-poster-design",
+            description: "Posters built by pairing AI for early-stage ideation — quick concept variations, mood directions, and layout exploration — with traditional hands-on finishing in Photoshop and Illustrator. AI speeds up how many directions get explored; every final composition is refined, adjusted, and delivered manually.",
             order: 1,
         },
         {
@@ -230,6 +238,25 @@ async function main() {
                 {
                     title: "Presentation Mockups",
                     description: "Visual presentations created to communicate branding concepts in realistic contexts.",
+                },
+            ],
+        },
+
+        // =================================================================
+        // AI-ASSISTED POSTER DESIGN (1 Project, 100+ Media)
+        // =================================================================
+        {
+            categorySlug: "ai-assisted-poster-design",
+            title: "AI-Assisted Poster Explorations",
+            slug: "ai-assisted-posters",
+            description: "A comprehensive collection of AI-assisted poster designs and visual explorations. Generative concepts explored for rapid mood, lighting, and composition ideation, refined and finalized into cohesive poster artwork.",
+            tags: ["AI Poster Design", "Concept Art", "Key Visuals", "Visual Storytelling", "Typography"],
+            isFeatured: true,
+            imageKitFolder: "/AI POSTERS",
+            sections: [
+                {
+                    title: "Poster Concepts & Visual Explorations",
+                    description: "Complete gallery of AI-assisted concept posters, visual experiments, and promotional compositions.",
                 },
             ],
         },
@@ -674,10 +701,10 @@ async function main() {
     console.log("IMAGEKIT PORTFOLIO SYNC REPORT");
     console.log("==================================================");
 
-    const categoriesList = ["branding", "ai-posters", "social-media", "print-materials"];
+    const categoriesList = ["branding", "ai-assisted-poster-design", "social-media", "print-materials"];
     const categoryLabels: Record<string, string> = {
         branding: "Branding",
-        "ai-posters": "AI Posters",
+        "ai-assisted-poster-design": "AI-Assisted Poster Design",
         "social-media": "Social Media",
         "print-materials": "Print Materials",
     };

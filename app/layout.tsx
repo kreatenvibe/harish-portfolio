@@ -19,9 +19,9 @@ const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-mono",
 });
 
-const SITE_TITLE = "HK Designs — Harish Kumar G, Paint & Roto Artist / Graphic Designer";
+const SITE_TITLE = "HK Designs — Harish Kumar G, Graphic Designer";
 const SITE_DESCRIPTION =
-  "Portfolio of Harish Kumar G — Paint & Roto artist and graphic designer working across VFX cleanup, brand identity, packaging, and print design.";
+  "Portfolio of Harish Kumar G — Graphic Designer specializing in brand identity, packaging, print collateral, and digital visual systems.";
 
 export const metadata: Metadata = {
   title: {

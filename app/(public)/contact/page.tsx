@@ -7,7 +7,7 @@ import { CONTACT } from "@/lib/contact";
 export const metadata = {
   title: "Contact — Initiate Project",
   description:
-    "Get in touch with Harish Kumar G for brand identity, packaging, print design, or VFX paint & roto commissions.",
+    "Get in touch with Harish Kumar G for brand identity, packaging, print design, and digital visual design commissions.",
 };
 
 export default function ContactPage() {
@@ -29,7 +29,7 @@ export default function ContactPage() {
                 </h1>
 
                 <p className="font-sans text-base sm:text-lg leading-relaxed text-muted">
-                  Share your project scope, shot plates, or branding deliverables.
+                  Share your project scope, design briefs, or branding deliverables.
                   I will review the requirements and follow up with estimated delivery timelines and strategic approach.
                 </p>
               </div>

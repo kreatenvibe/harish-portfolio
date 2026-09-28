@@ -140,7 +140,7 @@ export default function ContactForm() {
             name="business-description"
             rows={2}
             className={`${FIELD_CLASS} resize-none`}
-            placeholder="Brand Identity, Packaging, Paint Prep / Roto, Motion, or Print Design"
+            placeholder="Brand Identity, Packaging, Print Collateral, Digital Assets, or Motion Graphics"
           />
         </div>
 
@@ -154,21 +154,21 @@ export default function ContactForm() {
             name="what-to-build"
             rows={3}
             className={`${FIELD_CLASS} resize-none`}
-            placeholder="Key deliverables, number of shot plates, and expected delivery timeline"
+            placeholder="Key deliverables, design requirements, and expected delivery timeline"
           />
         </div>
 
         {/* Additional details */}
         <div>
           <label htmlFor="anything-else" className="font-mono text-xs font-semibold uppercase tracking-wider text-muted">
-            Additional Context or Plate References
+            Additional Context or Design References
           </label>
           <textarea
             id="anything-else"
             name="anything-else"
             rows={2}
             className={`${FIELD_CLASS} resize-none`}
-            placeholder="Links to footage references, moodboards, or existing brand guidelines"
+            placeholder="Links to moodboards, references, or existing brand guidelines"
           />
         </div>
 

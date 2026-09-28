@@ -56,7 +56,7 @@ export function CareerTimeline({ isStandalone = false }: { isStandalone?: boolea
             Career Tracks &amp; Milestones.
           </h2>
           <p className="font-sans text-base sm:text-lg text-muted">
-            A chronological progression across broadcast studios, visual effects facilities, and independent design practices.
+            A chronological progression across broadcast studios, creative agencies, and independent design practices.
           </p>
         </div>
 

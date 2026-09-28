@@ -1,9 +1,9 @@
-import { PaintBrush, FilmSlate, Palette } from "@phosphor-icons/react/dist/ssr";
+import { Sparkle, Package, Palette } from "@phosphor-icons/react/dist/ssr";
 
 const CARDS = [
-  { tone: "is-ink", label: "Paint & Roto", Icon: PaintBrush },
-  { tone: "is-accent", label: "VFX", Icon: FilmSlate },
-  { tone: "is-stone", label: "Design", Icon: Palette },
+  { tone: "is-ink", label: "Branding", Icon: Sparkle },
+  { tone: "is-accent", label: "Packaging", Icon: Package },
+  { tone: "is-stone", label: "Visual Design", Icon: Palette },
 ] as const;
 
 export function ShowcaseStack() {

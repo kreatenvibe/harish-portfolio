@@ -35,9 +35,9 @@ const COMPOSITING_LAYERS = [
   },
   {
     layer: "LAYER 06",
-    name: "3D & VFX Pipeline Background",
-    disciplines: "Autodesk Maya / Silhouette",
-    focus: "Supporting background in 3D assets, game art, and animation/VFX adding technical and production pipeline understanding.",
+    name: "3D & Digital Media Foundation",
+    disciplines: "Autodesk Maya / Digital Asset Pipelines",
+    focus: "Supporting background in 3D assets, spatial layout, and game art adding technical depth to graphic design workflows.",
   },
 ];
 
@@ -52,7 +52,7 @@ export function TechnicalLayerStack() {
             Design &amp; Software Stack.
           </h2>
           <p className="font-sans text-base sm:text-lg text-muted">
-            Graphic design capabilities structured with technical discipline—combining core visual design tools with motion, video, and 3D/VFX pipeline background.
+            Graphic design capabilities structured with technical discipline—combining core visual design tools with motion graphics and 3D digital media foundation.
           </p>
         </div>
 

@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export const metadata = {
   title: "Work Archive — HK Designs",
   description:
-    "Explore the complete portfolio archive across Branding, Packaging, Social Media, Print Design, and VFX Paint & Roto.",
+    "Explore the complete portfolio archive across Branding, Packaging, Social Media, Print Design, and Visual Direction.",
 };
 
 type Props = {
@@ -66,7 +66,7 @@ export default async function WorkPage({ searchParams }: Props) {
               Portfolio Archive.
             </h1>
             <p className="font-sans text-base sm:text-lg leading-relaxed text-muted max-w-2xl">
-              Complete index of brand identity systems, product packaging, motion campaigns, and broadcast VFX paint &amp; roto deliverables.
+              Complete index of brand identity systems, product packaging, digital campaign graphics, and print deliverables.
             </p>
           </div>
 

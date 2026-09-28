@@ -8,7 +8,7 @@ import { TrackingPoint } from "@/components/frame/TrackingPoints";
 export const metadata = {
   title: "About — Harish Kumar G",
   description:
-    "Graphic Designer and Paint & Roto artist with experience in broadcast media, brand systems, and VFX production.",
+    "Graphic Designer with experience in broadcast media, brand systems, packaging, and print design.",
 };
 
 const approachPoints = [
@@ -16,19 +16,19 @@ const approachPoints = [
     number: "01",
     title: "Look Closely First.",
     description:
-      "Whether it is a plate that needs a wire rig removed or a brand that needs an identity system, the work begins by understanding the foundational requirements and what flawless delivery looks like for that medium.",
+      "Whether it is a brand that needs a comprehensive identity system or high-impact print collateral, the work begins by understanding the foundational requirements and what flawless delivery looks like for that medium.",
   },
   {
     number: "02",
     title: "Work With Purpose.",
     description:
-      "Every pass on a plate and every typographic decision must earn its place. The goal is a clean result that holds up under close scrutiny, not just something that looks finished at a distance.",
+      "Every design element, layout structure, and typographic decision must earn its place. The goal is a clean result that holds up under close scrutiny, not just something that looks finished at a distance.",
   },
   {
     number: "03",
     title: "Stay Collaborative.",
     description:
-      "Great broadcast, VFX, and design work relies on clear communication. I share work-in-progress early, absorb feedback from senior leads and clients, and refine iteratively.",
+      "Great broadcast, digital, and print design work relies on clear communication. I share work-in-progress early, absorb feedback from stakeholders and clients, and refine iteratively.",
   },
 ];
 
@@ -86,7 +86,7 @@ export default function AboutPage() {
                   With experience spanning corporate in-house roles and independent freelance practice, I have created complete brand identity systems, real estate marketing collateral, product packaging, and digital assets.
                 </p>
                 <p>
-                  My background in game art and animation/VFX adds a strong technical and production-pipeline understanding to my design work, allowing me to collaborate effectively across print, digital, and motion-based visual media.
+                  My background in game art and 3D digital media adds a strong technical and production-pipeline understanding to my design work, allowing me to collaborate effectively across print, digital, and motion-based visual media.
                 </p>
               </div>
             </div>
@@ -145,7 +145,7 @@ export default function AboutPage() {
                 Ready to initiate a project?
               </h2>
               <p className="font-sans text-sm text-muted">
-                Let us discuss your project deliverables, shot plates, or branding requirements.
+                Let us discuss your project deliverables, design brief, or branding requirements.
               </p>
             </div>
 

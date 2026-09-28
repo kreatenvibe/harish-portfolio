@@ -4,9 +4,9 @@ import { FrameCounter } from "@/components/frame/FrameCounter";
 import { TrackingPoint } from "@/components/frame/TrackingPoints";
 
 export const metadata = {
-  title: "Services — Visual Design & VFX Capabilities",
+  title: "Services — Visual & Graphic Design Capabilities",
   description:
-    "Capabilities in Brand Identity, Packaging Design, Social Media Motion, Print Production, and VFX Paint & Roto.",
+    "Capabilities in Brand Identity, Packaging Design, Digital & Social Graphics, Print Production, Mockups, and AI Visual Direction.",
 };
 
 const SERVICES = [
@@ -172,7 +172,7 @@ export default function ServicesPage() {
                 Discuss your project requirements.
               </h2>
               <p className="font-sans text-sm text-muted">
-                From single shot plate cleanups to complete brand identities.
+                From bespoke visual systems to complete brand identities.
               </p>
             </div>
 

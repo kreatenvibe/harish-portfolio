@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Blog — Notes & Insights",
-  description: "Notes on VFX plate preparation, visual identity systems, and design craft by Harish Kumar G.",
+  description: "Notes on visual identity systems, typography, production workflows, and design craft by Harish Kumar G.",
 };
 
 export default async function BlogPage() {
@@ -27,7 +27,7 @@ export default async function BlogPage() {
               Notes on Craft.
             </h1>
             <p className="font-sans text-base sm:text-lg leading-relaxed text-muted">
-              Documenting technical workflows in Paint &amp; Roto, branding system architecture, and production lessons across broadcast media.
+              Documenting creative workflows, branding system architecture, and production lessons across broadcast and digital media.
             </p>
           </div>
         </div>

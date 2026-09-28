@@ -55,7 +55,7 @@ export function IdentityDossier() {
                   Graphic Designer with experience creating branding assets, posters, and visual materials across corporate and freelance settings, currently designing for broadcast and digital platforms at ETV Network.
                 </p>
                 <p>
-                  Brings an additional background in game art and animation/VFX, adding a strong technical and production-pipeline understanding to design work. Detail-oriented, collaborative, and comfortable working across print, digital, and motion-based visual media.
+                  Brings an additional background in game art and 3D digital media, adding a strong technical and production-pipeline understanding to design work. Detail-oriented, collaborative, and comfortable working across print, digital, and motion-based visual media.
                 </p>
               </div>
 

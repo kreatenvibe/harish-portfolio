@@ -8,9 +8,9 @@ import { FrameCounter } from "@/components/frame/FrameCounter";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Work Archive — HK Designs",
+  title: "All Projects — HK Designs",
   description:
-    "Explore the complete portfolio archive across Branding, Packaging, Social Media, Print Design, and Visual Direction.",
+    "Explore all projects across Branding, Packaging, Social Media, Print Design, and Visual Direction.",
 };
 
 type Props = {
@@ -54,19 +54,19 @@ export default async function WorkPage({ searchParams }: Props) {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      {/* Archive Header */}
+      {/* Work Header */}
       <section className="relative border-b border-line px-6 pt-24 pb-12 lg:px-8 lg:pt-32 lg:pb-16 2xl:px-12 3xl:px-16 overflow-hidden">
         <div className="absolute inset-0 hud-grid opacity-20 pointer-events-none" aria-hidden="true" />
 
         <div className="mx-auto max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1720px] space-y-6">
-          <FrameCounter index="02" total={7} label="WORK ARCHIVE" />
+          <FrameCounter index="02" total={7} label="ALL PROJECTS" />
 
           <div className="max-w-4xl space-y-4">
             <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl 2xl:text-9xl font-black uppercase tracking-tight text-foreground leading-[0.92]">
-              Portfolio Archive.
+              All Projects.
             </h1>
             <p className="font-sans text-base sm:text-lg leading-relaxed text-muted max-w-2xl">
-              Complete index of brand identity systems, product packaging, digital campaign graphics, and print deliverables.
+              Complete showcase of brand identity systems, product packaging, digital campaign graphics, and print deliverables.
             </p>
           </div>
 

@@ -163,7 +163,7 @@ export default async function BlogPostPage({
             className="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-muted hover:text-foreground hover:underline"
           >
             <ArrowLeft weight="bold" />
-            <span>BACK TO JOURNAL ARCHIVE</span>
+            <span>BACK TO ALL ARTICLES</span>
           </Link>
           <Link
             href="/contact"

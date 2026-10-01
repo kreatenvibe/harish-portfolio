@@ -115,7 +115,7 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
                 href="/work"
                 className="relative z-[50] inline-flex items-center gap-2 rounded border border-line bg-surface px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider text-foreground transition-colors hover:border-white/40 hover:bg-white/5"
               >
-                <span>ALL WORK ARCHIVE</span>
+                <span>ALL PROJECTS</span>
                 <ArrowUpRight size={12} weight="bold" />
               </Link>
             </div>
@@ -149,13 +149,13 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
             {/* End Cap Timeline Anchor */}
             <div className="flex flex-col items-center justify-center w-[280px] shrink-0 rounded border border-dashed border-line/60 bg-[#121215] p-6 text-center space-y-3">
               <span className="font-mono text-[10px] text-muted/60 uppercase tracking-widest">
-                END OF FEATURED PLATES
+                FEATURED PROJECTS
               </span>
               <Link
                 href="/work"
                 className="relative z-[50] inline-flex items-center gap-2 rounded border border-line bg-surface px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-foreground transition-colors hover:border-white/40 hover:bg-white/10"
               >
-                <span>OPEN ARCHIVE</span>
+                <span>VIEW ALL PROJECTS</span>
                 <ArrowRight size={13} weight="bold" />
               </Link>
             </div>
@@ -185,7 +185,7 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
               href="/work"
               className="relative z-[50] inline-flex items-center gap-2 rounded border border-line bg-surface px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-foreground hover:border-white/40"
             >
-              <span>VIEW FULL PORTFOLIO ARCHIVE</span>
+              <span>VIEW ALL PROJECTS</span>
               <ArrowRight size={14} weight="bold" />
             </Link>
           </div>

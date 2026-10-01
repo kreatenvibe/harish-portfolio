@@ -147,7 +147,7 @@ export default async function ProjectPage({ params }: Props) {
                 href="/work"
                 className="transition-colors hover:text-foreground"
               >
-                [ WORK ARCHIVE ]
+                [ ALL PROJECTS ]
               </Link>
               <span className="text-line">/</span>
               <Link

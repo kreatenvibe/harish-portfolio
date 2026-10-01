@@ -27,10 +27,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const category = result.data;
   return {
-    title: `${category.name} — Work Archive`,
+    title: `${category.name} — All Projects`,
     description:
       category.description ||
-      `Explore selected ${category.name} portfolio plates by Harish Kumar G.`,
+      `Explore selected ${category.name} portfolio projects by Harish Kumar G.`,
   };
 }
 
@@ -98,7 +98,7 @@ export default async function CategoryWorkPage({ params, searchParams }: Props) 
               href="/work"
               className="transition-colors hover:text-foreground"
             >
-              [ WORK ARCHIVE ]
+              [ ALL PROJECTS ]
             </Link>
             <span className="text-line">/</span>
             <span className="text-foreground">{category.name}</span>

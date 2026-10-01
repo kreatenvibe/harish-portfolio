@@ -23,10 +23,10 @@ export function FinalFrame() {
 
           {/* Top Meta */}
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line/40 pb-5 font-mono text-[9px] tracking-widest text-muted uppercase mb-10">
-            <FrameCounter index={6} total={7} label="CONTACT // INITIATE" />
+            <FrameCounter index="06" label="START A PROJECT" />
             <div className="flex items-center gap-2">
               <span className="signal-dot" />
-              <span className="text-foreground/80 font-semibold">DELIVERY PIPELINE OPEN</span>
+              <span className="text-foreground/80 font-semibold">AVAILABLE FOR NEW PROJECTS</span>
             </div>
           </div>
 

@@ -101,15 +101,15 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
         <div className="relative z-[40] mx-auto w-full max-w-7xl px-6 lg:px-8 mb-4 lg:mb-6 shrink-0">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-line/40 pb-4">
             <div className="space-y-2">
-              <FrameCounter index={1} total={7} label="SELECTED WORK" />
+              <FrameCounter index="01" label="SELECTED WORK" />
               <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-foreground">
-                Highlights.
+                Selected Works.
               </h2>
             </div>
 
             <div className="flex items-center gap-4">
               <p className="hidden md:block font-mono text-[10px] text-muted/60 uppercase tracking-wider">
-                SCROLL TO SCAN PLATES
+                SCROLL TO EXPLORE
               </p>
               <Link
                 href="/work"
@@ -193,8 +193,8 @@ export function FilmStrip({ projects, categorySlugMap }: FilmStripProps) {
 
         {/* Footer Meta Strip for Desktop Stage */}
         <div className="relative z-[40] hidden lg:flex mx-auto w-full max-w-7xl px-8 items-center justify-between border-t border-line/40 pt-3 shrink-0 font-mono text-[9px] text-muted/40 uppercase tracking-widest">
-          <span>PLATE COUNT: {projects.length} FRAMES</span>
-          <span>COMPOSITING TIMELINE</span>
+          <span>PORTFOLIO SELECTION: {projects.length} PROJECTS</span>
+          <span>CURATED DESIGN SHOWCASE</span>
         </div>
       </div>
     </section>

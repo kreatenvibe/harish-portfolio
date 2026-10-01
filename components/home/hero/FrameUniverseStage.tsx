@@ -238,9 +238,9 @@ export function FrameUniverseStage({
 
         {/* Bottom Sequence Guide (Z-INDEX 60: HUD) */}
         <div className="relative z-[60] flex items-center justify-between border-t border-line/40 pt-4 font-mono text-[10px] tracking-widest text-muted/60 uppercase">
-          <span>TIMELINE PROGRESSION ───→</span>
+          <span>PORTFOLIO &amp; DISCIPLINES ───→</span>
           <div className="flex items-center gap-2">
-            <span>SCROLL TO ADVANCE</span>
+            <span>SCROLL TO EXPLORE</span>
             <ArrowDown size={11} />
           </div>
         </div>

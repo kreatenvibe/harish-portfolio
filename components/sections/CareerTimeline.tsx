@@ -51,12 +51,12 @@ export function CareerTimeline({ isStandalone = false }: { isStandalone?: boolea
       <div className="relative z-[40] mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section Header */}
         <div className="relative z-[40] max-w-3xl space-y-4 mb-14 lg:mb-18">
-          <FrameCounter index={4} total={7} label="PRODUCTION TIMELINE" />
+          <FrameCounter index="04" label="CAREER EXPERIENCE" />
           <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-foreground">
-            Career Tracks &amp; Milestones.
+            Experience &amp; Milestones.
           </h2>
           <p className="font-sans text-base sm:text-lg text-muted">
-            A chronological progression across broadcast studios, creative agencies, and independent design practices.
+            A chronological progression across broadcast networks, creative corporate identities, and independent design practices.
           </p>
         </div>
 

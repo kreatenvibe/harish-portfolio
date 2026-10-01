@@ -24,12 +24,9 @@ export function IdentityDossier() {
           <span className="frame-corner-bl" aria-hidden="true" />
           <span className="frame-corner-br" aria-hidden="true" />
 
-          {/* Tracking Marker */}
-          <TrackingPoint className="top-6 right-6" variant="bracket" />
-
           {/* Frame Top Header */}
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line/40 pb-5 font-mono text-[9px] tracking-widest text-muted uppercase mb-10">
-            <FrameCounter index={3} total={7} label="IDENTITY DOSSIER" />
+            <FrameCounter index="03" label="ABOUT & PROFILE" />
             <div className="flex items-center gap-2">
               <span className="signal-dot" />
               <span className="text-foreground/80 font-semibold">HARISH KUMAR G</span>
@@ -64,7 +61,7 @@ export function IdentityDossier() {
                   href="/about"
                   className="relative z-[50] inline-flex items-center gap-2 rounded border border-line bg-[#161619] px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-foreground transition-all duration-300 hover:border-white/40 hover:bg-white/10"
                 >
-                  <span>FULL DOSSIER &amp; TIMELINE</span>
+                  <span>ABOUT &amp; FULL EXPERIENCE</span>
                   <ArrowUpRight size={13} weight="bold" />
                 </Link>
               </div>

@@ -1,11 +1,8 @@
 import { Hero } from "@/components/home/hero/Hero";
 import { FeaturedSection } from "@/components/home/FeaturedSection";
-import { WorkUniverse } from "@/components/portfolio/WorkUniverse";
-import { IdentityDossier } from "@/components/home/IdentityDossier";
 import { CareerTimeline } from "@/components/sections/CareerTimeline";
 import { TechnicalLayerStack } from "@/components/sections/TechnicalLayerStack";
 import { FinalFrame } from "@/components/home/FinalFrame";
-import { CameraJourneyCanvas } from "@/components/home/3d/CameraJourneyCanvas";
 import { getCategories } from "@/lib/actions/category.action";
 import { getProjects } from "@/lib/actions/project.action";
 
@@ -33,9 +30,6 @@ export default async function Home() {
 
   return (
     <div className="relative w-full bg-background text-foreground">
-      {/* PERSISTENT 3D CAMERA SPATIAL JOURNEY (Disabled for portfolio composition showcase) */}
-      {/* <CameraJourneyCanvas /> */}
-
       {/* FRAME 00 / 01 — OPENING STAGE & HERO */}
       <Hero
         featuredProjects={featuredProjects}
@@ -48,19 +42,13 @@ export default async function Home() {
         categorySlugMap={categorySlugMap}
       />
 
-      {/* FRAME 03 — FOUR DISCIPLINE WORLDS */}
-      <WorkUniverse categories={categories} />
-
-      {/* FRAME 04 — IDENTITY DOSSIER */}
-      <IdentityDossier />
-
-      {/* FRAME 05 — CAREER PRODUCTION TIMELINE */}
+      {/* FRAME 03 — CAREER PRODUCTION TIMELINE */}
       <CareerTimeline />
 
-      {/* FRAME 06 — TECHNICAL COMPOSITING LAYER STACK */}
+      {/* FRAME 04 — TECHNICAL COMPOSITING LAYER STACK */}
       <TechnicalLayerStack />
 
-      {/* FRAME 07 — FINAL FRAME // INITIATE */}
+      {/* FRAME 05 — FINAL FRAME // INITIATE */}
       <FinalFrame />
     </div>
   );

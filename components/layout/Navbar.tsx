@@ -82,8 +82,8 @@ export default function Navbar({
               </Link>
 
               {categories.length > 0 && workDropdownOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-60">
-                  <div className="rounded border border-line bg-[#161619] p-2 shadow-2xl backdrop-blur-2xl">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-64">
+                  <div className="rounded border border-line bg-[#161619] p-2 shadow-2xl backdrop-blur-2xl max-h-[70vh] overflow-y-auto">
                     <Link
                       href="/work"
                       className={`block rounded px-3.5 py-2 font-mono text-[10px] font-semibold uppercase tracking-wider transition-colors ${
@@ -97,6 +97,7 @@ export default function Navbar({
                     <div className="my-1.5 h-px bg-line/60" />
                     {categories.map((cat, idx) => {
                       const isActive = pathname === `/work/${cat.slug}`;
+                      const formattedIdx = String(idx + 1).padStart(2, "0");
                       return (
                         <Link
                           key={cat.slug}
@@ -107,9 +108,9 @@ export default function Navbar({
                               : "text-muted hover:bg-white/5 hover:text-foreground"
                           }`}
                         >
-                          <span>{cat.name}</span>
-                          <span className="font-mono text-[9px] text-muted/40">
-                            0{idx + 1}
+                          <span className="truncate pr-2">{cat.name}</span>
+                          <span className="font-mono text-[9px] text-muted/40 shrink-0">
+                            {formattedIdx}
                           </span>
                         </Link>
                       );

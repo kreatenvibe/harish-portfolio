@@ -1,31 +1,27 @@
 /**
- * Seed script — populates MongoDB with real-work-based portfolio structure
- * and synchronizes real assets directly from ImageKit (/PORTFOLIO/ hierarchy).
+ * Seed script — populates MongoDB with flattened portfolio categories
+ * directly matching ImageKit subfolders under /PORTFOLIO/.
  *
- * IMAGEKIT FOLDER MAPPING:
- *   - Branding:
- *       Logo Design & Brand Marks   -> /PORTFOLIO/BRANDING/LOGOS
- *       Brand Guidelines            -> /PORTFOLIO/BRANDING/BRAND GUIDELIENS
- *       Branding Mockups            -> /PORTFOLIO/BRANDING/MOCKUPS
- *   - AI Posters:                   -> (Empty category, 0 projects / 0 media)
- *   - Social Media:
- *       Job Listing                 -> /PORTFOLIO/SOCIAL MEDIA/JOB_LISTING
- *       Real Estate                 -> /PORTFOLIO/SOCIAL MEDIA/REAL ESTATE
- *       YouTube Thumbnails          -> /PORTFOLIO/SOCIAL MEDIA/YOUTUBE THUMBNAILS
- *       Movie Posters               -> /PORTFOLIO/SOCIAL MEDIA/MOVIE POSTERS
- *       Wedding                     -> /PORTFOLIO/SOCIAL MEDIA/WEDDING
- *       Chocolate Festival          -> /PORTFOLIO/SOCIAL MEDIA/CHOCOLATE FESTIVAL
- *       Animotsav                   -> /PORTFOLIO/SOCIAL MEDIA/ANIMOTSAV
- *       Social Media — Misc         -> Loose images directly under /PORTFOLIO/SOCIAL MEDIA/
- *   - Print Materials:
- *       Pamphlets                   -> /PORTFOLIO/PRINT MATERIALS/pamphlets
- *       Business Cards              -> /PORTFOLIO/PRINT MATERIALS/busines cards
- *       Banners                     -> /PORTFOLIO/PRINT MATERIALS/banners
- *       Menus                       -> /PORTFOLIO/PRINT MATERIALS/menu
- *       Letterheads                 -> /PORTFOLIO/PRINT MATERIALS/letterheads
+ * IMAGEKIT FOLDER -> CATEGORY MAPPING:
+ *   1. Logos                -> /PORTFOLIO/LOGOS
+ *   2. Brand Guidelines     -> /PORTFOLIO/BRAND GUIDELIENS
+ *   3. Brand Mockups        -> /PORTFOLIO/MOCKUPS
+ *   4. AI Posters           -> /PORTFOLIO/AI POSTERS
+ *   5. Real Estate          -> /PORTFOLIO/REALESTATE
+ *   6. Job Listings         -> /PORTFOLIO/JOB_LISTING
+ *   7. YouTube Thumbnails   -> /PORTFOLIO/YOUTUBE THUMBNAILS
+ *   8. Movie Posters        -> /PORTFOLIO/MOVIE POSTERS
+ *   9. Chocolate Festival   -> /PORTFOLIO/CHOCOLATE FESTIVAL
+ *  10. Animotsav            -> /PORTFOLIO/ANIMOTSAV
+ *  11. Amazon Listings      -> /PORTFOLIO/Amazon_listings
+ *  12. Business Cards       -> /PORTFOLIO/PRINT MATERIALS/busines cards
+ *  13. Letterheads          -> /PORTFOLIO/PRINT MATERIALS/letterheads
+ *  14. Pamphlets & Flyers   -> /PORTFOLIO/PRINT MATERIALS/pamplets
+ *  15. Banners & Signage    -> /PORTFOLIO/PRINT MATERIALS/banners
+ *  16. Restaurant Menus     -> /PORTFOLIO/PRINT MATERIALS/menu
  *
  * USAGE:
- *   npx tsx scripts/seed.ts
+ *   node scripts/seed.mjs (or npx tsx scripts/seed.ts)
  */
 
 import path from "node:path";
@@ -37,20 +33,162 @@ dotenv.config();
 import type { Types } from "mongoose";
 import type { IKRawFile } from "../types/imagekit";
 
-interface ProjectDefinition {
-    categorySlug: string;
-    title: string;
+interface CategoryDefinition {
+    name: string;
     slug: string;
     description: string;
+    order: number;
+    imageKitFolder: string;
     tags: string[];
     isFeatured: boolean;
-    imageKitFolder?: string;
-    isLooseSocialMedia?: boolean;
-    sections: {
-        title: string;
-        description: string;
-    }[];
 }
+
+const CATEGORIES_CONFIG: CategoryDefinition[] = [
+    {
+        name: "Logos",
+        slug: "logos",
+        description: "Selected logo explorations and identity marks created for distinct brand identities.",
+        order: 0,
+        imageKitFolder: "/PORTFOLIO/LOGOS",
+        tags: ["Logo Design", "Brand Marks", "Visual Identity"],
+        isFeatured: true,
+    },
+    {
+        name: "Brand Guidelines",
+        slug: "brand-guidelines",
+        description: "Comprehensive brand identity systems, typography rules, color palettes, and brand guidelines.",
+        order: 1,
+        imageKitFolder: "/PORTFOLIO/BRAND GUIDELIENS",
+        tags: ["Brand Guidelines", "Visual Systems", "Typography"],
+        isFeatured: true,
+    },
+    {
+        name: "Brand Mockups",
+        slug: "brand-mockups",
+        description: "Realistic presentation mockups demonstrating visual identities across physical and digital touchpoints.",
+        order: 2,
+        imageKitFolder: "/PORTFOLIO/MOCKUPS",
+        tags: ["Mockups", "Brand Presentation", "Visual Design"],
+        isFeatured: true,
+    },
+    {
+        name: "AI Posters",
+        slug: "ai-posters",
+        description: "AI-assisted concept posters, key visuals, lighting studies, and creative promotional compositions.",
+        order: 3,
+        imageKitFolder: "/PORTFOLIO/AI POSTERS",
+        tags: ["AI Poster Design", "Concept Art", "Key Visuals", "Typography"],
+        isFeatured: true,
+    },
+    {
+        name: "Real Estate",
+        slug: "real-estate",
+        description: "Property promotions, architecture marketing visuals, and real estate social campaigns.",
+        order: 4,
+        imageKitFolder: "/PORTFOLIO/REALESTATE",
+        tags: ["Real Estate", "Promotional Design", "Social Media"],
+        isFeatured: true,
+    },
+    {
+        name: "Job Listings",
+        slug: "job-listings",
+        description: "Recruitment creatives and hiring announcement graphics for modern brands.",
+        order: 5,
+        imageKitFolder: "/PORTFOLIO/JOB_LISTING",
+        tags: ["Social Media", "Recruitment", "Layout Design"],
+        isFeatured: false,
+    },
+    {
+        name: "YouTube Thumbnails",
+        slug: "youtube-thumbnails",
+        description: "High-conversion YouTube thumbnail designs crafted for high engagement and visual clarity.",
+        order: 6,
+        imageKitFolder: "/PORTFOLIO/YOUTUBE THUMBNAILS",
+        tags: ["YouTube Thumbnails", "Digital Media", "Visual Hierarchy"],
+        isFeatured: true,
+    },
+    {
+        name: "Movie Posters",
+        slug: "movie-posters",
+        description: "Cinematic poster designs, key art, entertainment graphics, and promotional compositions.",
+        order: 7,
+        imageKitFolder: "/PORTFOLIO/MOVIE POSTERS",
+        tags: ["Poster Design", "Cinematic Visuals", "Key Art"],
+        isFeatured: true,
+    },
+    {
+        name: "Chocolate Festival",
+        slug: "chocolate-festival",
+        description: "Event branding, campaign graphics, and festive social media creatives.",
+        order: 8,
+        imageKitFolder: "/PORTFOLIO/CHOCOLATE FESTIVAL",
+        tags: ["Event Design", "Social Media", "Campaign Graphics"],
+        isFeatured: false,
+    },
+    {
+        name: "Animotsav",
+        slug: "animotsav",
+        description: "Festival artwork, event promotions, and visual identity creatives for Animotsav.",
+        order: 9,
+        imageKitFolder: "/PORTFOLIO/ANIMOTSAV",
+        tags: ["Event Design", "Festival Branding", "Visual Storytelling"],
+        isFeatured: false,
+    },
+    {
+        name: "Amazon Listings",
+        slug: "amazon-listings",
+        description: "E-commerce product infographics, listing hero images, and Amazon visual assets.",
+        order: 10,
+        imageKitFolder: "/PORTFOLIO/Amazon_listings",
+        tags: ["E-Commerce", "Product Listing", "Infographics"],
+        isFeatured: false,
+    },
+    {
+        name: "Business Cards",
+        slug: "business-cards",
+        description: "Premium business card designs, corporate stationery, and tactile print collateral.",
+        order: 11,
+        imageKitFolder: "/PORTFOLIO/PRINT MATERIALS/busines cards",
+        tags: ["Print Materials", "Stationery", "Business Cards"],
+        isFeatured: false,
+    },
+    {
+        name: "Letterheads",
+        slug: "letterheads",
+        description: "Corporate letterhead layouts and stationery identity systems.",
+        order: 12,
+        imageKitFolder: "/PORTFOLIO/PRINT MATERIALS/letterheads",
+        tags: ["Print Materials", "Corporate Identity", "Letterheads"],
+        isFeatured: false,
+    },
+    {
+        name: "Pamphlets & Flyers",
+        slug: "pamphlets",
+        description: "Promotional flyers, trifold brochures, and print distribution materials.",
+        order: 13,
+        imageKitFolder: "/PORTFOLIO/PRINT MATERIALS/pamplets",
+        tags: ["Print Materials", "Flyers", "Brochures"],
+        isFeatured: true,
+    },
+    {
+        name: "Banners & Signage",
+        slug: "banners",
+        description: "Large format print banners, exhibition backdrops, and event signage.",
+        order: 14,
+        imageKitFolder: "/PORTFOLIO/PRINT MATERIALS/banners",
+        tags: ["Print Materials", "Signage", "Banners"],
+        isFeatured: false,
+    },
+    {
+        name: "Restaurant Menus",
+        slug: "restaurant-menus",
+        description: "Food & beverage menu designs, cafe price lists, and restaurant print layouts.",
+        order: 15,
+        imageKitFolder: "/PORTFOLIO/PRINT MATERIALS/menu",
+        tags: ["Print Materials", "Menu Design", "Hospitality"],
+        isFeatured: false,
+    },
+];
 
 async function main() {
     const { dbConnect } = await import("../lib/mongoose");
@@ -90,30 +228,6 @@ async function main() {
         }
     }
 
-    // Helper to fetch loose images directly under /PORTFOLIO/SOCIAL MEDIA/
-    async function fetchLooseSocialMediaFiles(): Promise<{ files: IKRawFile[]; failed: boolean }> {
-        try {
-            const rawFiles = await ikFetch<IKRawFile[]>(
-                `/files?path=/PORTFOLIO/SOCIAL MEDIA&limit=100`
-            );
-            if (!Array.isArray(rawFiles)) {
-                return { files: [], failed: false };
-            }
-            const looseFiles = rawFiles
-                .filter((f) => {
-                    const isImage = f.fileType === "image" || /\.(jpe?g|png|webp|avif|gif|svg)$/i.test(f.name);
-                    const folder = f.filePath.substring(0, f.filePath.lastIndexOf("/")) || "/";
-                    const isDirect = folder === "/PORTFOLIO/SOCIAL MEDIA" || folder === "/PORTFOLIO/SOCIAL MEDIA/";
-                    return isImage && isDirect;
-                })
-                .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
-            return { files: looseFiles, failed: false };
-        } catch (err) {
-            console.error(`[ImageKit Error] Failed to fetch loose files in "/PORTFOLIO/SOCIAL MEDIA":`, err instanceof Error ? err.message : err);
-            return { files: [], failed: true };
-        }
-    }
-
     await dbConnect();
     console.log("Connected to MongoDB");
 
@@ -127,490 +241,90 @@ async function main() {
         Lead.deleteMany({}),
     ]);
 
-    // ---------------------------------------------------------------------
-    // 1. CATEGORIES (4 total)
-    // ---------------------------------------------------------------------
-    const categoryDefs = [
-        {
-            name: "Branding",
-            slug: "branding",
-            description: "Logos, brand guidelines, visual identity systems, and realistic presentation mockups.",
-            order: 0,
-        },
-        {
-            name: "AI-Assisted Poster Design",
-            slug: "ai-assisted-poster-design",
-            description: "Posters built by pairing AI for early-stage ideation — quick concept variations, mood directions, and layout exploration — with traditional hands-on finishing in Photoshop and Illustrator. AI speeds up how many directions get explored; every final composition is refined, adjusted, and delivered manually.",
-            order: 1,
-        },
-        {
-            name: "Social Media",
-            slug: "social-media",
-            description: "Social media creatives, promotional campaign graphics, YouTube thumbnails, and event visuals.",
-            order: 2,
-        },
-        {
-            name: "Print Materials",
-            slug: "print-materials",
-            description: "Promotional pamphlet designs, business cards, banners, menus, and corporate stationery.",
-            order: 3,
-        },
-    ];
-
-    // Initialize categories in MongoDB
-    const createdCategories = await Promise.all(
-        categoryDefs.map(async (c) => {
-            return await Category.create({
-                name: c.name,
-                slug: c.slug,
-                description: c.description,
-                order: c.order,
-                isActive: true,
-            });
-        })
-    );
-
-    const catMap = new Map<string, Types.ObjectId>();
-    createdCategories.forEach((cat) => {
-        if (cat._id) catMap.set(cat.slug, cat._id);
-    });
-
-    console.log(`Inserted ${createdCategories.length} categories`);
-
-    // ---------------------------------------------------------------------
-    // 2. PROJECT DEFINITIONS WITH IMAGEKIT FOLDER MAPPINGS
-    // ---------------------------------------------------------------------
-    const projectDefs: ProjectDefinition[] = [
-        // =================================================================
-        // BRANDING (3 Projects)
-        // =================================================================
-        {
-            categorySlug: "branding",
-            title: "Logo Design & Brand Marks",
-            slug: "logo-design-brand-marks",
-            description: "Selected logo explorations and identity marks created for different branding requirements, focusing on clear visual language, memorable forms, and practical application.",
-            tags: ["Logo Design", "Brand Marks", "Visual Identity"],
-            isFeatured: true,
-            imageKitFolder: "/PORTFOLIO/BRANDING/LOGOS",
-            sections: [
-                {
-                    title: "Logo Designs",
-                    description: "Selected logo concepts and identity marks developed across different branding requirements.",
-                },
-                {
-                    title: "Identity Applications",
-                    description: "Examples of how logo and identity elements can translate across practical brand applications.",
-                },
-            ],
-        },
-        {
-            categorySlug: "branding",
-            title: "Brand Guidelines",
-            slug: "brand-guidelines",
-            description: "Brand identity documentation developed to establish a consistent visual language across communication materials and brand touchpoints.",
-            tags: ["Brand Guidelines", "Visual Systems", "Typography"],
-            isFeatured: false,
-            imageKitFolder: "/PORTFOLIO/BRANDING/BRAND GUIDELIENS",
-            sections: [
-                {
-                    title: "Brand Guidelines",
-                    description: "Guidelines covering logo usage, typography, color, and visual direction.",
-                },
-                {
-                    title: "Identity System",
-                    description: "Supporting visual elements that help maintain consistency across brand applications.",
-                },
-            ],
-        },
-        {
-            categorySlug: "branding",
-            title: "Branding Mockups",
-            slug: "branding-mockups",
-            description: "Presentation mockups used to visualize branding concepts in realistic environments and demonstrate how identity systems work across different applications.",
-            tags: ["Mockups", "Brand Presentation", "Visual Design"],
-            isFeatured: true,
-            imageKitFolder: "/PORTFOLIO/BRANDING/MOCKUPS",
-            sections: [
-                {
-                    title: "Brand Applications",
-                    description: "Identity elements presented across selected physical and digital applications.",
-                },
-                {
-                    title: "Presentation Mockups",
-                    description: "Visual presentations created to communicate branding concepts in realistic contexts.",
-                },
-            ],
-        },
-
-        // =================================================================
-        // AI-ASSISTED POSTER DESIGN (1 Project, 100+ Media)
-        // =================================================================
-        {
-            categorySlug: "ai-assisted-poster-design",
-            title: "AI-Assisted Poster Explorations",
-            slug: "ai-assisted-posters",
-            description: "A comprehensive collection of AI-assisted poster designs and visual explorations. Generative concepts explored for rapid mood, lighting, and composition ideation, refined and finalized into cohesive poster artwork.",
-            tags: ["AI Poster Design", "Concept Art", "Key Visuals", "Visual Storytelling", "Typography"],
-            isFeatured: true,
-            imageKitFolder: "/AI POSTERS",
-            sections: [
-                {
-                    title: "Poster Concepts & Visual Explorations",
-                    description: "Complete gallery of AI-assisted concept posters, visual experiments, and promotional compositions.",
-                },
-            ],
-        },
-
-        // =================================================================
-        // SOCIAL MEDIA (8 Projects)
-        // =================================================================
-        {
-            categorySlug: "social-media",
-            title: "Job Listing",
-            slug: "job-listing",
-            description: "Recruitment-focused social media creatives designed to communicate job opportunities clearly through engaging visual layouts.",
-            tags: ["Social Media", "Recruitment", "Layout Design"],
-            isFeatured: false,
-            imageKitFolder: "/PORTFOLIO/SOCIAL MEDIA/JOB_LISTING",
-            sections: [
-                {
-                    title: "Job Listing Creatives",
-                    description: "Social media designs created for recruitment and job opportunity communication.",
-                },
-                {
-                    title: "Social Media Formats",
-                    description: "Selected variations adapted for digital and social media presentation.",
-                },
-            ],
-        },
-        {
-            categorySlug: "social-media",
-            title: "Real Estate",
-            slug: "real-estate",
-            description: "Real estate promotional creatives combining property-focused information with clear and engaging visual communication.",
-            tags: ["Real Estate", "Promotional Design", "Social Media"],
-            isFeatured: true,
-            imageKitFolder: "/PORTFOLIO/SOCIAL MEDIA/REAL ESTATE",
-            sections: [
-                {
-                    title: "Property Promotions",
-                    description: "Promotional graphics created for real estate communication.",
-                },
-                {
-                    title: "Campaign Creatives",
-                    description: "Selected campaign-oriented visuals for property and real estate promotion.",
-                },
-            ],
-        },
-        {
-            categorySlug: "social-media",
-            title: "YouTube Thumbnails",
-            slug: "youtube-thumbnails",
-            description: "Thumbnail designs created to communicate video topics quickly through strong imagery, typography, and visual hierarchy.",
-            tags: ["YouTube Thumbnails", "Digital Media", "Visual Hierarchy"],
-            isFeatured: true,
-            imageKitFolder: "/PORTFOLIO/SOCIAL MEDIA/YOUTUBE THUMBNAILS",
-            sections: [
-                {
-                    title: "Thumbnail Designs",
-                    description: "Selected YouTube thumbnail compositions focused on clarity and visual impact.",
-                },
-                {
-                    title: "Visual Variations",
-                    description: "Alternative compositions exploring different imagery, typography, and hierarchy.",
-                },
-            ],
-        },
-        {
-            categorySlug: "social-media",
-            title: "Movie Posters",
-            slug: "movie-posters",
-            description: "Poster compositions exploring cinematic imagery, typography, hierarchy, and promotional visual storytelling.",
-            tags: ["Poster Design", "Cinematic Visuals", "Typography"],
-            isFeatured: true,
-            imageKitFolder: "/PORTFOLIO/SOCIAL MEDIA/MOVIE POSTERS",
-            sections: [
-                {
-                    title: "Poster Designs",
-                    description: "Selected cinematic poster compositions.",
-                },
-                {
-                    title: "Typography & Composition",
-                    description: "Poster layouts focused on typography, imagery, hierarchy, and visual storytelling.",
-                },
-            ],
-        },
-        {
-            categorySlug: "social-media",
-            title: "Wedding",
-            slug: "wedding",
-            description: "Wedding-themed social media creatives designed to communicate event information through expressive layouts and visual storytelling.",
-            tags: ["Event Design", "Social Media", "Visual Storytelling"],
-            isFeatured: false,
-            imageKitFolder: "/PORTFOLIO/SOCIAL MEDIA/WEDDING",
-            sections: [
-                {
-                    title: "Wedding Creatives",
-                    description: "Selected wedding-related social media designs.",
-                },
-                {
-                    title: "Event Visuals",
-                    description: "Visual compositions created for wedding and event communication.",
-                },
-            ],
-        },
-        {
-            categorySlug: "social-media",
-            title: "Chocolate Festival",
-            slug: "chocolate-festival",
-            description: "Promotional creatives developed around a chocolate festival, combining event communication with product-focused visual presentation.",
-            tags: ["Event Promotion", "Creative Layout", "Social Media"],
-            isFeatured: false,
-            imageKitFolder: "/PORTFOLIO/SOCIAL MEDIA/CHOCOLATE FESTIVAL",
-            sections: [
-                {
-                    title: "Festival Creatives",
-                    description: "Selected promotional designs created for festival communication.",
-                },
-                {
-                    title: "Promotional Visuals",
-                    description: "Visual compositions focused on event promotion and audience communication.",
-                },
-            ],
-        },
-        {
-            categorySlug: "social-media",
-            title: "Animotsav",
-            slug: "animotsav",
-            description: "Event-oriented visual communication created for Animotsav, exploring promotional layouts, typography, and digital presentation.",
-            tags: ["Event Visuals", "Typography", "Digital Media"],
-            isFeatured: false,
-            imageKitFolder: "/PORTFOLIO/SOCIAL MEDIA/ANIMOTSAV",
-            sections: [
-                {
-                    title: "Event Creatives",
-                    description: "Selected promotional visuals created for the event.",
-                },
-                {
-                    title: "Promotional Visuals",
-                    description: "Digital compositions focused on event communication and presentation.",
-                },
-            ],
-        },
-        {
-            categorySlug: "social-media",
-            title: "Social Media — Miscellaneous",
-            slug: "social-media-miscellaneous",
-            description: "A selection of additional social media designs covering different promotional and communication requirements.",
-            tags: ["Social Media", "Digital Creatives", "Campaign Design"],
-            isFeatured: false,
-            isLooseSocialMedia: true,
-            sections: [
-                {
-                    title: "Social Creatives",
-                    description: "Selected social media designs from different creative requirements.",
-                },
-                {
-                    title: "Campaign Visuals",
-                    description: "Additional promotional and campaign-oriented visual work.",
-                },
-            ],
-        },
-
-        // =================================================================
-        // PRINT MATERIALS (5 Projects)
-        // =================================================================
-        {
-            categorySlug: "print-materials",
-            title: "Pamphlets",
-            slug: "pamphlets",
-            description: "Promotional pamphlet designs focused on clear information hierarchy, engaging layouts, and practical print communication.",
-            tags: ["Print Design", "Pamphlets", "Marketing Collateral"],
-            isFeatured: true,
-            imageKitFolder: "/PORTFOLIO/PRINT MATERIALS/pamphlets",
-            sections: [
-                {
-                    title: "Selected Designs",
-                    description: "Selected pamphlet layouts and promotional print compositions.",
-                },
-            ],
-        },
-        {
-            categorySlug: "print-materials",
-            title: "Business Cards",
-            slug: "business-cards",
-            description: "Business card designs balancing essential information with a clean and recognizable visual identity.",
-            tags: ["Stationery", "Business Cards", "Brand Identity"],
-            isFeatured: false,
-            imageKitFolder: "/PORTFOLIO/PRINT MATERIALS/busines cards",
-            sections: [
-                {
-                    title: "Selected Designs",
-                    description: "Selected business card designs and identity applications.",
-                },
-            ],
-        },
-        {
-            categorySlug: "print-materials",
-            title: "Banners",
-            slug: "banners",
-            description: "Large-format banner designs created for promotional, event, and business communication purposes.",
-            tags: ["Large Format", "Banners", "Promotional Print"],
-            isFeatured: false,
-            imageKitFolder: "/PORTFOLIO/PRINT MATERIALS/banners",
-            sections: [
-                {
-                    title: "Selected Designs",
-                    description: "Selected banner compositions for promotional and business communication.",
-                },
-            ],
-        },
-        {
-            categorySlug: "print-materials",
-            title: "Menus",
-            slug: "menus",
-            description: "Menu layouts designed to organize food and service information into clear, readable, and visually appealing print compositions.",
-            tags: ["Editorial Layout", "Menu Design", "Print Materials"],
-            isFeatured: false,
-            imageKitFolder: "/PORTFOLIO/PRINT MATERIALS/menu",
-            sections: [
-                {
-                    title: "Selected Designs",
-                    description: "Selected menu layouts and print compositions.",
-                },
-            ],
-        },
-        {
-            categorySlug: "print-materials",
-            title: "Letterheads",
-            slug: "letterheads",
-            description: "Professional letterhead designs created to extend brand identity into formal business communication.",
-            tags: ["Stationery", "Letterheads", "Corporate Identity"],
-            isFeatured: false,
-            imageKitFolder: "/PORTFOLIO/PRINT MATERIALS/letterheads",
-            sections: [
-                {
-                    title: "Selected Designs",
-                    description: "Selected letterhead layouts and business stationery designs.",
-                },
-            ],
-        },
-    ];
-
     let totalSectionCount = 0;
     let totalRealMediaCount = 0;
-    const projectImageCounts: { category: string; title: string; count: number }[] = [];
-    const emptyFolders: string[] = [];
-    const failedFolders: string[] = [];
-    const categoryFirstCoverMap = new Map<string, { url: string; fileId: string }>();
+    const categoryReport: { name: string; slug: string; fileCount: number }[] = [];
+    let firstGeneralCover: { url: string; fileId: string } | undefined;
 
-    for (const [index, def] of projectDefs.entries()) {
-        const categoryId = catMap.get(def.categorySlug);
-        if (!categoryId) {
-            console.error(`Category not found for slug: ${def.categorySlug}`);
-            continue;
-        }
+    for (const [idx, catDef] of CATEGORIES_CONFIG.entries()) {
+        console.log(`Processing [${idx + 1}/${CATEGORIES_CONFIG.length}] ${catDef.name} (${catDef.imageKitFolder})...`);
+        const { files: imageFiles, failed } = await fetchImageKitFolderFiles(catDef.imageKitFolder);
 
-        // 1. Fetch real ImageKit assets for this project
-        let imageFiles: IKRawFile[] = [];
-        const folderLabel = def.isLooseSocialMedia
-            ? "/PORTFOLIO/SOCIAL MEDIA/ (loose)"
-            : def.imageKitFolder || "N/A";
-
-        if (def.isLooseSocialMedia) {
-            const res = await fetchLooseSocialMediaFiles();
-            imageFiles = res.files;
-            if (res.failed) failedFolders.push(folderLabel);
-            else if (imageFiles.length === 0) emptyFolders.push(folderLabel);
-        } else if (def.imageKitFolder) {
-            const res = await fetchImageKitFolderFiles(def.imageKitFolder);
-            imageFiles = res.files;
-            if (res.failed) failedFolders.push(folderLabel);
-            else if (imageFiles.length === 0) emptyFolders.push(folderLabel);
-        }
-
-        projectImageCounts.push({
-            category: def.categorySlug,
-            title: def.title,
-            count: imageFiles.length,
-        });
-
-        // Determine cover image from first sorted real asset
         const firstAsset = imageFiles[0];
         const coverImage = firstAsset
             ? { url: firstAsset.url, fileId: firstAsset.fileId }
             : undefined;
 
-        // Save first project image as potential category cover image
-        if (coverImage && !categoryFirstCoverMap.has(def.categorySlug)) {
-            categoryFirstCoverMap.set(def.categorySlug, coverImage);
+        if (coverImage && !firstGeneralCover) {
+            firstGeneralCover = coverImage;
         }
 
-        // 2. Create Project in MongoDB
-        const project = await Project.create({
-            categoryId,
-            title: def.title,
-            slug: def.slug,
-            description: def.description,
+        // 1. Create Category
+        const category = await Category.create({
+            name: catDef.name,
+            slug: catDef.slug,
+            description: catDef.description,
             coverImage,
-            tags: def.tags,
-            order: index,
+            order: catDef.order,
+            isActive: true,
+        });
+
+        // 2. Create Project inside this Category
+        const project = await Project.create({
+            categoryId: category._id,
+            title: catDef.name,
+            slug: catDef.slug,
+            description: catDef.description,
+            coverImage,
+            tags: catDef.tags,
+            order: idx,
             status: "published",
-            isFeatured: def.isFeatured,
+            isFeatured: catDef.isFeatured,
             seo: {
-                title: `${def.title} — Harish Kumar G`,
-                description: def.description,
+                title: `${catDef.name} — Harish Kumar G`,
+                description: catDef.description,
                 ogImage: coverImage,
             },
         });
 
-        // 3. Create Project Sections & Assign Real Media
-        for (const [sIndex, sectionDef] of def.sections.entries()) {
-            const section = await ProjectSection.create({
+        // 3. Create Project Section & Assign Media
+        const section = await ProjectSection.create({
+            projectId: project._id,
+            title: `${catDef.name} Gallery`,
+            description: `Showcase gallery for ${catDef.name}.`,
+            order: 0,
+        });
+        totalSectionCount += 1;
+
+        for (let m = 0; m < imageFiles.length; m++) {
+            const item = imageFiles[m];
+            await Media.create({
                 projectId: project._id,
-                title: sectionDef.title,
-                description: sectionDef.description,
-                order: sIndex,
+                sectionId: section._id,
+                type: "image",
+                url: item.url,
+                fileId: item.fileId,
+                title: item.name,
+                altText: `${catDef.name} work by Harish Kumar`,
+                caption: "",
+                mimeType: "image/jpeg",
+                width: item.width || 1600,
+                height: item.height || 1000,
+                size: item.size,
+                order: m,
             });
-            totalSectionCount += 1;
-
-            // Assign all images to the primary (first) section
-            if (sIndex === 0 && imageFiles.length > 0) {
-                for (let m = 0; m < imageFiles.length; m++) {
-                    const item = imageFiles[m];
-                    await Media.create({
-                        projectId: project._id,
-                        sectionId: section._id,
-                        type: "image",
-                        url: item.url,
-                        fileId: item.fileId,
-                        title: item.name,
-                        altText: `${def.title} design by Harish Kumar`,
-                        caption: "",
-                        mimeType: "image/jpeg",
-                        width: item.width || 1600,
-                        height: item.height || 1000,
-                        size: item.size,
-                        order: m,
-                    });
-                    totalRealMediaCount += 1;
-                }
-            }
+            totalRealMediaCount += 1;
         }
+
+        categoryReport.push({
+            name: catDef.name,
+            slug: catDef.slug,
+            fileCount: imageFiles.length,
+        });
     }
 
     // ---------------------------------------------------------------------
-    // 3. UPDATE CATEGORY COVER IMAGES WITH REAL ASSETS
-    // ---------------------------------------------------------------------
-    for (const [catSlug, cover] of categoryFirstCoverMap.entries()) {
-        await Category.updateOne(
-            { slug: catSlug },
-            { $set: { coverImage: cover } }
-        );
-    }
-
-    // ---------------------------------------------------------------------
-    // 4. BLOG POSTS (Development seed data preserved)
+    // BLOG POSTS (Development seed data preserved)
     // ---------------------------------------------------------------------
     const blogDefs = [
         {
@@ -645,15 +359,14 @@ async function main() {
     const blogPosts = await BlogPost.insertMany(
         blogDefs.map((b) => ({
             ...b,
-            coverImage: categoryFirstCoverMap.get("branding") || undefined,
+            coverImage: firstGeneralCover || undefined,
             publishedAt: b.published ? new Date() : undefined,
         }))
     );
-
     console.log(`Inserted ${blogPosts.length} blog posts`);
 
     // ---------------------------------------------------------------------
-    // 5. LEADS (Development seed data preserved)
+    // LEADS (Development seed data preserved)
     // ---------------------------------------------------------------------
     const leadDefs = [
         {
@@ -695,52 +408,18 @@ async function main() {
     console.log(`Inserted ${leads.length} leads`);
 
     // ---------------------------------------------------------------------
-    // 6. FINAL SEED REPORT
+    // SUMMARY REPORT
     // ---------------------------------------------------------------------
     console.log("\n==================================================");
-    console.log("IMAGEKIT PORTFOLIO SYNC REPORT");
+    console.log("IMAGEKIT PORTFOLIO FLATTENED SYNC REPORT");
     console.log("==================================================");
-
-    const categoriesList = ["branding", "ai-assisted-poster-design", "social-media", "print-materials"];
-    const categoryLabels: Record<string, string> = {
-        branding: "Branding",
-        "ai-assisted-poster-design": "AI-Assisted Poster Design",
-        "social-media": "Social Media",
-        "print-materials": "Print Materials",
-    };
-
-    for (const catKey of categoriesList) {
-        console.log(`\n${categoryLabels[catKey]}`);
-        const items = projectImageCounts.filter((p) => p.category === catKey);
-        if (items.length === 0) {
-            console.log("  - No projects / no images");
-        } else {
-            items.forEach((p) => {
-                console.log(`  - ${p.title}: ${p.count} images`);
-            });
-        }
+    for (const cat of categoryReport) {
+        console.log(`  - [${cat.slug}] ${cat.name}: ${cat.fileCount} assets`);
     }
-
-    console.log("\n--------------------------------------------------");
-    console.log(`TOTAL REAL IMAGEKIT IMAGES: ${totalRealMediaCount}`);
+    console.log("--------------------------------------------------");
+    console.log(`TOTAL CATEGORIES: ${CATEGORIES_CONFIG.length}`);
+    console.log(`TOTAL REAL IMAGEKIT IMAGES SYNCED: ${totalRealMediaCount}`);
     console.log(`TOTAL SECTIONS: ${totalSectionCount}`);
-    console.log(`PROJECT COVERS CONFIGURED: ${projectImageCounts.filter((p) => p.count > 0).length}`);
-    console.log(`CATEGORY COVERS CONFIGURED: ${categoryFirstCoverMap.size}`);
-
-    if (emptyFolders.length > 0) {
-        console.log("\nEMPTY FOLDERS:");
-        emptyFolders.forEach((f) => console.log(`  - ${f}`));
-    } else {
-        console.log("\nEMPTY FOLDERS: None");
-    }
-
-    if (failedFolders.length > 0) {
-        console.log("\nFAILED FOLDERS:");
-        failedFolders.forEach((f) => console.log(`  - ${f}`));
-    } else {
-        console.log("\nFAILED FOLDERS: None");
-    }
-
     console.log("==================================================\n");
 
     await mongoose.disconnect();

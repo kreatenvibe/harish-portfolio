@@ -83,7 +83,7 @@ export default function Navbar({
 
               {categories.length > 0 && workDropdownOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-64">
-                  <div className="rounded border border-line bg-[#161619] p-2 shadow-2xl backdrop-blur-2xl max-h-[70vh] overflow-y-auto">
+                  <div className="rounded border border-line bg-[#161619] p-2 shadow-2xl backdrop-blur-2xl max-h-[70vh] overflow-y-auto no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                     <Link
                       href="/work"
                       className={`block rounded px-3.5 py-2 font-mono text-[10px] font-semibold uppercase tracking-wider transition-colors ${
@@ -198,7 +198,7 @@ export default function Navbar({
       />
 
       <div
-        className={`fixed top-0 right-0 z-50 h-screen w-4/5 max-w-sm border-l border-line bg-[#0E0E10] backdrop-blur-2xl shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between px-6 py-16 overflow-y-auto ${
+        className={`fixed top-0 right-0 z-50 h-screen w-4/5 max-w-sm border-l border-line bg-[#0E0E10] backdrop-blur-2xl shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between px-6 py-16 overflow-y-auto no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

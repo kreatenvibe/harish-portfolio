@@ -160,7 +160,7 @@ export default async function ProjectPage({ params }: Props) {
               <span className="text-foreground">{project.title}</span>
             </nav>
 
-            <FrameCounter index="01" total={sectionsWithMedia.length + 1} label="CHAPTER BREAKDOWN" />
+            <FrameCounter index="01" total={sectionsWithMedia.length || 1} label={`DELIVERABLES // ${category.name.toUpperCase()}`} />
           </div>
 
           {/* Main Project Headline */}
@@ -168,51 +168,6 @@ export default async function ProjectPage({ params }: Props) {
             <h1 className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl 2xl:text-[9.5rem] font-black uppercase leading-[0.88] tracking-tight text-foreground">
               {project.title}
             </h1>
-          </div>
-
-          {/* Technical Metadata Matrix (4-column HUD card strip) */}
-          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 pt-2">
-            <div className="relative rounded border border-line bg-surface p-5 space-y-2">
-              <span className="frame-corner-tl" aria-hidden="true" />
-              <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-muted">
-                DISCIPLINE
-              </p>
-              <p className="font-heading text-xl font-bold uppercase text-foreground">
-                {category.name}
-              </p>
-            </div>
-
-            <div className="relative rounded border border-line bg-surface p-5 space-y-2">
-              <span className="frame-corner-tl" aria-hidden="true" />
-              <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-muted">
-                CLIENT / STUDIO
-              </p>
-              <p className="font-heading text-xl font-bold uppercase text-foreground truncate">
-                {project.client || "STUDIO PRODUCTION"}
-              </p>
-            </div>
-
-            <div className="relative rounded border border-line bg-surface p-5 space-y-2">
-              <span className="frame-corner-tl" aria-hidden="true" />
-              <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-muted">
-                YEAR / TAGS
-              </p>
-              <p className="font-heading text-xl font-bold uppercase text-foreground truncate">
-                {project.year ? `${project.year} • ` : ""}{project.tags?.[0] || "VISUAL SYSTEM"}
-              </p>
-            </div>
-
-            <div className="relative rounded border border-line bg-surface p-5 space-y-2">
-              <span className="frame-corner-tl" aria-hidden="true" />
-              <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-muted">
-                CHAPTERS
-              </p>
-              <p className="font-heading text-xl font-bold uppercase text-foreground">
-                {sectionsWithMedia.length > 0
-                  ? `0${sectionsWithMedia.length} SECTIONS`
-                  : "01 MASTER PLATE"}
-              </p>
-            </div>
           </div>
         </div>
       </header>
@@ -244,19 +199,16 @@ export default async function ProjectPage({ params }: Props) {
 
       {/* 3. CASE STUDY NARRATIVE & CHAPTERS */}
       <main className="mx-auto max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1720px] px-6 py-12 lg:px-8 lg:py-20 2xl:px-12 3xl:px-16 space-y-16 lg:space-y-24">
-        {/* Project Overview Narrative */}
-        {project.description && (
-          <div className="relative rounded border border-line bg-surface p-8 sm:p-12 space-y-4 shadow-xl">
-            <span className="frame-corner-tl" aria-hidden="true" />
-            <span className="frame-corner-tr" aria-hidden="true" />
-            <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted">
-              CHAPTER 00 // PROJECT BRIEF
-            </p>
-            <p className="font-sans text-lg md:text-xl leading-relaxed text-foreground/90 max-w-5xl whitespace-pre-line">
-              {project.description}
-            </p>
-          </div>
-        )}
+          {/* Project Overview Narrative */}
+          {project.description && (
+            <div className="relative rounded border border-line bg-surface p-8 sm:p-12 space-y-4 shadow-xl">
+              <span className="frame-corner-tl" aria-hidden="true" />
+              <span className="frame-corner-tr" aria-hidden="true" />
+              <p className="font-sans text-lg md:text-xl leading-relaxed text-foreground/90 max-w-5xl whitespace-pre-line">
+                {project.description}
+              </p>
+            </div>
+          )}
 
         {/* Dynamic Project Sections with Elevated Media Blocks */}
         <ProjectDetail

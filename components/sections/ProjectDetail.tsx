@@ -46,51 +46,17 @@ export default function ProjectDetail({
 
   return (
     <>
-      <div className="space-y-16 lg:space-y-24">
-        {sections.map((section, sIndex) => {
-          const chapterNum = String(sIndex + 1).padStart(2, "0");
+      <div className="space-y-12 lg:space-y-16">
+        {sections.map((section) => {
+          if (!section.media || section.media.length === 0) return null;
 
           return (
             <section
               key={String(section._id)}
-              className="relative scroll-mt-28 space-y-8"
+              className="relative scroll-mt-28"
             >
-              {/* Chapter Heading Frame */}
-              <div className="relative rounded border border-line bg-surface p-6 sm:p-8 lg:p-10 space-y-3 shadow-xl">
-                <span className="frame-corner-tl" aria-hidden="true" />
-                <span className="frame-corner-tr" aria-hidden="true" />
-                <TrackingPoint className="top-4 right-4" variant="cross" />
-
-                <div className="flex items-center gap-3 font-mono text-xs font-bold uppercase tracking-widest text-muted">
-                  <span className="text-foreground font-semibold">
-                    CHAPTER {chapterNum}
-                  </span>
-                  <span className="text-line">•</span>
-                  <span>DELIVERABLE SEQUENCE</span>
-                  {section.media?.length > 0 && (
-                    <>
-                      <span className="text-line">•</span>
-                      <span>
-                        {String(section.media.length).padStart(2, "0")} ASSETS
-                      </span>
-                    </>
-                  )}
-                </div>
-
-                <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-foreground">
-                  {section.title}
-                </h2>
-
-                {section.description && (
-                  <p className="font-sans text-base sm:text-lg leading-relaxed text-muted max-w-4xl pt-1">
-                    {section.description}
-                  </p>
-                )}
-              </div>
-
               {/* Responsive Bento / Masonry Grid preserving natural image ratios */}
-              {section.media.length > 0 && (
-                <div className="columns-1 sm:columns-2 xl:columns-3 2xl:columns-3 gap-6 lg:gap-8">
+              <div className="columns-1 sm:columns-2 xl:columns-3 2xl:columns-3 gap-6 lg:gap-8">
                   {section.media.map((item) => {
                     const isImage = !item.type || item.type === "image";
 
@@ -226,7 +192,6 @@ export default function ProjectDetail({
                     );
                   })}
                 </div>
-              )}
             </section>
           );
         })}

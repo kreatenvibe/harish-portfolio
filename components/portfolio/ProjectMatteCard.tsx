@@ -20,7 +20,7 @@ export function ProjectMatteCard({
   className = "",
 }: ProjectMatteCardProps) {
   const targetHref = categorySlug
-    ? `/work/${categorySlug}/${project.slug}`
+    ? `/work/${categorySlug}`
     : `/work/${project.slug}`;
 
   const formattedIndex = String(index + 1).padStart(2, "0");

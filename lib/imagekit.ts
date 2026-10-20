@@ -24,6 +24,16 @@ export function isImageKitUrl(url?: string | null): boolean {
 }
 
 /**
+ * Returns ImageKit's auto-generated JPEG poster for a video URL.
+ * The `/ik-thumbnail.jpg` suffix must go on the path, before any query
+ * string (ImageKit URLs usually carry `?updatedAt=...`).
+ */
+export function getVideoThumbnailUrl(url: string): string {
+  const [base, query] = url.split("?");
+  return `${base}/ik-thumbnail.jpg${query ? `?${query}` : ""}`;
+}
+
+/**
  * Returns an ImageKit delivery URL with safe transformations applied (e.g. max width 2500px)
  * to avoid HTTP 400 errors on images exceeding ImageKit's 25.0 MegaPixel transformation limit.
  *

@@ -6,6 +6,7 @@ export interface IKRawFile {
   thumbnail?: string;
   filePath: string;
   fileType: "image" | "non-image";
+  mime?: string;
   size: number;
   width?: number;
   height?: number;
@@ -25,6 +26,7 @@ export interface IKFile {
   url: string;
   thumbnailUrl: string;
   type: "image" | "non-image";
+  mime?: string;
   path: string;
 }
 

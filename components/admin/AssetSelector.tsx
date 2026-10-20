@@ -5,6 +5,7 @@ import { upload } from "@imagekit/next";
 import Image from "next/image";
 import { FilmSlate, FileText, File, Check, FolderPlus, ArrowsOut, FolderOpen } from "@phosphor-icons/react";
 import type { IKFile, IKFolder } from "@/types/imagekit";
+import { getVideoThumbnailUrl } from "@/lib/imagekit";
 
 const VIDEO_EXTENSIONS = ["mp4", "webm", "mov", "m4v", "ogg", "ogv"];
 const PDF_EXTENSIONS = ["pdf"];
@@ -16,6 +17,7 @@ export type MediaKind = "image" | "video" | "pdf" | "other";
 // supports (image/video/pdf/other) is selectable, not just image/video.
 function getMediaKind(file: IKFile): MediaKind {
   if (file.type === "image") return "image";
+  if (file.mime?.startsWith("video/")) return "video";
   const ext = file.name.split(".").pop()?.toLowerCase();
   if (ext && VIDEO_EXTENSIONS.includes(ext)) return "video";
   if (ext && PDF_EXTENSIONS.includes(ext)) return "pdf";
@@ -326,6 +328,17 @@ export default function AssetSelector({
                   aria-pressed={multiple ? isSelected : undefined}
                   aria-label={`Select ${file.name}`}
                   onClick={handleSelect}
+                  // Hover-to-preview for video tiles; reset to the poster on leave
+                  onMouseEnter={(e) => {
+                    e.currentTarget.querySelector("video")?.play().catch(() => {});
+                  }}
+                  onMouseLeave={(e) => {
+                    const video = e.currentTarget.querySelector("video");
+                    if (video) {
+                      video.pause();
+                      video.currentTime = 0;
+                    }
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
@@ -351,7 +364,21 @@ export default function AssetSelector({
                   )}
                   <div className="relative w-full flex-1 bg-background flex items-center justify-center">
                     {kind === "video" ? (
-                      <FilmSlate size={32} className="text-muted" />
+                      <>
+                        {/* ImageKit's ik-thumbnail.jpg poster avoids pulling video bytes until hover */}
+                        <video
+                          src={file.url}
+                          poster={getVideoThumbnailUrl(file.url)}
+                          muted
+                          playsInline
+                          loop
+                          preload="none"
+                          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+                        />
+                        <span className="absolute bottom-2 left-2 z-10 flex h-6 w-6 items-center justify-center rounded-md border border-line bg-surface/80 text-foreground">
+                          <FilmSlate size={14} />
+                        </span>
+                      </>
                     ) : kind === "pdf" ? (
                       <FileText size={32} className="text-muted" />
                     ) : kind === "other" ? (

@@ -8,7 +8,7 @@ import {
   CaretRight,
   ArrowsOutSimple,
 } from "@phosphor-icons/react";
-import { getImageKitUrl } from "@/lib/imagekit";
+import { getImageKitUrl, getVideoThumbnailUrl } from "@/lib/imagekit";
 import { TrackingPoint } from "@/components/frame/TrackingPoints";
 import type { IMedia } from "@/database";
 
@@ -169,7 +169,12 @@ export default function ProjectLightbox({
         >
           {currentItem.type === "video" ? (
             <video
+              key={currentItem.url}
               src={currentItem.url}
+              poster={getImageKitUrl(
+                getVideoThumbnailUrl(currentItem.url),
+                { width: 1920 }
+              )}
               controls
               autoPlay
               playsInline
@@ -225,7 +230,7 @@ export default function ProjectLightbox({
           <div className="flex items-center gap-4 font-mono text-[10px] sm:text-[11px] text-muted uppercase">
             <span className="hidden md:inline">← PREV / NEXT → KEYBOARD NAVIGATION</span>
             <span className="text-white/20 hidden md:inline">|</span>
-            <span>HIGH RES MASTER // 2560PX</span>
+            <span>{currentItem.type === "video" ? "VIDEO PLAYBACK" : "HIGH RES MASTER // 2560PX"}</span>
           </div>
         </div>
       </footer>

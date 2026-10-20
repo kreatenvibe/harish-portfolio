@@ -19,6 +19,7 @@
  *  14. Pamphlets & Flyers   -> /PORTFOLIO/PRINT MATERIALS/pamplets
  *  15. Banners & Signage    -> /PORTFOLIO/PRINT MATERIALS/banners
  *  16. Restaurant Menus     -> /PORTFOLIO/PRINT MATERIALS/menu
+ *  17. Motion Graphics      -> /Motion Graphics (videos)
  *
  * USAGE:
  *   node scripts/seed.mjs (or npx tsx scripts/seed.ts)
@@ -188,6 +189,15 @@ const CATEGORIES_CONFIG: CategoryDefinition[] = [
         tags: ["Print Materials", "Menu Design", "Hospitality"],
         isFeatured: false,
     },
+    {
+        name: "Motion Graphics",
+        slug: "motion-graphics",
+        description: "Broadcast motion assets, campaign video edits, title sequences, and kinetic typography.",
+        order: 16,
+        imageKitFolder: "/Motion Graphics",
+        tags: ["Motion Graphics", "Video", "Kinetic Typography"],
+        isFeatured: true,
+    },
 ];
 
 async function main() {
@@ -201,7 +211,12 @@ async function main() {
     const Lead = (await import("../database/models/Lead.model")).default;
     const mongoose = (await import("mongoose")).default;
 
-    // Helper to fetch and sort image files from a specific ImageKit folder (with pagination)
+    const isVideo = (f: IKRawFile) =>
+        Boolean(f.mime?.startsWith("video/")) || /\.(mp4|webm|mov|m4v|ogv)$/i.test(f.name);
+    const { getVideoThumbnailUrl } = await import("../lib/imagekit");
+    const coverUrl = (f: IKRawFile) => (isVideo(f) ? getVideoThumbnailUrl(f.url) : f.url);
+
+    // Helper to fetch and sort image/video files from a specific ImageKit folder (with pagination)
     async function fetchImageKitFolderFiles(folderPath: string): Promise<{ files: IKRawFile[]; failed: boolean }> {
         try {
             let skip = 0;
@@ -219,7 +234,7 @@ async function main() {
             }
 
             const imageFiles = allFiles
-                .filter((f) => f.fileType === "image" || /\.(jpe?g|png|webp|avif|gif|svg)$/i.test(f.name))
+                .filter((f) => f.fileType === "image" || /\.(jpe?g|png|webp|avif|gif|svg)$/i.test(f.name) || isVideo(f))
                 .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
             return { files: imageFiles, failed: false };
         } catch (err) {
@@ -252,7 +267,7 @@ async function main() {
 
         const firstAsset = imageFiles[0];
         const coverImage = firstAsset
-            ? { url: firstAsset.url, fileId: firstAsset.fileId }
+            ? { url: coverUrl(firstAsset), fileId: firstAsset.fileId }
             : undefined;
 
         if (coverImage && !firstGeneralCover) {
@@ -301,13 +316,14 @@ async function main() {
             await Media.create({
                 projectId: project._id,
                 sectionId: section._id,
-                type: "image",
+                type: isVideo(item) ? "video" : "image",
                 url: item.url,
                 fileId: item.fileId,
+                ...(isVideo(item) && { thumbnail: coverUrl(item) }),
                 title: item.name,
                 altText: `${catDef.name} work by Harish Kumar`,
                 caption: "",
-                mimeType: "image/jpeg",
+                mimeType: item.mime ?? (isVideo(item) ? "video/mp4" : "image/jpeg"),
                 width: item.width || 1600,
                 height: item.height || 1000,
                 size: item.size,

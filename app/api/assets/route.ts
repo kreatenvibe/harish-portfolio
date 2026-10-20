@@ -25,6 +25,7 @@ export async function GET(req: Request) {
       url: item.url,
       thumbnailUrl: item.thumbnail ?? item.url,
       type: item.fileType,
+      mime: item.mime,
       path: item.filePath,
     }));
 

@@ -9,7 +9,7 @@ import {
   FilePdf,
 } from "@phosphor-icons/react";
 import { TrackingPoint } from "@/components/frame/TrackingPoints";
-import { getImageKitUrl } from "@/lib/imagekit";
+import { getImageKitUrl, getVideoThumbnailUrl } from "@/lib/imagekit";
 import ProjectLightbox from "@/components/portfolio/ProjectLightbox";
 import type { IProject, IProjectSection, IMedia } from "@/database";
 
@@ -24,9 +24,11 @@ export default function ProjectDetail({
   project,
   sections,
 }: ProjectDetailProps) {
-  // Collect all image/media items in order across all sections for continuous lightbox navigation
+  // Collect all image/video items in order across all sections for continuous lightbox navigation
   const allMediaItems = sections.flatMap((s) => s.media || []);
-  const imageMediaItems = allMediaItems.filter((item) => item.type === "image" || !item.type);
+  const imageMediaItems = allMediaItems.filter(
+    (item) => item.type === "image" || item.type === "video" || !item.type
+  );
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
@@ -61,28 +63,54 @@ export default function ProjectDetail({
                     const isImage = !item.type || item.type === "image";
 
                     // 1. VIDEO DELIVERABLE BLOCK
+                    // Grid shows only ImageKit's generated poster frame (a small JPEG) —
+                    // the video itself is fetched only when opened in the lightbox.
                     if (item.type === "video") {
+                      const poster = getImageKitUrl(
+                        getVideoThumbnailUrl(item.url),
+                        { width: 1000 }
+                      );
                       return (
                         <div
                           key={String(item._id)}
                           className="break-inside-avoid mb-6 lg:mb-8 space-y-2"
                         >
-                          <div className="relative overflow-hidden rounded border border-line bg-black shadow-2xl">
+                          <div className="group relative overflow-hidden rounded border border-line bg-black shadow-2xl transition-all duration-300 hover:border-white/60">
                             <span className="frame-corner-tl" aria-hidden="true" />
                             <span className="frame-corner-tr" aria-hidden="true" />
                             <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 rounded border border-white/20 bg-black/60 px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider text-foreground backdrop-blur-xs">
                               <Play size={10} weight="fill" className="text-emerald-400" />
                               <span>VIDEO ASSET</span>
                             </div>
-                            <video
-                              src={item.url}
-                              autoPlay
-                              muted
-                              loop
-                              playsInline
-                              preload="metadata"
-                              className="w-full h-auto block"
-                            />
+                            {isFullscreenEnabled ? (
+                              <button
+                                type="button"
+                                onClick={() => handleOpenLightbox(item)}
+                                aria-label={`Play ${item.title || "video"} fullscreen`}
+                                className="block w-full cursor-pointer"
+                              >
+                                <img
+                                  src={poster}
+                                  alt={item.altText || item.title || project.title}
+                                  loading="lazy"
+                                  className="w-full h-auto block transition-transform duration-500 ease-out group-hover:scale-[1.015]"
+                                />
+                                <span className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors duration-300 group-hover:bg-black/40">
+                                  <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-black/70 text-white backdrop-blur-md shadow-2xl transition-transform duration-300 group-hover:scale-110">
+                                    <Play size={22} weight="fill" />
+                                  </span>
+                                </span>
+                              </button>
+                            ) : (
+                              <video
+                                src={item.url}
+                                poster={poster}
+                                controls
+                                playsInline
+                                preload="none"
+                                className="w-full h-auto block"
+                              />
+                            )}
                           </div>
                           {(item.caption || item.title) && (
                             <p className="px-2 font-mono text-[10px] sm:text-[11px] text-muted leading-relaxed uppercase tracking-wider">
